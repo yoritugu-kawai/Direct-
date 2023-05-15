@@ -1,8 +1,7 @@
 #include"WindowsClass.h"
 
-
 //　ウィンドウプロシャージャ
-LRESULT CALLBACK  WindowsClass::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 
 	//　メッセージ固有処理
 	switch (msg)
@@ -22,9 +21,7 @@ void Log(const std::string& message) {
 	OutputDebugStringA(message.c_str());
 }
 
-
-
-void  WindowsClass::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
+void  WinApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名

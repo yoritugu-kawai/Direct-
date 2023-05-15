@@ -2,7 +2,8 @@
 #include<Windows.h>
 #include <cstdint>
 #include<string>
-class WindowsClass
+
+class WinApp
 {
 public:
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

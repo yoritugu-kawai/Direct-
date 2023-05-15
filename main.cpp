@@ -1,22 +1,13 @@
-
 #include"WindowsClass.h"
-
-
-
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WindowsClass* windowsClass_ = new WindowsClass;
+	WinApp* winApp_ = new WinApp;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	windowsClass_->Initialize(kClientWidth, kClientHeight);
-
-
-
-
-
+	winApp_->Initialize(kClientWidth, kClientHeight);
 
 	//　メインループ
 	MSG msg{};
