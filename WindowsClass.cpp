@@ -2,7 +2,7 @@
 
 
 //　ウィンドウプロシャージャ
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT CALLBACK  WindowsClass::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 
 	//　メッセージ固有処理
 	switch (msg)
