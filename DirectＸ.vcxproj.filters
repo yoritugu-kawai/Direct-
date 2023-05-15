@@ -20,8 +20,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include=".editorconfig.txt">
+    <Text Include=".editorconfig">
       <Filter>ソース ファイル</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Obiject3d.VS.hlsl" />
+    <FxCompile Include="Odject3d.PS.hlsl" />
   </ItemGroup>
 </Project>
