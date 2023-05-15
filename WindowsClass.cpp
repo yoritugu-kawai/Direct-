@@ -36,25 +36,25 @@ void  WindowsClass::Initialize(const int32_t kClientWidth, const int32_t kClient
 	//ウィンドウクラス登録
 	RegisterClass(&wc);
 	// クライアント領域サイズ
-	
+
 	//  ウィンドウサイズを表す構造体にクライアント領域を入れる
 	RECT wrc = { 0,0,kClientWidth ,kClientHeight };
 	// クライアント領域を元に実際のサイズにwrcを変更
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 	// ウィンドウ生成
-		hwnd = CreateWindow(
-			wc.lpszClassName,//　クラス名
-			L"CG2",                //　タイトルバーの文字
-			WS_OVERLAPPEDWINDOW,  //　標準的なウィンドウスタイル
-			CW_USEDEFAULT,        //　標準X座標
-			CW_USEDEFAULT,        //　標準Y座標
-			wrc.right - wrc.left, //　横幅
-			wrc.bottom - wrc.top, //　縦幅
-			nullptr,              //　親ハンドル
-			nullptr,              //　メニューハンドル
-			wc.hInstance,         //　インスタンスハンドル
-			nullptr               //　オプション
-		);
+	hwnd = CreateWindow(
+		wc.lpszClassName,//　クラス名
+		L"CG2",                //　タイトルバーの文字
+		WS_OVERLAPPEDWINDOW,  //　標準的なウィンドウスタイル
+		CW_USEDEFAULT,        //　標準X座標
+		CW_USEDEFAULT,        //　標準Y座標
+		wrc.right - wrc.left, //　横幅
+		wrc.bottom - wrc.top, //　縦幅
+		nullptr,              //　親ハンドル
+		nullptr,              //　メニューハンドル
+		wc.hInstance,         //　インスタンスハンドル
+		nullptr               //　オプション
+	);
 	//ウィンドウを表示
 	ShowWindow(hwnd, SW_SHOW);
 }

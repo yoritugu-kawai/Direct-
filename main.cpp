@@ -7,12 +7,12 @@
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WindowsClass* windowsClass_ = new WindowsClass;
-	
+
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-	
+
 	windowsClass_->Initialize(kClientWidth, kClientHeight);
-	
+
 
 
 
@@ -20,7 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//　メインループ
 	MSG msg{};
-	while (msg.message!=WM_QUIT)
+	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&msg);
