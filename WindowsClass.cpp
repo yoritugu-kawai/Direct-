@@ -17,6 +17,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 
 }
+
+void Log(const std::string& message) {
+	OutputDebugStringA(message.c_str());
+}
+
+
+
 void  WindowsClass::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
