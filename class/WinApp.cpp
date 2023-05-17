@@ -1,4 +1,4 @@
-#include"WindowsClass.h"
+#include"WinApp.h"
 
 //　ウィンドウプロシャージャ
 LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
