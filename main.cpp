@@ -1,13 +1,16 @@
 #include "class/WindowsClass.h"
 
+const wchar_t Title[] = { L"CG2WindowClass" };
+
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WinApp* winApp_ = new WinApp;
+	WinApp* windowsClass_ = new WinApp;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	winApp_->Initialize(kClientWidth, kClientHeight);
+	windowsClass_->Initialize(Title, kClientWidth, kClientHeight);
 
 	//　メインループ
 	MSG msg{};
@@ -24,4 +27,3 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	return 0;
 }
-

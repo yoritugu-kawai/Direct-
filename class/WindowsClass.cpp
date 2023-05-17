@@ -21,11 +21,14 @@ void Log(const std::string& message) {
 	OutputDebugStringA(message.c_str());
 }
 
-void  WinApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
+
+
+
+void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名
-	wc.lpszClassName = L"CG2WindowClass";
+	wc.lpszClassName = L"%s", title;
 	//インスタンドハンドル
 	wc.hInstance = GetModuleHandle(nullptr);
 	//　カーソル
@@ -41,12 +44,12 @@ void  WinApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight
 	// ウィンドウ生成
 	hwnd = CreateWindow(
 		wc.lpszClassName,//　クラス名
-		L"CG2",                //　タイトルバーの文字
+		title,                //　タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,  //　標準的なウィンドウスタイル
 		CW_USEDEFAULT,        //　標準X座標
 		CW_USEDEFAULT,        //　標準Y座標
 		wrc.right - wrc.left, //　横幅
-		wrc.bottom - wrc.top, //　縦幅
+		wrc.bottom - wrc.top, //　縦幅ti
 		nullptr,              //　親ハンドル
 		nullptr,              //　メニューハンドル
 		wc.hInstance,         //　インスタンスハンドル
@@ -55,4 +58,3 @@ void  WinApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight
 	//ウィンドウを表示
 	ShowWindow(hwnd, SW_SHOW);
 }
-
