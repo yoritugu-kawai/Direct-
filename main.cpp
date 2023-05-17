@@ -1,4 +1,4 @@
-#include "class/WindowsClass.h"
+#include "class/WinApp.h"
 
 const wchar_t Title[] = { L"CG2WindowClass" };
 
