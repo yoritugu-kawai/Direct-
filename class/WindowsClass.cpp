@@ -22,8 +22,6 @@ void Log(const std::string& message) {
 }
 
 
-
-
 void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
