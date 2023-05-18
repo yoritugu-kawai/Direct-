@@ -17,10 +17,6 @@ LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 
 }
 
-void Log(const std::string& message) {
-	OutputDebugStringA(message.c_str());
-}
-
 
 void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
 	//ウィンドウプロシャージャ
