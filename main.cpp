@@ -1,17 +1,17 @@
 #include "class/WinApp.h"
-
+#include"class/DixApp.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	WinApp* windowsClass_ = new WinApp;
-
+	WinApp* winApp_ = new WinApp;
+	DixApp* dixApp_ = new DixApp;
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	windowsClass_->Initialize(Title, kClientWidth, kClientHeight);
-
+	winApp_->Initialize(Title, kClientWidth, kClientHeight);
+	dixApp_->Initialize();
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)

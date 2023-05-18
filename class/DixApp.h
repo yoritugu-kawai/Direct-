@@ -22,6 +22,5 @@ public:
 	void Log(const std::string& message);
 private:
 	HRESULT hr;
-	D3D_FEATURE_LEVEL featureLevels[];
-
+	
 };
