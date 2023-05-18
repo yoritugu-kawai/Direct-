@@ -3,6 +3,7 @@
 #include<dxgi1_6.h>
 #include<cassert>
 #include<string>
+#include<format>
 #include<Windows.h>
 #include <cstdint>
 
