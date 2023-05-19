@@ -38,20 +38,9 @@ void DixApp::Log(const std::string& message) {
 	OutputDebugStringA(message.c_str());
 }
 
-void DixApp::Debug() {
-#ifdef _DEBUG
+void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+	//GXGFactoryの生成
 
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
-		deugController->EnableDebugLayer();
-		deugController->SetEnableGPUBasedValidation(TRUE);
-	}
-
-#endif // _DEBUG
-
-}
-
-void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
-	WinApp* winApp_ = new WinApp;
 	//HRESULTはWindows系のエラーコードあり
 	//関数が成功したかどうかをSUCCEDEDマクロで判定できる
 	hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
@@ -60,6 +49,7 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	assert(SUCCEEDED(hr));
 
 	//アダプタ決定
+
 	// 良い順にアダプタ
 	for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i,
 		DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&useAdapter))
@@ -81,7 +71,7 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	//D3D12Deviceの作成
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
-				D3D_FEATURE_LEVEL_12_2,	D3D_FEATURE_LEVEL_12_1,	D3D_FEATURE_LEVEL_12_0
+			D3D_FEATURE_LEVEL_12_2,	D3D_FEATURE_LEVEL_12_1,	D3D_FEATURE_LEVEL_12_0
 	};
 	const char* featureLevelStrings[] = { "12.2","12.1","12.0" };
 	for (size_t i = 0; i < _countof(featureLevels); ++i) {
@@ -95,15 +85,11 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	Log("Complete Create D3D12Device!!!\n");
 #ifdef _DEBUG
 
-
-	ID3D12InfoQueue* infoQueue = nullptr;
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
 
-		
-		infoQueue->Release();
 		D3D12_MESSAGE_ID denyIds[]{
 			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
 		};
@@ -115,9 +101,12 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 		filter.DenyList.pSeverityList = severities;
 
 		infoQueue->PushStorageFilter(&filter);
+		infoQueue->Release();
+
 	}
 
 #endif // _DEBUG
+
 	// コマンドキュー作成
 
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -125,15 +114,16 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 		IID_PPV_ARGS(&commandQueue));
 	// コマンドキュー作成がうまくいかなかった
 	assert(SUCCEEDED(hr));
+
 	// CommandList作成
 
 	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 	assert(SUCCEEDED(hr));
 
-
 	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator, nullptr,
 		IID_PPV_ARGS(&commandList));
 	assert(SUCCEEDED(hr));
+
 	//   スワップチェーン作成
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
@@ -144,8 +134,9 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, winApp_-> hwnd, &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
+	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, hwnd, &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	assert(SUCCEEDED(hr));
+
 	//ディスクトップヒープ作成
 
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
@@ -153,12 +144,14 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	rtvDescriptorHeapDesc.NumDescriptors = 2;
 	hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));
+
 	//リソースを引っ張る
 
 	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
 	assert(SUCCEEDED(hr));
 	hr = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
 	assert(SUCCEEDED(hr));
+
 	// RTVです
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -174,8 +167,10 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	rtvHandles[1].ptr = rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
+
 	//コマンド積んでいく
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
+	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
 	///張る
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -184,51 +179,96 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	commandList->ResourceBarrier(1, &barrier);
-	
-	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
+
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
 	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
+
+	uint64_t fenceValue = 0;
+	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	assert(SUCCEEDED(hr));
+
+	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
+
+	//DXCの初期化
+	IDxcUtils* dxcUtils = nullptr;
+	IDxcCompiler3* dxcCompiler = nullptr;
+	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
+	assert(SUCCEEDED(hr));
+	hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler));
+	assert(SUCCEEDED(hr));
+
+	IDxcIncludeHandler* includeHandler = nullptr;
+	hr = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
+	assert(SUCCEEDED(hr));
+
+	//POS
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+	//シリアライズしてバイナリ
+	ID3DBlob* signatureBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+	hr = D3D12SerializeRootSignature(&descriptionRootSignature,
+		D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr)) {
+		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	//バイナリを元に生成
+	ID3D12RootSignature* rootSignature = nullptr;
+	hr = device->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
+		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	assert(SUCCEEDED(hr));
+
+	// インプットLayoutの設定
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
+	inputElementDescs[0].SemanticName = "POSITION";
+	inputElementDescs[0].SemanticIndex = 0;
+	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	inputLayoutDesc.pInputElementDescs = inputElementDescs;
+	inputLayoutDesc.NumElements = _countof(inputElementDescs);
+
+	////BlendStateの設定
+	D3D12_BLEND_DESC blendDesc{};
+	blendDesc.RenderTarget[0].RenderTargetWriteMask =
+		D3D12_COLOR_WRITE_ENABLE_ALL;
+
+	//_RASTERIZERの設定
+	D3D12_RASTERIZER_DESC rasterizerDesc{};
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
+	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
+	//
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	commandList->ResourceBarrier(1, &barrier);
-
 	hr = commandList->Close();
 	assert(SUCCEEDED(hr));
-	
+
 	//コマンドキック
 	ID3D12CommandList* commandLists[] = { commandList };
 
 	commandQueue->ExecuteCommandLists(1, commandLists);
 
 	swapChain->Present(1, 0);
+	//
 	fenceValue++;
 	commandQueue->Signal(fence, fenceValue);
-
 	if (fence->GetCompletedValue() < fenceValue) {
 		fence->SetEventOnCompletion(fenceValue, fenceEvent);
 		WaitForSingleObject(fenceEvent, INFINITE);
 	}
 
+	///
 	hr = commandAllocator->Reset();
 	assert(SUCCEEDED(hr));
 	hr = commandList->Reset(commandAllocator, nullptr);
 	assert(SUCCEEDED(hr));
 
 }
+void DixApp::Release(HWND hwnd) {
 
-void DixApp::Ma() {
-	fenceValue = 0;
-	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
-	assert(SUCCEEDED(hr));
-
-	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	assert(fenceEvent != nullptr);
-}
-
-
-void DixApp::Release() {
-
-	WinApp* winApp_ = new WinApp;
 	CloseHandle(fenceEvent);
 	fence->Release();
 	rtvDescriptorHeap->Release();
@@ -241,11 +281,8 @@ void DixApp::Release() {
 	device->Release();
 	useAdapter->Release();
 	dxgiFactory->Release();
-#ifdef _DEBUG
-	deugController->Release();
-#endif // _DEBUG
-	CloseWindow(winApp_->hwnd);
 
+	CloseWindow(hwnd);
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;
