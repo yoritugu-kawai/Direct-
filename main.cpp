@@ -9,9 +9,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DixApp* dixApp_ = new DixApp;
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-
+	
 	winApp_->Initialize(Title, kClientWidth, kClientHeight);
-	dixApp_->Initialize();
+	dixApp_->Initialize(kClientWidth, kClientHeight);
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
