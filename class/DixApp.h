@@ -18,6 +18,8 @@
 class DixApp
 {
 public:
+	std::wstring ConvertString(const std::string& str);
+	std::string ConvertString(const std::wstring& str);
 	void Initialize();
 	void Log(const std::string& message);
 private:

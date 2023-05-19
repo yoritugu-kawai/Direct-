@@ -1,6 +1,6 @@
 #include"DixApp.h"
 
-std::wstring ConvertString(const std::string& str)
+std::wstring DixApp::ConvertString(const std::string& str)
 {
 	if (str.empty())
 	{
@@ -17,7 +17,7 @@ std::wstring ConvertString(const std::string& str)
 	return result;
 }
 
-std::string ConvertString(const std::wstring& str)
+std::string DixApp::ConvertString(const std::wstring& str)
 {
 	if (str.empty())
 	{
