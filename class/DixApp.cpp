@@ -38,6 +38,18 @@ void DixApp::Log(const std::string& message) {
 	OutputDebugStringA(message.c_str());
 }
 
+void DixApp::Debug() {
+#ifdef _DEBUG
+
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
+		deugController->EnableDebugLayer();
+		deugController->SetEnableGPUBasedValidation(TRUE);
+	}
+
+#endif // _DEBUG
+
+}
+
 void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight) {
 	WinApp* winApp_ = new WinApp;
 	//HRESULTはWindows系のエラーコードあり
@@ -88,8 +100,10 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
 
+		
+		infoQueue->Release();
 		D3D12_MESSAGE_ID denyIds[]{
 			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
 		};
@@ -101,8 +115,6 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 		filter.DenyList.pSeverityList = severities;
 
 		infoQueue->PushStorageFilter(&filter);
-		infoQueue->Release();
-
 	}
 
 #endif // _DEBUG
@@ -164,32 +176,6 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
 	//コマンド積んでいく
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
-	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
-	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
-	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
-	hr = commandList->Close();
-	assert(SUCCEEDED(hr));
-
-	/*----------------------------*/
-
-#ifdef _DEBUG
-	
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
-		deugController->EnableDebugLayer();
-		deugController->SetEnableGPUBasedValidation(TRUE);
-	}
-
-#endif // _DEBUG
-
-	
-
-
-	
-	
-	
-
-	
-	
 	///張る
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -198,22 +184,16 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	commandList->ResourceBarrier(1, &barrier);
-
-
 	
-	fenceValue = 0;
-	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
-	assert(SUCCEEDED(hr));
-
-	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	assert(fenceEvent != nullptr);
-
-
-
+	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
+	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
+	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	commandList->ResourceBarrier(1, &barrier);
 
+	hr = commandList->Close();
+	assert(SUCCEEDED(hr));
 	
 	//コマンドキック
 	ID3D12CommandList* commandLists[] = { commandList };
@@ -221,9 +201,9 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	commandQueue->ExecuteCommandLists(1, commandLists);
 
 	swapChain->Present(1, 0);
-
 	fenceValue++;
 	commandQueue->Signal(fence, fenceValue);
+
 	if (fence->GetCompletedValue() < fenceValue) {
 		fence->SetEventOnCompletion(fenceValue, fenceEvent);
 		WaitForSingleObject(fenceEvent, INFINITE);
@@ -234,13 +214,20 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	hr = commandList->Reset(commandAllocator, nullptr);
 	assert(SUCCEEDED(hr));
 
+}
 
+void DixApp::Ma() {
+	fenceValue = 0;
+	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	assert(SUCCEEDED(hr));
 
+	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
 }
 
 
-
 void DixApp::Release() {
+
 	WinApp* winApp_ = new WinApp;
 	CloseHandle(fenceEvent);
 	fence->Release();

@@ -12,6 +12,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	winApp_->Initialize(Title, kClientWidth, kClientHeight);
 	dixApp_->Initialize(kClientWidth, kClientHeight);
+	dixApp_->Ma();
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -24,6 +25,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//　ゲーム処理
 		}
 	}
-
+	dixApp_->Debug();
 	return 0;
 }

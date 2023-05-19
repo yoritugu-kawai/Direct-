@@ -19,6 +19,7 @@ LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 
 
 void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
+	DixApp* dixApp_ = new DixApp;
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名
@@ -51,4 +52,5 @@ void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const
 	);
 	//ウィンドウを表示
 	ShowWindow(hwnd, SW_SHOW);
+	dixApp_->Debug();
 }

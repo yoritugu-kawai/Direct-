@@ -10,6 +10,7 @@
 #include<dxcapi.h>
 #include"WinApp.h"
 
+
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -22,6 +23,8 @@ public:
 	std::string ConvertString(const std::wstring& str);
 	void Log(const std::string& message);
 	void Initialize(const int32_t kClientWidth, const int32_t kClientHeight);
+	void Debug();
+	void Ma();
 	void Release();
 private:
 	HRESULT hr;
