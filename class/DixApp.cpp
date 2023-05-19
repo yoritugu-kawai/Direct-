@@ -81,6 +81,31 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	}
 	assert(device != nullptr);
 	Log("Complete Create D3D12Device!!!\n");
+#ifdef _DEBUG
+
+
+	ID3D12InfoQueue* infoQueue = nullptr;
+	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+
+		D3D12_MESSAGE_ID denyIds[]{
+			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+		};
+		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+		D3D12_INFO_QUEUE_FILTER filter{};
+		filter.DenyList.NumIDs = _countof(denyIds);
+		filter.DenyList.pIDList = denyIds;
+		filter.DenyList.NumSeverities = _countof(severities);
+		filter.DenyList.pSeverityList = severities;
+
+		infoQueue->PushStorageFilter(&filter);
+		infoQueue->Release();
+
+	}
+
+#endif // _DEBUG
 	// コマンドキュー作成
 
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -146,140 +171,101 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight)
 	assert(SUCCEEDED(hr));
 
 	/*----------------------------*/
-//
-//#ifdef _DEBUG
-//	
-//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
-//		deugController->EnableDebugLayer();
-//		deugController->SetEnableGPUBasedValidation(TRUE);
-//	}
-//
-//#endif // _DEBUG
-//
-//	//D3D12Deviceの作成
-//	ID3D12Device* device = nullptr;
-//	D3D_FEATURE_LEVEL featureLevels[] = {
-//			D3D_FEATURE_LEVEL_12_2,	D3D_FEATURE_LEVEL_12_1,	D3D_FEATURE_LEVEL_12_0
-//	};
-//	const char* featureLevelStrings[] = { "12.2","12.1","12.0" };
-//	for (size_t i = 0; i < _countof(featureLevels); ++i) {
-//		hr = D3D12CreateDevice(useAdapter, featureLevels[i], IID_PPV_ARGS(&device));
-//		if (SUCCEEDED(hr)) {
-//			Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
-//			break;
-//		}
-//	}
-//	assert(device != nullptr);
-//	Log("Complete Create D3D12Device!!!\n");
-//#ifdef _DEBUG
-//
-//
-//	ID3D12InfoQueue* infoQueue = nullptr;
-//	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
-//		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
-//		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-//		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
-//
-//		D3D12_MESSAGE_ID denyIds[]{
-//			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
-//		};
-//		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
-//		D3D12_INFO_QUEUE_FILTER filter{};
-//		filter.DenyList.NumIDs = _countof(denyIds);
-//		filter.DenyList.pIDList = denyIds;
-//		filter.DenyList.NumSeverities = _countof(severities);
-//		filter.DenyList.pSeverityList = severities;
-//
-//		infoQueue->PushStorageFilter(&filter);
-//		infoQueue->Release();
-//
-//	}
-//
-//#endif // _DEBUG
-//
-//
-//
-//	
-//	
-//	
-//
-//	
-//	
-//	///張る
-//	D3D12_RESOURCE_BARRIER barrier{};
-//	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-//	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-//	barrier.Transition.pResource = swapChainResources[backBufferIndex];
-//	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-//	commandList->ResourceBarrier(1, &barrier);
-//
-//
-//	
-//	fenceValue = 0;
-//	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
-//	assert(SUCCEEDED(hr));
-//
-//	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-//	assert(fenceEvent != nullptr);
-//
-//
-//
-//	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-//	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-//	commandList->ResourceBarrier(1, &barrier);
-//
-//	
-//	//コマンドキック
-//	ID3D12CommandList* commandLists[] = { commandList };
-//
-//	commandQueue->ExecuteCommandLists(1, commandLists);
-//
-//	swapChain->Present(1, 0);
-//
-//	fenceValue++;
-//	commandQueue->Signal(fence, fenceValue);
-//	if (fence->GetCompletedValue() < fenceValue) {
-//		fence->SetEventOnCompletion(fenceValue, fenceEvent);
-//		WaitForSingleObject(fenceEvent, INFINITE);
-//	}
-//
-//	hr = commandAllocator->Reset();
-//	assert(SUCCEEDED(hr));
-//	hr = commandList->Reset(commandAllocator, nullptr);
-//	assert(SUCCEEDED(hr));
-//
-//
-//
+
+#ifdef _DEBUG
+	
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
+		deugController->EnableDebugLayer();
+		deugController->SetEnableGPUBasedValidation(TRUE);
+	}
+
+#endif // _DEBUG
+
+	
+
+
+	
+	
+	
+
+	
+	
+	///張る
+	D3D12_RESOURCE_BARRIER barrier{};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = swapChainResources[backBufferIndex];
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	commandList->ResourceBarrier(1, &barrier);
+
+
+	
+	fenceValue = 0;
+	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	assert(SUCCEEDED(hr));
+
+	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
+
+
+
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	commandList->ResourceBarrier(1, &barrier);
+
+	
+	//コマンドキック
+	ID3D12CommandList* commandLists[] = { commandList };
+
+	commandQueue->ExecuteCommandLists(1, commandLists);
+
+	swapChain->Present(1, 0);
+
+	fenceValue++;
+	commandQueue->Signal(fence, fenceValue);
+	if (fence->GetCompletedValue() < fenceValue) {
+		fence->SetEventOnCompletion(fenceValue, fenceEvent);
+		WaitForSingleObject(fenceEvent, INFINITE);
+	}
+
+	hr = commandAllocator->Reset();
+	assert(SUCCEEDED(hr));
+	hr = commandList->Reset(commandAllocator, nullptr);
+	assert(SUCCEEDED(hr));
+
+
+
 }
 
 
 
-//void DixApp::Release() {
-//	CloseHandle(fenceEvent);
-//	fence->Release();
-//	rtvDescriptorHeap->Release();
-//	swapChainResources[0]->Release();
-//	swapChainResources[1]->Release();
-//	swapChain->Release();
-//	commandList->Release();
-//	commandAllocator->Release();
-//	commandQueue->Release();
-//	device->Release();
-//	useAdapter->Release();
-//	dxgiFactory->Release();
-//#ifdef _DEBUG
-//	deugController->Release();
-//#endif // _DEBUG
-//	CloseWindow(hwnd);
-//
-//
-//	//リソースリークチェック
-//	IDXGIDebug1* debug;
-//	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
-//		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-//		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
-//		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
-//		debug->Release();
-//	}
-//}
+void DixApp::Release() {
+	WinApp* winApp_ = new WinApp;
+	CloseHandle(fenceEvent);
+	fence->Release();
+	rtvDescriptorHeap->Release();
+	swapChainResources[0]->Release();
+	swapChainResources[1]->Release();
+	swapChain->Release();
+	commandList->Release();
+	commandAllocator->Release();
+	commandQueue->Release();
+	device->Release();
+	useAdapter->Release();
+	dxgiFactory->Release();
+#ifdef _DEBUG
+	deugController->Release();
+#endif // _DEBUG
+	CloseWindow(winApp_->hwnd);
+
+
+	//リソースリークチェック
+	IDXGIDebug1* debug;
+	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
+		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
+		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
+		debug->Release();
+	}
+}
