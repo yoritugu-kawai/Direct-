@@ -1,7 +1,7 @@
 #include"DixApp.h"
 
 std::wstring DixApp::ConvertString(const std::string& str)
-{
+{ 
 	if (str.empty())
 	{
 		return std::wstring();
