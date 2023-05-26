@@ -91,6 +91,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="class\DixApp.cpp" />
+    <ClCompile Include="class\Polygon.cpp" />
     <ClCompile Include="class\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -113,6 +114,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class\DixApp.h" />
+    <ClInclude Include="class\Polygon.h" />
     <ClInclude Include="class\WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

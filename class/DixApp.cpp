@@ -267,6 +267,7 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	assert(SUCCEEDED(hr));
 
 }
+
 void DixApp::Release(HWND hwnd) {
 
 	CloseHandle(fenceEvent);
