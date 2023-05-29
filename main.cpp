@@ -9,7 +9,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* winApp_ = new WinApp(Title, kClientWidth, kClientHeight);
 	DixApp* dixApp_ = new DixApp;
 
-
 	winApp_->Initialize();
 
 	dixApp_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
