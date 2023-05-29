@@ -1,5 +1,5 @@
-#include"class/WinApp.h"
-#include"class/DixApp.h"
+#include"Myclass/WinApp.h"
+#include"Myclass/DixApp.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 

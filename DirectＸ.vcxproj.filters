@@ -18,13 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="class\DixApp.cpp">
+    <ClCompile Include="Myclass\DixApp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="class\WinApp.cpp">
+    <ClCompile Include="Myclass\Polygon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="class\Polygon.cpp">
+    <ClCompile Include="Myclass\WinApp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +38,13 @@
     <FxCompile Include="Odject3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\DixApp.h">
+    <ClInclude Include="Myclass\DixApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="class\WinApp.h">
+    <ClInclude Include="Myclass\Polygon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="class\Polygon.h">
+    <ClInclude Include="Myclass\WinApp.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
