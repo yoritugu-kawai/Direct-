@@ -98,7 +98,7 @@ IDxcBlob* CompileShader(
 }
 
 
-void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight, HWND hwnd) {
 	// GXGFactoryの生成
 		IDXGIFactory7 * dxgiFactory = nullptr;
 	//HRESULTはWindows系のエラーコードあり

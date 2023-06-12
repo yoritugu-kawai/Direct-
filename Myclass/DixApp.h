@@ -18,7 +18,7 @@
 class DixApp
 {
 public:
-	void Initialize(int32_t windowsizeWidth, int32_t windowsizeHeight, HWND hwnd);
+	void Initialize(const int32_t windowsizeWidth, const  int32_t windowsizeHeight, HWND hwnd);
 
 	void Release(HWND hwnd);
 
