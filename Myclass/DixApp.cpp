@@ -39,7 +39,7 @@ void DixApp::Log(const std::string& message) {
 }
 
 void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
-	//GXGFactoryの生成
+	/*----↓　GXGFactoryの生成　↓---*/
 
 	//HRESULTはWindows系のエラーコードあり
 	//関数が成功したかどうかをSUCCEDEDマクロで判定できる
@@ -47,8 +47,10 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 
 	//初期化の根本的な部分でエラーが出た場合はプログラムが間違っているか、どうにもできない場合が多いのでassertにしておく
 	assert(SUCCEEDED(hr));
-
-	//アダプタ決定
+	
+	/*----↑　GXGFactoryの生成　↑---*/
+	
+	/*----↓アダプタ決定 ↓---*/
 
 	// 良い順にアダプタ
 	for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i,
