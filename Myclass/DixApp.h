@@ -7,14 +7,11 @@
 #include<dxgi1_6.h>
 #include<cassert>
 #include<dxgidebug.h>
-#include<dxcapi.h>
 #include"WinApp.h"
-
 
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
-#pragma comment(lib,"dxcompiler.lib")
 
 class DixApp
 {
