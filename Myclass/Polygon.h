@@ -13,6 +13,6 @@
 //	void Drow();
 //
 //private:
-//	
+//	HRESULT hr;
 //};
 //
