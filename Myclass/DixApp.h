@@ -13,6 +13,8 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
+#include<dxcapi.h>
+#pragma comment(lib,"dxcompiler.lib")
 class DixApp
 {
 public:
