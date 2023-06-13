@@ -1,6 +1,6 @@
 #include"DixApp.h"
 
-std::wstring DixApp::ConvertString(const std::string& str)
+std::wstring ConvertString(const std::string& str)
 {
 	if (str.empty())
 	{
@@ -17,7 +17,7 @@ std::wstring DixApp::ConvertString(const std::string& str)
 	return result;
 }
 
-std::string DixApp::ConvertString(const std::wstring& str)
+std::string ConvertString(const std::wstring& str)
 {
 	if (str.empty())
 	{
@@ -34,9 +34,64 @@ std::string DixApp::ConvertString(const std::wstring& str)
 	return result;
 }
 
-void DixApp::Log(const std::string& message) {
+void Log(const std::string& message) {
 	OutputDebugStringA(message.c_str());
 }
+
+//コンパイルシェイダ
+IDxcBlob* CompileShader(
+	const std::wstring& filePath,
+	const wchar_t* profile,
+	IDxcUtils* dxcUtils,
+	IDxcCompiler3* dxcCompiler,
+	IDxcIncludeHandler* includeHandler)
+{
+	//_1
+	Log(ConvertString(std::format(L"Begin CompileShader,path:{},profile:{}\n", filePath, profile)));
+	IDxcBlobEncoding* shaderSource = nullptr;
+	HRESULT hr = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
+	assert(SUCCEEDED(hr));
+	DxcBuffer shaderSourceBuffer;
+	shaderSourceBuffer.Ptr = shaderSource->GetBufferPointer();
+	shaderSourceBuffer.Size = shaderSource->GetBufferSize();
+	shaderSourceBuffer.Encoding = DXC_CP_UTF8;
+	//_2
+	LPCWSTR arguments[] = {
+		filePath.c_str(),
+	L"-E",L"main",
+	L"-T",profile,
+	L"-Zi",L"-Qembed_debug",
+	L"-Od",
+	L"-Zpr",
+	};
+
+	IDxcResult* shaderResult = nullptr;
+	hr = dxcCompiler->Compile(
+		&shaderSourceBuffer,
+		arguments,
+		_countof(arguments),
+		includeHandler,
+		IID_PPV_ARGS(&shaderResult)
+
+	);
+	assert(SUCCEEDED(hr));
+	//_3
+	IDxcBlobUtf8* shadeError = nullptr;
+	shaderResult->GetOutput(DXC_OUT_ERRORS, IID_PPV_ARGS(&shadeError), nullptr);
+	if (shadeError != nullptr && shadeError->GetStringLength() != 0) {
+		Log(shadeError->GetStringPointer());
+		assert(false);
+	}
+	//_4
+	IDxcBlob* shaderBlob = nullptr;
+	hr = shaderResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&shaderBlob), nullptr);
+	assert(SUCCEEDED(hr));
+	Log(ConvertString(std::format(L"Compile Shader,path:{},profile:{}\n", filePath, profile)));
+	shaderSource->Release();
+	shaderResult->Release();
+	return  shaderBlob;
+}
+
 
 void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 
@@ -119,7 +174,7 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	}
 
 #endif // _DEBUG
-
+	                                                                 /*^^^^^^^^^^^^^^GPU作成^^^^^^^^^^^^*/
 	/*-------↓ コマンドキュー作成 ↓------*/
 
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
@@ -165,14 +220,15 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	
 	/*-------↑  ディスクトップヒープ作成  ↑--------*/
 
-	//リソースを引っ張る
-
+	/*-----リソースを引っ張る------*/
 	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
 	assert(SUCCEEDED(hr));
 	hr = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
 	assert(SUCCEEDED(hr));
+	/*-----リソースを引っ張る------*/
 
-	// RTVです
+
+	/*-------RTVです----*/
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
@@ -187,6 +243,8 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	rtvHandles[1].ptr = rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
+	/*-------RTVです----*/
+	                                                              /*^^^^^^^^^^^^^^GPU作成^^^^^^^^^^^^*/
 
 	//コマンド積んでいく
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
@@ -209,8 +267,10 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 
 	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	assert(fenceEvent != nullptr);
+
+
 	//DXCの初期化
-	/*IDxcUtils* dxcUtils = nullptr;
+	IDxcUtils* dxcUtils = nullptr;
 	IDxcCompiler3* dxcCompiler = nullptr;
 	hr = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils));
 	assert(SUCCEEDED(hr));
@@ -218,7 +278,7 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	assert(SUCCEEDED(hr));
 	IDxcIncludeHandler* includeHandler = nullptr;
 	hr = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
-	assert(SUCCEEDED(hr));*/
+	assert(SUCCEEDED(hr));
 	//POS
 	//D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	//descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
