@@ -414,8 +414,8 @@ void DixApp::Initialize(const int32_t kClientWidth, const int32_t kClientHeight,
 	//ビューボード
 	D3D12_VIEWPORT viewport{};
 
-	viewport.Width = kClientWidth;
-	viewport.Height = kClientHeight;
+	viewport.Width =100;
+	viewport.Height = 100;
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
