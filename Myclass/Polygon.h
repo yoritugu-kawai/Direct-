@@ -1,14 +1,14 @@
-#pragma once
-
-class Polygon
-{
-public:
-	Polygon();
-	~Polygon();
-	void Initialize();
-	void Drow();
-
-private:
-	
-};
-
+//#pragma once
+//
+//class Polygon
+//{
+//public:
+//	Polygon();
+//	~Polygon();
+//	void Initialize();
+//	void Drow();
+//
+//private:
+//	
+//};
+//

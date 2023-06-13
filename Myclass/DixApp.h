@@ -20,7 +20,7 @@ class DixApp
 public:
 	
 	void Initialize(int32_t windowsizeWidth, int32_t windowsizeHeight, HWND hwnd);
-
+	void POS();
 	void Release(HWND hwnd);
 
 private:
@@ -37,4 +37,7 @@ private:
 	ID3D12Fence* fence = nullptr;
 	IDXGISwapChain4* swapChain = nullptr;
 	HANDLE fenceEvent;
+	IDxcIncludeHandler* includeHandler = nullptr;
+	IDxcUtils* dxcUtils = nullptr;
+	IDxcCompiler3* dxcCompiler = nullptr;
 };
