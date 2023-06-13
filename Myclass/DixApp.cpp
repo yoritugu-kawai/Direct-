@@ -39,6 +39,10 @@ void DixApp::Log(const std::string& message) {
 }
 
 void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+
+
+	                                                        /*--^^^^^^^^^^DX12初期化^^^^^^^^^^^^--*/
+
 	/*----↓　GXGFactoryの生成　↓---*/
 
 	//HRESULTはWindows系のエラーコードあり
@@ -47,9 +51,9 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 
 	//初期化の根本的な部分でエラーが出た場合はプログラムが間違っているか、どうにもできない場合が多いのでassertにしておく
 	assert(SUCCEEDED(hr));
-	
+
 	/*----↑　GXGFactoryの生成　↑---*/
-	
+
 	/*----↓アダプタ決定 ↓---*/
 
 	// 良い順にアダプタ
@@ -69,8 +73,10 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 		useAdapter = nullptr;
 	}
 	assert(useAdapter != nullptr);
+	/*----↑ アダプタ決定 ↑---*/
 
-	//D3D12Deviceの作成
+
+	/*----↓ *D3D12Deviceの作成 ↓---*/
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
 			D3D_FEATURE_LEVEL_12_2,	D3D_FEATURE_LEVEL_12_1,	D3D_FEATURE_LEVEL_12_0
@@ -85,6 +91,11 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	}
 	assert(device != nullptr);
 	Log("Complete Create D3D12Device!!!\n");
+	// ----↑ *D3D12Deviceの作成 ↑---*/
+
+
+	                                                               /*--^^^^^^^^^^DX12初期化^^^^^^^^^^^^--*/
+
 #ifdef _DEBUG
 
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
@@ -109,15 +120,16 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 
 #endif // _DEBUG
 
-	// コマンドキュー作成
+	/*-------↓ コマンドキュー作成 ↓------*/
 
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
 	hr = device->CreateCommandQueue(&commandQueueDesc,
 		IID_PPV_ARGS(&commandQueue));
 	// コマンドキュー作成がうまくいかなかった
 	assert(SUCCEEDED(hr));
+	/*-------↑ コマンドキュー作成 ↑------*/
 
-	// CommandList作成
+	/*---------↓ CommandList作成 ↓----------*/
 
 	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
 	assert(SUCCEEDED(hr));
@@ -125,8 +137,9 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator, nullptr,
 		IID_PPV_ARGS(&commandList));
 	assert(SUCCEEDED(hr));
+	/*----------↑ CommandList作成 ↑---------*/
 
-	//   スワップチェーン作成
+	/*------↓  スワップチェーン作成  ↓-------*/
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	swapChainDesc.Width = kClientWidth;
@@ -139,13 +152,18 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, hwnd, &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	assert(SUCCEEDED(hr));
 
-	//ディスクトップヒープ作成
+	/*------↑  スワップチェーン作成  ↑-------*/
+
+
+	/*-------↓  ディスクトップヒープ作成  ↓--------*/	
 
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
 	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvDescriptorHeapDesc.NumDescriptors = 2;
 	hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));
+	
+	/*-------↑  ディスクトップヒープ作成  ↑--------*/
 
 	//リソースを引っ張る
 
