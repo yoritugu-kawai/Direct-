@@ -93,12 +93,14 @@ IDxcBlob* CompileShader(
 }
 
 
-void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 
-
+void DixApp::CreateFactory(IDXGIFactory7* dxgiFactory, IDXGIAdapter4* useAdapter)
+{
 	/*--^^^^^^^^^^DX12初期化^^^^^^^^^^^^--*/
 
 /*----↓　GXGFactoryの生成　↓---*/
+	
+	HRESULT hr;
 
 //HRESULTはWindows系のエラーコードあり
 //関数が成功したかどうかをSUCCEDEDマクロで判定できる
@@ -128,9 +130,23 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 		useAdapter = nullptr;
 	}
 	assert(useAdapter != nullptr);
+
+}
+
+
+
+
+
+
+void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+
+
+	//DirectXのファクトリーを作成
+	CreateFactory(dxgiFactory, useAdapter);
+
 	/*----↑ アダプタ決定 ↑---*/
 
-
+	//
 	/*----↓ *D3D12Deviceの作成 ↓---*/
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
@@ -307,14 +323,16 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	assert(SUCCEEDED(hr));
 
 }
+
+
 void  DixApp::POS() {
 
 	/*---------ルートシグネチャの設定---------*/
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	//シリアライズしてバイナリ
-	ID3DBlob* signatureBlob = nullptr;
-	ID3DBlob* errorBlob = nullptr;
+
+
 	hr = D3D12SerializeRootSignature(&descriptionRootSignature,
 		D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
 	if (FAILED(hr)) {
@@ -322,7 +340,7 @@ void  DixApp::POS() {
 		assert(false);
 	}
 	//バイナリを元に生成
-	ID3D12RootSignature* rootSignature = nullptr;
+
 	hr = device->CreateRootSignature(0, signatureBlob->GetBufferPointer(),
 		signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(hr));
@@ -351,17 +369,17 @@ void  DixApp::POS() {
 	/*-----ラスタライザステートの設定---*/
 
 	/*-----シェイダ－コンパイル-------*/
-	IDxcBlob* vertexShaderBlob = CompileShader(L"Obiject3d.VS.hlsl",
+	vertexShaderBlob = CompileShader(L"Obiject3d.VS.hlsl",
 		L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob != nullptr);
 
-	IDxcBlob* pixelShaderBlob = CompileShader(L"Odject3d.PS.hlsl",
+	pixelShaderBlob = CompileShader(L"Odject3d.PS.hlsl",
 		L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
 	/*-----シェイダ－コンパイル-------*/
 
 	/*----POS作成--------*/
-	
+
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	graphicsPipelineStateDesc.pRootSignature = rootSignature;
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc;
@@ -381,12 +399,37 @@ void  DixApp::POS() {
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	ID3D12PipelineState* graphicsPipelineState = nullptr;
+
 	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&graphicsPipelineState));
 	assert(SUCCEEDED(hr));
 	/*----POS作成--------*/
+
+	//////ⅤertexResource作成
+	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
+
+	D3D12_RESOURCE_DESC vertexResourceDesc{};
+
+	vertexResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	vertexResourceDesc.Width = sizeof(Vector4) * 3;
+
+	vertexResourceDesc.Height = 1;
+	vertexResourceDesc.DepthOrArraySize = 1;
+	vertexResourceDesc.MipLevels = 1;
+	vertexResourceDesc.SampleDesc.Count = 1;
+
+	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+	hr = device->CreateCommittedResource(
+		&uploadHeapProperties,
+		D3D12_HEAP_FLAG_NONE,
+		&vertexResourceDesc,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr, IID_PPV_ARGS(&vertexResource));
+	assert(SUCCEEDED(hr));
 }
+
 void DixApp::Release(HWND hwnd) {
 
 	CloseHandle(fenceEvent);
@@ -412,4 +455,18 @@ void DixApp::Release(HWND hwnd) {
 		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
 		debug->Release();
 	}
+
+
+	signatureBlob->Release();
+	if (errorBlob) {
+		errorBlob->Release();
+
+	}
+	pixelShaderBlob->Release();
+	vertexShaderBlob->Release();
+	commandList->SetGraphicsRootSignature(rootSignature);
+	commandList->SetPipelineState(graphicsPipelineState);
+	graphicsPipelineState->Release();
+
+	rootSignature->Release();
 }
