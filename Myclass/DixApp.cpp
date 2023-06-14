@@ -96,7 +96,7 @@ IDxcBlob* CompileShader(
 
 void DixApp::CreateFactory(IDXGIFactory7* dxgiFactory, IDXGIAdapter4* useAdapter)
 {
-	/*--^^^^^^^^^^DX12初期化^^^^^^^^^^^^--*/
+
 
 /*----↓　GXGFactoryの生成　↓---*/
 	
@@ -130,7 +130,7 @@ void DixApp::CreateFactory(IDXGIFactory7* dxgiFactory, IDXGIAdapter4* useAdapter
 		useAdapter = nullptr;
 	}
 	assert(useAdapter != nullptr);
-
+	/*----↑ アダプタ決定 ↑---*/
 }
 
 
@@ -144,7 +144,7 @@ void DixApp::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) 
 	//DirectXのファクトリーを作成
 	CreateFactory(dxgiFactory, useAdapter);
 
-	/*----↑ アダプタ決定 ↑---*/
+	
 
 	//
 	/*----↓ *D3D12Deviceの作成 ↓---*/
