@@ -25,38 +25,42 @@ struct Vector4
 class DixApp
 {
 public:
-	
-	void Initialize(int32_t windowsizeWidth, int32_t windowsizeHeight, HWND hwnd);
+	/// <summary>
+	/// DIXの初期設定
+	/// </summary>
+	void CreateFactory();
+	void CreateAdapter();
+	void CreateDevice();
+	/// <summary>
+	/// 青画面
+	/// </summary>
+	void CreateCommandQueue();
+	void CreateCommandList();
+	void CreateSwapChain();
+	void CreateDescriptorHeap();
+	void CreateSwChResce();
+	//void Create;
+	//void Create;
+
+	/// <summary>
+	/// DIXの初期化
+	/// </summary>
+	void Initialize();
 	void POS();
 	void Release(HWND hwnd);
 
 	
-	static void CreateFactory(IDXGIFactory7* dxgiFactory, IDXGIAdapter4* useAdapter);
-
+	
 
 
 private:
-	IDXGIFactory7* dxgiFactory = nullptr;
+	/// <summary>
+	/// ファクトリーの作成
+	/// </summary>
+	IDXGIFactory7* dxgiFactory;
 	HRESULT hr;
-	IDXGIAdapter4* useAdapter = nullptr;
-	ID3D12Resource* vertexResource = nullptr;
-	ID3D12InfoQueue* infoQueue = nullptr;
-	ID3D12CommandQueue* commandQueue = nullptr;
-	ID3D12CommandAllocator* commandAllocator = nullptr;
-	ID3DBlob* signatureBlob = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
-	ID3D12Resource* swapChainResources[2] = { nullptr };
-	ID3D12Fence* fence = nullptr;
-	IDXGISwapChain4* swapChain = nullptr;
-	HANDLE fenceEvent;
-	IDxcIncludeHandler* includeHandler = nullptr;
-	IDxcUtils* dxcUtils = nullptr;
-	IDxcCompiler3* dxcCompiler = nullptr;
-	IDxcBlob* pixelShaderBlob;
-	IDxcBlob* vertexShaderBlob;
-	ID3D12Device* device = nullptr;
-	ID3D12GraphicsCommandList* commandList = nullptr;
-	ID3D12PipelineState* graphicsPipelineState = nullptr;
-	ID3D12RootSignature* rootSignature = nullptr;
+	/// <summary>
+	/// アダプターの作成
+	/// </summary>
+	IDXGIAdapter4* useAdapter;
 };

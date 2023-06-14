@@ -12,8 +12,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	/*PolygonApp* polygon_ = new PolygonApp;*/
 	
 	winApp_->Initialize();
-
-	dixApp_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
+	dixApp_->Initialize();
+	
 
 
 
@@ -32,11 +32,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/*	polygon_->Triangle(50, 50, 100, 100);*/
 		}
 	}
-	dixApp_->Release(winApp_->Gethwnd());
+	
 	winApp_->Release();
 	/*polygon_->Release();*/
 	/*delete polygon_;*/
-	delete dixApp_;
+
 	delete winApp_;
 	return 0;
 }
