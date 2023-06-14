@@ -36,16 +36,19 @@ public:
 	/// </summary>
 	void CreateCommandQueue();
 	void CreateCommandList();
-	void CreateSwapChain();
+	void CreateSwapChain(HWND hwnd);
 	void CreateDescriptorHeap();
 	void CreateSwChResce();
-	//void Create;
-	//void Create;
+	void CreateRTV();
+	//ループさせる
+	void CommandLoad();
+	void Commandkick();
 
 	/// <summary>
 	/// DIXの初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(HWND hwnd);
+	void Update();
 	void POS();
 	void Release(HWND hwnd);
 
@@ -63,4 +66,13 @@ private:
 	/// アダプターの作成
 	/// </summary>
 	IDXGIAdapter4* useAdapter;
+	/// <summary>
+	/// Deviceの作成
+	/// </summary>
+	ID3D12Device* device;
+	/// <summary>
+	/// 
+	/// </summary>
+	ID3D12CommandQueue* commandQueue;
+
 };
