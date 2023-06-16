@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	winApp_->Initialize();
 	dxCommen_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
-	//polygon_->Initialize(winApp_->Width(), winApp_->Height(), dxCommen_->deviceGet(), dxCommen_->hrGet());
+	polygon_->Initialize(winApp_->Width(), winApp_->Height(), dxCommen_->deviceGet(), dxCommen_->hrGet());
 
 	TrianglePeropety riangle[10];
 	riangle[0]=
