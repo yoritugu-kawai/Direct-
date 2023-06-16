@@ -1,7 +1,7 @@
 #pragma once
 #include<Windows.h>
 #include <cstdint>
-#include"DixApp.h"
+#include"Dxcommen.h"
 
 class WinApp
 {
@@ -20,7 +20,7 @@ private:
 	const wchar_t* title_;
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
-	ID3D12Debug1* deugController = nullptr;
+	ID3D12Debug1* deugController;
 };
 
 

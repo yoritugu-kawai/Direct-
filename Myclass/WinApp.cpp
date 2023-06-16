@@ -25,7 +25,7 @@ WinApp::WinApp(const wchar_t* title, const int32_t kClientWidth, const int32_t k
 }
 
 void  WinApp::Initialize() {
-
+	DxCommen* dxCommen_ = new DxCommen;
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名
@@ -59,7 +59,7 @@ void  WinApp::Initialize() {
 	//ウィンドウを表示
 	ShowWindow(hwnd_, SW_SHOW);
 #ifdef _DEBUG
-
+	deugController = nullptr;
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
 		deugController->EnableDebugLayer();
 		deugController->SetEnableGPUBasedValidation(TRUE);
