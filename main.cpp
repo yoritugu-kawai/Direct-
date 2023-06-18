@@ -6,7 +6,7 @@ const wchar_t Title[] = { L"CG2WindowClass" };
 
 
 
-struct TrianglePeropety
+struct TrianglePropaty
 {
 	Vector4 lefe;
 	Vector4  top;
@@ -29,13 +29,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	
-	TrianglePeropety triangle[10];
-	/*Triangle* triangle[10];
-
-	for () {
+	TrianglePropaty triangle[10];
 	
-		tirangle[i]->Init(triaglePropaty[i]);
-	}*/
+
+	//for () {
+	//
+	//	triangle[i]->Init(TriaglePropaty[i]);
+	//}
 	
 	triangle[0]=
 	{
@@ -118,7 +118,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			for (int i = 0; i < 6; i++) {
 				polygon_->Draw(triangle[i].lefe, triangle[i].top, triangle[i].right, dxCommen_->commandListGet(),
-					dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet(), triangle[i].Resource.vertexResource, triangle[i].Resource);
+					dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet(),
+					triangle[i].Resource.vertexResource, triangle[i].Resource);
 			}
 		
 			
