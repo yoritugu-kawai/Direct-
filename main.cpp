@@ -2,11 +2,17 @@
 #include"Myclass/Dxcommen.h"
 #include"Myclass/Polygon.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
+
+
+
+
 struct TrianglePeropety
 {
 	Vector4 lefe;
 	Vector4  top;
 	Vector4 right;
+	BufferResource Resource;
+
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -19,27 +25,73 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	winApp_->Initialize();
 	dxCommen_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
-	polygon_->Initialize(winApp_->Width(), winApp_->Height(), dxCommen_->deviceGet(), dxCommen_->hrGet());
+	
 
-	TrianglePeropety riangle[10];
-	riangle[0]=
+
+	
+	TrianglePeropety triangle[10];
+	/*Triangle* triangle[10];
+
+	for () {
+	
+		tirangle[i]->Init(triaglePropaty[i]);
+	}*/
+	
+	triangle[0]=
 	{
 		{-0.8f,-0.0f,0.0f,1.0f},
 		{-0.65f,0.5f,0.0f,1.0f},
-		{-0.5f,-0.0f,0.0f,1.0f}
+		{-0.5f,-0.0f,0.0f,1.0f},
+		{polygon_->CreateBufferResource(dxCommen_->deviceGet())}
 
 
 	};
-	riangle[1] =
+	triangle[1] =
 	{
+		{-0.4f,-0.0f,0.0f,1.0f},
+		{-0.35f,0.5f,0.0f,1.0f},
 		{-0.2f,-0.0f,0.0f,1.0f},
-		{0.1f,0.5f,0.0f,1.0f},
-		{-0.2f,-0.0f,0.0f,1.0f}
+		{ polygon_->CreateBufferResource(dxCommen_->deviceGet()) }
 
 
 	};
 
-	
+	triangle[2] =
+	{
+		{-0.1f,-0.0f,0.0f,1.0f},
+		{0.1f,0.5f,0.0f,1.0f},
+		{0.2f,-0.0f,0.0f,1.0f},
+		{ polygon_->CreateBufferResource(dxCommen_->deviceGet()) }
+
+
+	};
+	triangle[3] =
+	{
+		{-0.1f,-0.3f,0.0f,1.0f},
+		{0.1f,-0.1f,0.0f,1.0f},
+		{0.2f,-0.3f,0.0f,1.0f},
+		{ polygon_->CreateBufferResource(dxCommen_->deviceGet()) }
+
+
+	};
+	triangle[4] =
+	{
+		{-0.8f,-0.3f,0.0f,1.0f},
+		{-0.65f,-0.1f,0.0f,1.0f},
+		{-0.5f,-0.3f,0.0f,1.0f},
+		{polygon_->CreateBufferResource(dxCommen_->deviceGet())}
+
+
+	};
+	triangle[5] =
+	{
+		{-0.4f,-0.3f,0.0f,1.0f},
+		{-0.35f,-0.1f,0.0f,1.0f},
+		{-0.2f,-0.3f,0.0f,1.0f},
+		{ polygon_->CreateBufferResource(dxCommen_->deviceGet()) }
+
+
+	};
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -50,8 +102,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else {
 			dxCommen_->BeginFrame();
-			for (int i = 0; i < 2; i++) {
-				polygon_->Triangle(riangle[i].lefe, riangle[i].top, riangle[i].right, dxCommen_->commandListGet(), dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet());
+			polygon_->Initialize(winApp_->Width(), winApp_->Height(), dxCommen_->commandListGet());
+
+
+
+
+			//描画処理
+			/*for () {
+				triagnle[i]->Draw();
+
+
+			}*/
+
+
+
+			for (int i = 0; i < 6; i++) {
+				polygon_->Draw(triangle[i].lefe, triangle[i].top, triangle[i].right, dxCommen_->commandListGet(),
+					dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet(), triangle[i].Resource.vertexResource, triangle[i].Resource);
 			}
 		
 			
@@ -63,9 +130,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	winApp_->Release();
 	dxCommen_->Release(winApp_->Gethwnd());
-	polygon_->Release(dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet(), dxCommen_->pixelShaderBlobGet(), dxCommen_->vertexShaderBlobGet(),
-		dxCommen_->signatureBlobGet(), dxCommen_->errorBlobGet());
+
+		polygon_->Release(dxCommen_->rootSignatureGet(), dxCommen_->graphicsPipelineStateGet(), dxCommen_->pixelShaderBlobGet(), dxCommen_->vertexShaderBlobGet(),
+			dxCommen_->signatureBlobGet(), dxCommen_->errorBlobGet(), triangle[0].Resource.vertexResource);
+	
 	delete polygon_;
+
 	delete dxCommen_;
 	delete winApp_;
 	return 0;

@@ -116,6 +116,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Myclass\Dxcommen.h" />
     <ClInclude Include="Myclass\Polygon.h" />
     <ClInclude Include="Myclass\WinApp.h" />
+    <ClInclude Include="PolygonStrt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
