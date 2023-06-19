@@ -21,7 +21,7 @@ struct Vector4
 	float z;
 	float w;
 };
-class DxCommen
+class DxCommon
 {
 public:
 	void DIX();

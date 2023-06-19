@@ -1,16 +1,21 @@
 #include"Polygon.h"
 
-PolygonApp::PolygonApp()
+PolygoType::PolygoType()
 {
 }
 
-PolygonApp::~PolygonApp()
+PolygoType::~PolygoType()
 {
+}
+
+void PolygoType::Initiluze(DxCommon* dxcommon)
+{
+	dxcommon_ = dxcommon;
 }
 
 
 
-void PolygonApp::Initialize(int32_t  kClientWidth, int32_t kClientHeight, ID3D12GraphicsCommandList* commandList)
+void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 {
 
 	
@@ -30,12 +35,12 @@ void PolygonApp::Initialize(int32_t  kClientWidth, int32_t kClientHeight, ID3D12
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	
-	commandList->RSSetViewports(1, &viewport);
-	commandList->RSSetScissorRects(1, &scissorRect);
+	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
+	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 
 }
 
-BufferResource PolygonApp::CreateBufferResource( ID3D12Device* device)
+BufferResource PolygoType::CreateBufferResource()
 {
 
 	//////ⅤertexResource作成
@@ -57,7 +62,7 @@ BufferResource PolygonApp::CreateBufferResource( ID3D12Device* device)
 	BufferResource bufferResource;
 	
 	
-	HRESULT hr = device->CreateCommittedResource(
+	HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(
 		&uploadHeapProperties,
 		D3D12_HEAP_FLAG_NONE,
 		&vertexResourceDesc,
@@ -76,7 +81,7 @@ BufferResource PolygonApp::CreateBufferResource( ID3D12Device* device)
 	return bufferResource;
 }
 
-void PolygonApp::Triangle(Vector4 lefe,Vector4 top , Vector4 right, ID3D12Resource* vertexResource)
+void PolygoType::Triangle(Vector4 lefe,Vector4 top , Vector4 right, ID3D12Resource* vertexResource)
 {
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -87,39 +92,37 @@ void PolygonApp::Triangle(Vector4 lefe,Vector4 top , Vector4 right, ID3D12Resour
 	
 }
 
-void PolygonApp::Call(ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* rootSignature, ID3D12PipelineState* graphicsPipelineState, BufferResource bufferResource )
+void PolygoType::Call(  BufferResource bufferResource )
 {
 	
 	//コマンドつむ２
 
-	commandList->SetGraphicsRootSignature(rootSignature);
-	commandList->SetPipelineState(graphicsPipelineState);
-	commandList->IASetVertexBuffers(0, 1, &bufferResource.vertexBufferView);
-
-	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	commandList->DrawInstanced(3, 1, 0, 0);
+	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
+	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
+	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &bufferResource.vertexBufferView);
+	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 
 }
-void PolygonApp::Draw(Vector4 lefe, Vector4 top, Vector4 right, ID3D12GraphicsCommandList* commandList, ID3D12RootSignature* rootSignature, ID3D12PipelineState* graphicsPipelineState, ID3D12Resource* vertexResource, BufferResource bufferResource)
+void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right,ID3D12Resource* vertexResource, BufferResource bufferResource)
 {
 	Triangle(lefe,  top, right,  bufferResource.vertexResource);
-	Call( commandList,  rootSignature, graphicsPipelineState, bufferResource);
+	Call(  bufferResource);
 	
 }
 
-void PolygonApp::Release(ID3D12RootSignature* rootSignature, ID3D12PipelineState* graphicsPipelineState, IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
-{
-	vertexResource->Release();
-	graphicsPipelineState->Release();
-	signatureBlob->Release();
-	if (errorBlob) {
-		errorBlob->Release();
-
-	}
-	rootSignature->Release();
-	pixelShaderBlob->Release();
-	vertexShaderBlob->Release();
-
-}
+//void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
+//{
+//	vertexResource->Release();
+//	graphicsPipelineState->Release();
+//	signatureBlob->Release();
+//	if (errorBlob) {
+//		errorBlob->Release();
+//
+//	}
+//	dxcommon_->rootSignatureGet()->Release();
+//	pixelShaderBlob->Release();
+//	vertexShaderBlob->Release();
+//
+//}
 

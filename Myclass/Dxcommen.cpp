@@ -95,7 +95,7 @@ IDxcBlob* CompileShader(
 
 
 
-void DxCommen::DIX()
+void DxCommon::DIX()
 {
 	
 	//DXCの初期化
@@ -111,7 +111,7 @@ void DxCommen::DIX()
 	POS();
 }
 
-void DxCommen::DebugInfoQueue()
+void DxCommon::DebugInfoQueue()
 {
 #ifdef _DEBUG
 	ID3D12InfoQueue* infoQueue = nullptr;
@@ -138,7 +138,7 @@ void DxCommen::DebugInfoQueue()
 
 
 /*DIXの初期設定*/
-void DxCommen::CreateFactory()
+void DxCommon::CreateFactory()
 {
 	//GXGFactoryの生成
 	dxgiFactory = nullptr;
@@ -150,7 +150,7 @@ void DxCommen::CreateFactory()
 	assert(SUCCEEDED(hr));
 
 }
-void DxCommen::CreateAdapter() {
+void DxCommon::CreateAdapter() {
 	//アダプタ決定
 	useAdapter = nullptr;
 	// 良い順にアダプタ
@@ -171,7 +171,7 @@ void DxCommen::CreateAdapter() {
 	}
 	assert(useAdapter != nullptr);
 }
-void DxCommen::CreateDevice() {
+void DxCommon::CreateDevice() {
 	//D3D12Deviceの作成
 	device = nullptr;
 	D3D_FEATURE_LEVEL featureLevels[] = {
@@ -191,7 +191,7 @@ void DxCommen::CreateDevice() {
 /*DIXの初期設定*/
 
 /*青画面*/
-void DxCommen::CreateCommandQueue() {
+void DxCommon::CreateCommandQueue() {
 	commandQueue = nullptr;
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
 	hr = device->CreateCommandQueue(&commandQueueDesc,
@@ -199,7 +199,7 @@ void DxCommen::CreateCommandQueue() {
 	// コマンドキュー作成がうまくいかなかった
 	assert(SUCCEEDED(hr));
 }
-void DxCommen::CreateCommandList() {
+void DxCommon::CreateCommandList() {
 	// CommandList作成
 	commandAllocator = nullptr;
 	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
@@ -212,7 +212,7 @@ void DxCommen::CreateCommandList() {
 }
 
 
-void DxCommen::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
+void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
 ) {
 	//   スワップチェーン作成
 	swapChain = nullptr;
@@ -228,7 +228,7 @@ void DxCommen::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 	assert(SUCCEEDED(hr));
 
 }
-void DxCommen::CreateDescriptorHeap() {
+void DxCommon::CreateDescriptorHeap() {
 	//ディスクトップヒープ作成
 	rtvDescriptorHeap = nullptr;
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
@@ -238,7 +238,7 @@ void DxCommen::CreateDescriptorHeap() {
 	assert(SUCCEEDED(hr));
 
 }
-void DxCommen::CreateSwapResce() {
+void DxCommon::CreateSwapResce() {
 	//リソースを引っ張る
 	swapChainResources[2] = { nullptr };
 	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
@@ -247,7 +247,7 @@ void DxCommen::CreateSwapResce() {
 	assert(SUCCEEDED(hr));
 
 }
-void DxCommen::CreateRTV() {
+void DxCommon::CreateRTV() {
 	// RTVです
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -266,7 +266,7 @@ void DxCommen::CreateRTV() {
 
 }
 
-void DxCommen::CreateFeneEvent()
+void DxCommon::CreateFeneEvent()
 {
 	//初期値0fenceを作る
 	fence = nullptr;
@@ -280,7 +280,7 @@ void DxCommen::CreateFeneEvent()
 }
 
 //ループさせる
-void DxCommen::CommandLoad() {
+void DxCommon::CommandLoad() {
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
 	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
 	///トランジションバリア
@@ -297,7 +297,7 @@ void DxCommen::CommandLoad() {
 	
 }
 
-void DxCommen::Commandkick() {
+void DxCommon::Commandkick() {
 	//画面クリア
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
@@ -326,7 +326,7 @@ void DxCommen::Commandkick() {
 	assert(SUCCEEDED(hr));
 }
 
-void DxCommen::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 	/*DIXの初期設定*/
 	CreateFactory();
 	CreateAdapter();
@@ -343,16 +343,16 @@ void DxCommen::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
 	DIX();
 }
 
-void DxCommen::BeginFrame() {
+void DxCommon::BeginFrame() {
 	CommandLoad();
 	
 }
-void DxCommen::EndFrame()
+void DxCommon::EndFrame()
 {
 	Commandkick();
 	
 }
-void  DxCommen::POS() {
+void  DxCommon::POS() {
 
 	/*---------ルートシグネチャの設定---------*/
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
@@ -433,7 +433,7 @@ void  DxCommen::POS() {
 
 }
 
-void DxCommen::Release(HWND hwnd) {
+void DxCommon::Release(HWND hwnd) {
 	///
 	CloseHandle(fenceEvent);
 	fence->Release();

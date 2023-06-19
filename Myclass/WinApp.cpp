@@ -25,7 +25,7 @@ WinApp::WinApp(const wchar_t* title, const int32_t kClientWidth, const int32_t k
 }
 
 void  WinApp::Initialize() {
-	DxCommen* dxCommen_ = new DxCommen;
+	DxCommon* dxCommen_ = new DxCommon;
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名
