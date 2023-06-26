@@ -18,9 +18,9 @@ void PolygoType::Initiluze(DxCommon* dxcommon)
 void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 {
 
-	
+
 	//描画許可範囲
-	
+
 	scissorRect.left = 0;
 	scissorRect.right = kClientWidth;
 	scissorRect.top = 0;
@@ -34,7 +34,7 @@ void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
-	
+
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 
@@ -58,10 +58,10 @@ BufferResource PolygoType::CreateBufferResource()
 	vertexResourceDesc.SampleDesc.Count = 1;
 
 	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	
+
 	BufferResource bufferResource;
-	
-	
+
+
 	HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(
 		&uploadHeapProperties,
 		D3D12_HEAP_FLAG_NONE,
@@ -72,7 +72,7 @@ BufferResource PolygoType::CreateBufferResource()
 
 
 	//VerteBufferView作成
-	
+
 	bufferResource.vertexBufferView.BufferLocation = bufferResource.vertexResource->GetGPUVirtualAddress();
 	bufferResource.vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
@@ -81,20 +81,20 @@ BufferResource PolygoType::CreateBufferResource()
 	return bufferResource;
 }
 
-void PolygoType::Triangle(Vector4 lefe,Vector4 top , Vector4 right, ID3D12Resource* vertexResource)
+void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, ID3D12Resource* vertexResource)
 {
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	vertexData[0] = {lefe};
-	vertexData[1] = { top};
-	vertexData[2] = { right};
-	
-	
+	vertexData[0] = { lefe };
+	vertexData[1] = { top };
+	vertexData[2] = { right };
+
+
 }
 
-void PolygoType::Call(  BufferResource bufferResource )
+void PolygoType::Call(BufferResource bufferResource)
 {
-	
+
 	//コマンドつむ２
 
 	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
@@ -104,11 +104,11 @@ void PolygoType::Call(  BufferResource bufferResource )
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 
 }
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right,ID3D12Resource* vertexResource, BufferResource bufferResource)
+void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, ID3D12Resource* vertexResource, BufferResource bufferResource)
 {
-	Triangle(lefe,  top, right,  bufferResource.vertexResource);
-	Call(  bufferResource);
-	
+	Triangle(lefe, top, right, bufferResource.vertexResource);
+	Call(bufferResource);
+
 }
 
 //void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
