@@ -3,9 +3,6 @@
 #include"Myclass/Polygon.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
-
-
-
 struct TrianglePropaty
 {
 	Vector4 lefe;
@@ -123,7 +120,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	winApp_->Release();
 	dxCommon_->Release(winApp_->Gethwnd());
 
-	
+
 	for (int i = 0; i < max; i++) {
 		delete polygon_[i];
 	}
