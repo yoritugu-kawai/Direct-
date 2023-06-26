@@ -8,6 +8,7 @@ class PolygoType
 public:
 	PolygoType();
 	~PolygoType();
+
 	void Initiluze(DxCommon* dxcommon);
 	void Update(int32_t windowsizeWidth, int32_t windowsizeHeight);
 
