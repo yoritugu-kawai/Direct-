@@ -27,7 +27,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		polygon_[i]->Initiluze(dxCommon_);
 	}
 
-
 	TrianglePropaty triangle[max];
 
 	triangle[0] =

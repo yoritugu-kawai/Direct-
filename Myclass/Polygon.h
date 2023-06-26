@@ -18,9 +18,6 @@ public:
 	void Draw(Vector4 lefe, Vector4 top, Vector4 right, ID3D12Resource* vertexResource, BufferResource bufferResource);
 private:
 
-
-	//////ⅤertexResource作成
-
 	//
 	D3D12_VIEWPORT viewport{};
 	D3D12_RECT scissorRect{};
