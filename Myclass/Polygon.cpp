@@ -13,8 +13,6 @@ void PolygoType::Initiluze(DxCommon* dxcommon)
 	dxcommon_ = dxcommon;
 }
 
-
-
 void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 {
 
