@@ -8,7 +8,7 @@ struct TrianglePropaty
 	Vector4 lefe;
 	Vector4  top;
 	Vector4 right;
-	BufferResource Resource;
+	
 
 };
 
@@ -35,7 +35,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.8f,-0.0f,0.0f,1.0f},
 		{-0.65f,0.5f,0.0f,1.0f},
 		{-0.5f,-0.0f,0.0f,1.0f},
-		{polygon_[0]->CreateBufferResource()}
+		
 
 
 	};
@@ -45,7 +45,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.4f,-0.0f,0.0f,1.0f},
 		{-0.35f,0.5f,0.0f,1.0f},
 		{-0.2f,-0.0f,0.0f,1.0f},
-		{ polygon_[1]->CreateBufferResource()}
+	
 
 
 	};
@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.1f,-0.0f,0.0f,1.0f},
 		{0.1f,0.5f,0.0f,1.0f},
 		{0.2f,-0.0f,0.0f,1.0f},
-		{ polygon_[2]->CreateBufferResource()}
+	
 
 
 	};
@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.1f,-0.3f,0.0f,1.0f},
 		{0.1f,-0.1f,0.0f,1.0f},
 		{0.2f,-0.3f,0.0f,1.0f},
-		{ polygon_[3]->CreateBufferResource()}
+	
 
 
 	};
@@ -73,8 +73,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.8f,-0.3f,0.0f,1.0f},
 		{-0.65f,-0.1f,0.0f,1.0f},
 		{-0.5f,-0.3f,0.0f,1.0f},
-		{polygon_[4]->CreateBufferResource()}
-
+		
 
 	};
 	triangle[5] =
@@ -82,7 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.4f,-0.3f,0.0f,1.0f},
 		{-0.35f,-0.1f,0.0f,1.0f},
 		{-0.2f,-0.3f,0.0f,1.0f},
-		{ polygon_[5]->CreateBufferResource()}
+		
 
 
 	};
@@ -105,8 +104,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//描画処理
 			for (int i = 0; i < max; i++) {
-				polygon_[i]->Draw(triangle[i].lefe, triangle[i].top, triangle[i].right,
-					triangle[i].Resource.vertexResource, triangle[i].Resource);
+				polygon_[i]->Draw(triangle[i].lefe, triangle[i].top, triangle[i].right);
 			}
 
 

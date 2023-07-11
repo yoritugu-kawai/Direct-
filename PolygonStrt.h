@@ -15,7 +15,6 @@
 #pragma comment(lib,"dxcompiler.lib")
 struct  BufferResource
 {
-	ID3D12Resource* vertexResource;
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
+	
 
 };
