@@ -1,6 +1,7 @@
 #include"Myclass/WinApp.h"
 #include"Myclass/Dxcommen.h"
 #include"Myclass/Polygon.h"
+
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 struct TrianglePropaty
