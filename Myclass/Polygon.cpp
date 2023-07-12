@@ -17,7 +17,7 @@ void PolygoType::Initiluze(DxCommon* dxcommon)
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
 	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
-	vertexBufferView.StrideInBytes = sizeof(Vector4)*3;
+	vertexBufferView.StrideInBytes = sizeof(Vector4);
 
 }
 
