@@ -12,12 +12,12 @@ void PolygoType::Initiluze(DxCommon* dxcommon)
 {
 	dxcommon_ = dxcommon;
 	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
-	materialResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4));
+	materialResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4)* 3);
 
-	vertexBufferView.BufferLocation = materialResource->GetGPUVirtualAddress();
+	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
 	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
-	vertexBufferView.StrideInBytes = sizeof(Vector4);
+	vertexBufferView.StrideInBytes = sizeof(Vector4)*3;
 
 }
 
@@ -85,7 +85,7 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 	
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 	
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
