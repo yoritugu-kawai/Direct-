@@ -38,9 +38,9 @@ void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 
 }
 
-void PolygoType::CreateBufferResource()
+ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t sizeInBytes)
 {
-
+	ID3D12Resource* resultResource_;
 	//////ⅤertexResource作成
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
 	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -57,39 +57,34 @@ void PolygoType::CreateBufferResource()
 
 	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	
 
-
-	//HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(
-	//	&uploadHeapProperties,
-	//	D3D12_HEAP_FLAG_NONE,
-	//	&vertexResourceDesc,
-	//	D3D12_RESOURCE_STATE_GENERIC_READ,
-	//	nullptr, IID_PPV_ARGS(vertexResource));
-	//assert(SUCCEEDED(hr));
-
-	HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(&uploadHeapProperties ,
+	HRESULT hr =  device ->CreateCommittedResource(&uploadHeapProperties,
 		D3D12_HEAP_FLAG_NONE,
-		&vertexResourceDesc, 
+		&vertexResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertexResource));
+		IID_PPV_ARGS(&resultResource_));
 	assert(SUCCEEDED(hr));
 
 	//VerteBufferView作成
 
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
+	vertexBufferView.BufferLocation = resultResource_->GetGPUVirtualAddress();
 	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
-    vertexBufferView.StrideInBytes = sizeof(Vector4);
+	vertexBufferView.StrideInBytes = sizeof(Vector4);
 
-	
+	return resultResource_;
 }
 
 void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 {
-	CreateBufferResource();
-
+	vertexResource = CreateBufferResource(dxcommon_->deviceGet(),sizeof(Vector4) * 3);
+	materialResource = CreateBufferResource(dxcommon_->deviceGet(),sizeof(Vector4));
+	
+	Vector4* materialData = nullptr;
+	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	*materialData = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+	
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	vertexData[0] = { lefe };
@@ -109,7 +104,7 @@ void PolygoType::Call()
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
 	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
-
+	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 }
 void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 {

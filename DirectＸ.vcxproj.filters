@@ -13,19 +13,31 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Type">
+      <UniqueIdentifier>{44b14bf2-fc18-494c-9f35-7afcfcaa84ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Dase">
+      <UniqueIdentifier>{e43ab90e-3eee-4edb-85be-810d1964ba07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Type">
+      <UniqueIdentifier>{920365f2-eadd-4881-a694-0b69cb1afb1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Dase">
+      <UniqueIdentifier>{10de9f61-345b-4b01-bae2-c837405a2ee6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Myclass\Dxcommen.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Myclass\Polygon.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="Myclass\Dxcommen.cpp">
+      <Filter>ソース ファイル\Dase</Filter>
     </ClCompile>
     <ClCompile Include="Myclass\WinApp.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Dase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -38,14 +50,17 @@
     <FxCompile Include="Odject3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Myclass\Dxcommen.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Myclass\Polygon.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="Myclass\Dxcommen.h">
+      <Filter>ヘッダー ファイル\Dase</Filter>
     </ClInclude>
     <ClInclude Include="Myclass\WinApp.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Dase</Filter>
+    </ClInclude>
+    <ClInclude Include="PolygonStrt.h">
+      <Filter>ヘッダー ファイル\Type</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
