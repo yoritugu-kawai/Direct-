@@ -81,6 +81,8 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 
 void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 {
+	
+	
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	*materialData = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
