@@ -83,7 +83,7 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 {
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+	*materialData = Vector4(1.0f, 1.0f, 0.0f, 1.0f);
 	
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -103,8 +103,9 @@ void PolygoType::Call()
 	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
 	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
+	
 }
 void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 {
