@@ -384,6 +384,8 @@ void  DxCommon::POS() {
 	/*---------ルートシグネチャの設定---------*/
 
 	/*----------インプットレイアウトの設定------------*/
+
+	//InputLayoutの設定
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
 	inputElementDescs[0].SemanticName = "POSITION";
 	inputElementDescs[0].SemanticIndex = 0;
