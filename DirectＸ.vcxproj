@@ -91,9 +91,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Myclass\Dxcommen.cpp" />
-    <ClCompile Include="Myclass\Polygon.cpp" />
-    <ClCompile Include="Myclass\WinApp.cpp" />
+    <ClCompile Include="Myclass\dase\Dxcommen.cpp" />
+    <ClCompile Include="Myclass\dase\WinApp.cpp" />
+    <ClCompile Include="Myclass\math\Math.cpp" />
+    <ClCompile Include="Myclass\type\Polygon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig" />
@@ -113,10 +114,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Myclass\Dxcommen.h" />
-    <ClInclude Include="Myclass\Polygon.h" />
-    <ClInclude Include="Myclass\WinApp.h" />
-    <ClInclude Include="PolygonStrt.h" />
+    <ClInclude Include="Myclass\dase\Dxcommen.h" />
+    <ClInclude Include="Myclass\dase\WinApp.h" />
+    <ClInclude Include="Myclass\math\mathStrt.h" />
+    <ClInclude Include="Myclass\type\Polygon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
