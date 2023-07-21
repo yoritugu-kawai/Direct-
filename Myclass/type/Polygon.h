@@ -31,6 +31,7 @@ private:
 	//
 	ID3D12Resource* materialResource;
 	ID3D12Resource* wvpResource;
+	Transfom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 };
 

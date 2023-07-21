@@ -29,8 +29,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	TrianglePropaty triangle[max];
-
 	triangle[0] =
+	{
+
+		{-0.5f,-0.5f,0.0f,1.0f},
+		{-0.0f,0.5f,0.0f,1.0f},
+		{0.5f,-0.5f,0.0f,1.0f},
+		{0x783964ff}
+
+
+	};
+	/*triangle[0] =
 	{
 
 	    {-0.8f,-0.0f,0.0f,1.0f},
@@ -39,51 +48,54 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{0x783964ff}
 
 
-	};
+	};*/
 
-	triangle[1] =
-	{
-		{-0.4f,-0.0f,0.0f,1.0f},
-		{-0.35f,0.5f,0.0f,1.0f},
-		{-0.2f,-0.0f,0.0f,1.0f},
-	    {0xff44ffff}
-
-
-	};
-
-	triangle[2] =
-	{
-		{-0.1f,-0.0f,0.0f,1.0f},
-		{0.1f,0.5f,0.0f,1.0f},
-		{0.2f,-0.0f,0.0f,1.0f},
-		{0x22ffffff}
+	//triangle[1] =
+	//{
+	//	{-0.4f,-0.0f,0.0f,1.0f},
+	//	{-0.35f,0.5f,0.0f,1.0f},
+	//	{-0.2f,-0.0f,0.0f,1.0f},
+	//    {0xff44ffff}
 
 
-	};
-	triangle[3] =
-	{
-		{-0.1f,-0.3f,0.0f,1.0f},
-		{0.1f,-0.1f,0.0f,1.0f},
-		{0.2f,-0.3f,0.0f,1.0f},
-		{0xff00ffff}
+	//};
+
+	//triangle[2] =
+	//{
+	//	{-0.1f,-0.0f,0.0f,1.0f},
+	//	{0.1f,0.5f,0.0f,1.0f},
+	//	{0.2f,-0.0f,0.0f,1.0f},
+	//	{0x22ffffff}
 
 
-	};
-	triangle[4] =
-	{
-		{-0.8f,-0.3f,0.0f,1.0f},
-		{-0.65f,-0.1f,0.0f,1.0f},
-		{-0.5f,-0.3f,0.0f,1.0f},
-		{0xffffafaf}
+	//};
+	//triangle[3] =
+	//{
+	//	{-0.1f,-0.3f,0.0f,1.0f},
+	//	{0.1f,-0.1f,0.0f,1.0f},
+	//	{0.2f,-0.3f,0.0f,1.0f},
+	//	{0xff00ffff}
 
-	};
-	triangle[5] =
-	{
-		{-0.4f,-0.3f,0.0f,1.0f},
-		{-0.35f,-0.1f,0.0f,1.0f},
-		{-0.2f,-0.3f,0.0f,1.0f},
-		{0xffffffff}
-	};
+
+	//};
+	//triangle[4] =
+	//{
+	//	{-0.8f,-0.3f,0.0f,1.0f},
+	//	{-0.65f,-0.1f,0.0f,1.0f},
+	//	{-0.5f,-0.3f,0.0f,1.0f},
+	//	{0xffffafaf}
+
+	//};
+	//triangle[5] =
+	//{
+	//	{-0.4f,-0.3f,0.0f,1.0f},
+	//	{-0.35f,-0.1f,0.0f,1.0f},
+	//	{-0.2f,-0.3f,0.0f,1.0f},
+	//	{0xffffffff}
+	//};
+	// 
+	
+	
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -100,7 +112,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 				polygon_[i]->Update(winApp_->Width(), winApp_->Height());
 			}
-
+		
+			//
 			//描画処理
 			for (int i = 0; i < max; i++) {
 				polygon_[i]->Draw(triangle[i].left, triangle[i].top, triangle[i].right, triangle[i].color);
