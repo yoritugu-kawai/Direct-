@@ -21,11 +21,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DxCommon* dxCommon_ = new DxCommon;
 	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
 	const int max = 6;
-	PolygoType* polygon_[max]{};
-	for (int i = 0; i < max; i++) {
-		polygon_[i] = new PolygoType;
-		polygon_[i]->Initiluze(dxCommon_);
-	}
+	
 
 	TrianglePropaty triangle[max];
 
@@ -85,6 +81,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	};
+
+	PolygoType* polygon_[max]{};
+	for (int i = 0; i < max; i++) {
+		polygon_[i] = new PolygoType;
+		polygon_[i]->Initiluze(dxCommon_);
+	}
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
