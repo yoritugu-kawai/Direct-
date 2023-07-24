@@ -56,7 +56,7 @@ void PolygoType::CreateBufferResource()
     vertexBufferView.StrideInBytes = sizeof(Vector4);
 }
 
-void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
+void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 {
 
 	//描画許可範囲
@@ -80,10 +80,6 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 	vertexData[1] = { top };
 	vertexData[2] = { right };
 
-}
-
-void PolygoType::Call()
-{
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
@@ -92,11 +88,5 @@ void PolygoType::Call()
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
 	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
-
-}
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
-{
-	Triangle(lefe, top, right);
-	Call();
 
 }
