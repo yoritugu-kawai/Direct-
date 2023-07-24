@@ -8,11 +8,14 @@ PolygoType::~PolygoType()
 {
 }
 
-void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight)
+void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right)
 {
 	dxcommon_ = dxcommon;
 	this->kClientWidth_ = kClientWidth;
 	this->kClientHeight_ = kClientHeight;
+	this->lefe_= lefe,
+	this->top_= top;
+	this->right_= right;
 }
 
 void PolygoType::Update()
@@ -56,7 +59,7 @@ void PolygoType::CreateBufferResource()
     vertexBufferView.StrideInBytes = sizeof(Vector4);
 }
 
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
+void PolygoType::Draw()
 {
 	//描画許可範囲
 	scissorRect.left = 0;
@@ -75,9 +78,9 @@ void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	vertexData[0] = { lefe };
-	vertexData[1] = { top };
-	vertexData[2] = { right };
+	vertexData[0] = { lefe_ };
+	vertexData[1] = { top_ };
+	vertexData[2] = { right_ };
 
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
