@@ -22,9 +22,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DxCommon* dxCommon_ = new DxCommon;
 	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
 
-	const int max = 6;
+	const int triangleCount = 6;
 	
-	TrianglePropaty triangle[max];
+	TrianglePropaty triangle[triangleCount];
 
 	triangle[0] =
 	{
@@ -75,8 +75,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{0xffffffff}
 	};
 
-	PolygoType* polygon_[max]{};
-	for (int i = 0; i < max; i++) {
+	PolygoType* polygon_[triangleCount]{};
+	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
 		polygon_[i]->Initiluze(dxCommon_);
 	}
@@ -95,13 +95,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon_->BeginFrame();
 
 			//更新処理
-			for (int i = 0; i < max; i++) {
+			for (int i = 0; i < triangleCount; i++) {
 
 				polygon_[i]->Update(winApp_->Width(), winApp_->Height());
 			}
 
 			//描画処理
-			for (int i = 0; i < max; i++) {
+			for (int i = 0; i < triangleCount; i++) {
 				polygon_[i]->Draw(triangle[i].left, triangle[i].top, triangle[i].right, triangle[i].color);
 			}
 
@@ -114,7 +114,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	winApp_->Release();
 	dxCommon_->Release(winApp_->Gethwnd());
 
-	for (int i = 0; i < max; i++) {
+	for (int i = 0; i < triangleCount; i++) {
 		delete polygon_[i];
 	}
 	delete dxCommon_;
