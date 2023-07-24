@@ -20,7 +20,7 @@ Vector4 PolygoType::Color(unsigned int color)
 	return color_;
 }
 
-void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right)
+void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
 {
 	dxcommon_ = dxcommon;
 	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
@@ -36,6 +36,7 @@ void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kC
 	this->lefe_ = lefe,
 	this->top_ = top;
 	this->right_ = right;
+	this->color_ = color;
 }
 
 void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
@@ -82,7 +83,7 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Draw( unsigned int color)
+void PolygoType::Draw()
 {
 
 	//描画許可範囲
@@ -101,7 +102,7 @@ void PolygoType::Draw( unsigned int color)
 	//PS
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Color(color);
+	*materialData = Color(color_);
 	//VS
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));

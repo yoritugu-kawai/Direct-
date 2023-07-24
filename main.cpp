@@ -6,7 +6,7 @@ const wchar_t Title[] = { L"CG2WindowClass" };
 
 struct TrianglePropaty
 {
-	Vector4 left;
+	Vector4 lefe;
 	Vector4  top;
 	Vector4 right;
 	unsigned int color;
@@ -78,9 +78,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygoType* polygon_[triangleCount]{};
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
-		polygon_[i]->Initiluze(dxCommon_, winApp_->Height(), winApp_->Gethwnd(),triangle[i].left, triangle[i].top, triangle[i].right, );
+		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right, triangle[i].color);
 	}
-
 	//　メインループ
 	MSG msg{};
 
@@ -99,7 +98,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
-				polygon_[i]->Draw( triangle[i].color);
+				polygon_[i]->Draw( );
 			}
 
 			dxCommon_->EndFrame();
