@@ -95,10 +95,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon_->BeginFrame();
 
 			//更新処理
-			for (int i = 0; i < triangleCount; i++) {
-
-				polygon_[i]->Update(winApp_->Width(), winApp_->Height());
-			}
+			
 
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {

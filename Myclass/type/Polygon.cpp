@@ -38,25 +38,6 @@ void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
 {
 
 
-	//描画許可範囲
-
-	scissorRect.left = 0;
-	scissorRect.right = kClientWidth;
-	scissorRect.top = 0;
-	scissorRect.bottom = kClientHeight;
-	//表示許可範囲
-
-//
-	viewport.Width = float(kClientWidth);
-	viewport.Height = float(kClientHeight);
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
-	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
-
 }
 
 void PolygoType::Move()
@@ -99,6 +80,33 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 
 void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
 {
+	
+	
+	
+}
+
+void PolygoType::Call()
+{
+
+	
+	
+}
+void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
+{
+
+	//描画許可範囲
+
+	scissorRect.left = 0;
+	scissorRect.right = kClientWidth;
+	scissorRect.top = 0;
+	scissorRect.bottom = kClientHeight;
+	//表示許可範囲
+	viewport.Width = float(kClientWidth);
+	viewport.Height = float(kClientHeight);
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
 	//PS
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
@@ -113,15 +121,9 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, unsigned int
 	vertexData[0] = { lefe };
 	vertexData[1] = { top };
 	vertexData[2] = { right };
-	
-	
-}
-
-void PolygoType::Call()
-{
-
 	//コマンドつむ２
-
+	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
+	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
 	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
@@ -129,12 +131,6 @@ void PolygoType::Call()
 	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
-	
-}
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
-{
-	Triangle(lefe, top, right, color);
-	Call();
 
 }
 
