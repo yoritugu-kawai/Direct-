@@ -40,17 +40,6 @@ void PolygoType::CreateBufferResource()
 
 	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	
-
-
-	//HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(
-	//	&uploadHeapProperties,
-	//	D3D12_HEAP_FLAG_NONE,
-	//	&vertexResourceDesc,
-	//	D3D12_RESOURCE_STATE_GENERIC_READ,
-	//	nullptr, IID_PPV_ARGS(vertexResource));
-	//assert(SUCCEEDED(hr));
-
 	HRESULT hr = dxcommon_->deviceGet()->CreateCommittedResource(&uploadHeapProperties ,
 		D3D12_HEAP_FLAG_NONE,
 		&vertexResourceDesc, 
@@ -65,13 +54,10 @@ void PolygoType::CreateBufferResource()
 	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
     vertexBufferView.StrideInBytes = sizeof(Vector4);
-
-	
 }
 
 void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 {
-
 
 	//描画許可範囲
 	scissorRect.left = 0;
@@ -86,7 +72,6 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
-	
 	CreateBufferResource();
 
 	Vector4* vertexData = nullptr;
@@ -95,12 +80,10 @@ void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 	vertexData[1] = { top };
 	vertexData[2] = { right };
 
-
 }
 
 void PolygoType::Call()
 {
-
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
@@ -117,19 +100,3 @@ void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 	Call();
 
 }
-
-//void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
-//{
-//	vertexResource->Release();
-//	graphicsPipelineState->Release();
-//	signatureBlob->Release();
-//	if (errorBlob) {
-//		errorBlob->Release();
-//
-//	}
-//	dxcommon_->rootSignatureGet()->Release();
-//	pixelShaderBlob->Release();
-//	vertexShaderBlob->Release();
-//
-//}
-
