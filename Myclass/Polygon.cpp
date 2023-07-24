@@ -58,7 +58,6 @@ void PolygoType::CreateBufferResource()
 
 void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right)
 {
-
 	//描画許可範囲
 	scissorRect.left = 0;
 	scissorRect.right = kClientWidth_;

@@ -89,7 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
-				polygon_[i]->Draw(triangle[i].lefe, triangle[i].top, triangle[i].right);
+				polygon_[i]->DrawTriangle(triangle[i].lefe, triangle[i].top, triangle[i].right);
 			}
 
 			dxCommon_->EndFrame();
