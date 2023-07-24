@@ -12,7 +12,7 @@ public:
 	void Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight);
 	void Update();
 	void CreateBufferResource();
-	void Draw(Vector4 lefe, Vector4 top, Vector4 right);
+	void DrawTriangle(Vector4 lefe, Vector4 top, Vector4 right);
 private:
 
 	//
