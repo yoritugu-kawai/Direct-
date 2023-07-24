@@ -20,8 +20,7 @@ Vector4 PolygoType::Color(unsigned int color)
 	return color_;
 }
 
-
-void PolygoType::Initiluze(DxCommon* dxcommon)
+void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right)
 {
 	dxcommon_ = dxcommon;
 	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
@@ -32,6 +31,11 @@ void PolygoType::Initiluze(DxCommon* dxcommon)
 
 	vertexBufferView.StrideInBytes = sizeof(Vector4);
 
+	this->kClientWidth_ = kClientWidth;
+	this->kClientHeight_ = kClientHeight;
+	this->lefe_ = lefe,
+		this->top_ = top;
+	this->right_ = right;
 }
 
 void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
