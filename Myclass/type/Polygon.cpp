@@ -34,7 +34,7 @@ void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kC
 	this->kClientWidth_ = kClientWidth;
 	this->kClientHeight_ = kClientHeight;
 	this->lefe_ = lefe,
-		this->top_ = top;
+	this->top_ = top;
 	this->right_ = right;
 }
 
@@ -82,31 +82,18 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
-{
-	
-	
-	
-}
-
-void PolygoType::Call()
-{
-
-	
-	
-}
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
+void PolygoType::Draw( unsigned int color)
 {
 
 	//描画許可範囲
 
 	scissorRect.left = 0;
-	scissorRect.right = kClientWidth;
+	scissorRect.right = kClientWidth_;
 	scissorRect.top = 0;
-	scissorRect.bottom = kClientHeight;
+	scissorRect.bottom = kClientHeight_;
 	//表示許可範囲
-	viewport.Width = float(kClientWidth);
-	viewport.Height = float(kClientHeight);
+	viewport.Width = float(kClientWidth_);
+	viewport.Height = float(kClientHeight_);
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
@@ -122,9 +109,9 @@ void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int col
 	//TR
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	vertexData[0] = { lefe };
-	vertexData[1] = { top };
-	vertexData[2] = { right };
+	vertexData[0] = { lefe_ };
+	vertexData[1] = { top_ };
+	vertexData[2] = { right_ };
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
@@ -138,20 +125,4 @@ void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int col
 
 }
 
-
-
-//void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
-//{
-//	vertexResource->Release();
-//	graphicsPipelineState->Release();
-//	signatureBlob->Release();
-//	if (errorBlob) {
-//		errorBlob->Release();
-//
-//	}
-//	dxcommon_->rootSignatureGet()->Release();
-//	pixelShaderBlob->Release();
-//	vertexShaderBlob->Release();
-//
-//}
 
