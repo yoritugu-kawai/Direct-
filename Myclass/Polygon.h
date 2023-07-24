@@ -15,7 +15,6 @@ public:
 	void CreateBufferResource();
 	void Triangle(Vector4 lefe, Vector4 top, Vector4 right);
 	void Call();
-	//void Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource);
 	void Draw(Vector4 lefe, Vector4 top, Vector4 right);
 private:
 
