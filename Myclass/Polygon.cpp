@@ -8,33 +8,16 @@ PolygoType::~PolygoType()
 {
 }
 
-void PolygoType::Initiluze(DxCommon* dxcommon)
+void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight)
 {
 	dxcommon_ = dxcommon;
+	this->kClientWidth_ = kClientWidth;
+	this->kClientHeight_ = kClientHeight;
 }
 
-void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
+void PolygoType::Update()
 {
 
-
-	//描画許可範囲
-
-	scissorRect.left = 0;
-	scissorRect.right = kClientWidth;
-	scissorRect.top = 0;
-	scissorRect.bottom = kClientHeight;
-	//表示許可範囲
-
-//
-	viewport.Width = float(kClientWidth);
-	viewport.Height = float(kClientHeight);
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-
-	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
-	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 
 }
 
@@ -88,6 +71,22 @@ void PolygoType::CreateBufferResource()
 
 void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right)
 {
+
+
+	//描画許可範囲
+	scissorRect.left = 0;
+	scissorRect.right = kClientWidth_;
+	scissorRect.top = 0;
+	scissorRect.bottom = kClientHeight_;
+	//表示許可範囲
+	viewport.Width = float(kClientWidth_);
+	viewport.Height = float(kClientHeight_);
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+	
 	CreateBufferResource();
 
 	Vector4* vertexData = nullptr;
@@ -103,7 +102,8 @@ void PolygoType::Call()
 {
 
 	//コマンドつむ２
-
+	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
+	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
 	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
