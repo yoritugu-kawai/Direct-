@@ -26,7 +26,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 
 	TrianglePropaty triangle[max];
-	triangle[0] =
+	/*triangle[0] =
 	{
 
 		{-0.5f,-0.5f,0.0f,1.0f},
@@ -35,8 +35,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{0x783964ff}
 
 
-	};
-	/*triangle[0] =
+	};*/
+	triangle[0] =
 	{
 
 	    {-0.8f,-0.0f,0.0f,1.0f},
@@ -45,52 +45,52 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{0x783964ff}
 
 
-	};*/
+	};
 
-	//triangle[1] =
-	//{
-	//	{-0.4f,-0.0f,0.0f,1.0f},
-	//	{-0.35f,0.5f,0.0f,1.0f},
-	//	{-0.2f,-0.0f,0.0f,1.0f},
-	//    {0xff44ffff}
-
-
-	//};
-
-	//triangle[2] =
-	//{
-	//	{-0.1f,-0.0f,0.0f,1.0f},
-	//	{0.1f,0.5f,0.0f,1.0f},
-	//	{0.2f,-0.0f,0.0f,1.0f},
-	//	{0x22ffffff}
+	triangle[1] =
+	{
+		{-0.4f,-0.0f,0.0f,1.0f},
+		{-0.35f,0.5f,0.0f,1.0f},
+		{-0.2f,-0.0f,0.0f,1.0f},
+	    {0xff44ffff}
 
 
-	//};
-	//triangle[3] =
-	//{
-	//	{-0.1f,-0.3f,0.0f,1.0f},
-	//	{0.1f,-0.1f,0.0f,1.0f},
-	//	{0.2f,-0.3f,0.0f,1.0f},
-	//	{0xff00ffff}
+	};
+
+	triangle[2] =
+	{
+		{-0.1f,-0.0f,0.0f,1.0f},
+		{0.1f,0.5f,0.0f,1.0f},
+		{0.2f,-0.0f,0.0f,1.0f},
+		{0x22ffffff}
 
 
-	//};
-	//triangle[4] =
-	//{
-	//	{-0.8f,-0.3f,0.0f,1.0f},
-	//	{-0.65f,-0.1f,0.0f,1.0f},
-	//	{-0.5f,-0.3f,0.0f,1.0f},
-	//	{0xffffafaf}
+	};
+	triangle[3] =
+	{
+		{-0.1f,-0.3f,0.0f,1.0f},
+		{0.1f,-0.1f,0.0f,1.0f},
+		{0.2f,-0.3f,0.0f,1.0f},
+		{0xff00ffff}
 
-	//};
-	//triangle[5] =
-	//{
-	//	{-0.4f,-0.3f,0.0f,1.0f},
-	//	{-0.35f,-0.1f,0.0f,1.0f},
-	//	{-0.2f,-0.3f,0.0f,1.0f},
-	//	{0xffffffff}
-	//};
-	// 
+
+	};
+	triangle[4] =
+	{
+		{-0.8f,-0.3f,0.0f,1.0f},
+		{-0.65f,-0.1f,0.0f,1.0f},
+		{-0.5f,-0.3f,0.0f,1.0f},
+		{0xffffafaf}
+
+	};
+	triangle[5] =
+	{
+		{-0.4f,-0.3f,0.0f,1.0f},
+		{-0.35f,-0.1f,0.0f,1.0f},
+		{-0.2f,-0.3f,0.0f,1.0f},
+		{0xffffffff}
+	};
+	 
 	
 	PolygoType* polygon_[max]{};
 	for (int i = 0; i < max; i++) {
