@@ -171,6 +171,7 @@ void DxCommon::CreateAdapter() {
 	}
 	assert(useAdapter != nullptr);
 }
+
 void DxCommon::CreateDevice() {
 	//D3D12Deviceの作成
 	device = nullptr;
@@ -199,6 +200,7 @@ void DxCommon::CreateCommandQueue() {
 	// コマンドキュー作成がうまくいかなかった
 	assert(SUCCEEDED(hr));
 }
+
 void DxCommon::CreateCommandList() {
 	// CommandList作成
 	commandAllocator = nullptr;
@@ -228,6 +230,7 @@ void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 	assert(SUCCEEDED(hr));
 
 }
+
 void DxCommon::CreateDescriptorHeap() {
 	//ディスクトップヒープ作成
 	rtvDescriptorHeap = nullptr;
