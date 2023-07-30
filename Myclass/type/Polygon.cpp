@@ -97,18 +97,18 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
+void PolygoType::Triangle(Vector4 lefe, Vector4 top, Vector4 right, Vector4 color)
 {
 	//PS
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Color(color);
+	*materialData = color;
 	//VS
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	//*wvpData = MakeIdentity4x4();
 
-	transfom.rotate.y += 0.03f;
+	//transfom.rotate.y += 0.03f;
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transfom.scale, transfom.rotate, transfom.translate);
 	*wvpData = worldMatrix;
 
@@ -136,7 +136,7 @@ void PolygoType::Call()
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 	
 }
-void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
+void PolygoType::Draw(Vector4 lefe, Vector4 top, Vector4 right,  Vector4 color)
 {
 	Triangle(lefe, top, right, color);
 	Call();

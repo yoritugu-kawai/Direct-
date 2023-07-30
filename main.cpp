@@ -1,7 +1,7 @@
 #include"Myclass/dase/WinApp.h"
 #include"Myclass/dase/Dxcommen.h"
 #include"Myclass/type/Polygon.h"
-
+#include"Myclass/type/ImguiManager.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 struct TrianglePropaty
@@ -9,7 +9,7 @@ struct TrianglePropaty
 	Vector4 left;
 	Vector4  top;
 	Vector4 right;
-	unsigned int color;
+	Vector4 color;
 
 };
 
@@ -22,6 +22,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	winApp_->Initialize();
 	DxCommon* dxCommon_ = new DxCommon;
 	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
+	ImguiManager* imguiManager = new ImguiManager;
+	imguiManager->Initialize(winApp_->Gethwnd(),dxCommon_->deviceGet(),dxCommon_->swapChainDescGet(),dxCommon_->rtvDescGet(),dxCommon_->srvDescriptorHeapGet());
 	const int triangleCount = 6;
 	
 
@@ -31,7 +33,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.5f,-0.5f,0.0f,1.0f},
 		{-0.0f,0.5f,0.0f,1.0f},
 		{0.5f,-0.5f,0.0f,1.0f},
-		{0x783964ff}
+		{1.0f,1.0f,1.0f,1.0f}
 
 	};
 
@@ -106,20 +108,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else {
 			dxCommon_->BeginFrame();
-
+			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
 			for (int i = 0; i < triangleCount; i++) {
 
 				polygon_[i]->Update(winApp_->Width(), winApp_->Height());
 			}
-		
+			ImGui::Begin("TriangleColor");
+			ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
+			ImGui::End();
 			//
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
 				polygon_[i]->Draw(triangle[i].left, triangle[i].top, triangle[i].right, triangle[i].color);
 			}
 
-
+			imguiManager->EndFrame(dxCommon_->commandListGet());
 			dxCommon_->EndFrame();
 			//　ゲーム処理
 

@@ -97,7 +97,7 @@ IDxcBlob* CompileShader(
 
 void DxCommon::DIX()
 {
-	
+
 	//DXCの初期化
 	dxcUtils = nullptr;
 	dxcCompiler = nullptr;
@@ -218,7 +218,7 @@ void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 ) {
 	//   スワップチェーン作成
 	swapChain = nullptr;
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+
 	swapChainDesc.Width = kClientWidth;
 	swapChainDesc.Height = kClientHeight;
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -231,16 +231,22 @@ void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 
 }
 
+
 void DxCommon::CreateDescriptorHeap() {
-	//ディスクトップヒープ作成
-	rtvDescriptorHeap = nullptr;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
-	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDescriptorHeapDesc.NumDescriptors = 2;
-	hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
-	assert(SUCCEEDED(hr));
+	rtvDescriptorHeap = CreateDescriptorHeap2(device,D3D12_DESCRIPTOR_HEAP_TYPE_RTV,2,false);
+	srvDescriptorHeap = CreateDescriptorHeap2(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+	
+
+	////ディスクトップヒープ作成
+	//rtvDescriptorHeap = nullptr;
+	//D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
+	//rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	//rtvDescriptorHeapDesc.NumDescriptors = 2;
+	//hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
+	//assert(SUCCEEDED(hr));
 
 }
+
 void DxCommon::CreateSwapResce() {
 	//リソースを引っ張る
 	swapChainResources[2] = { nullptr };
@@ -252,7 +258,7 @@ void DxCommon::CreateSwapResce() {
 }
 void DxCommon::CreateRTV() {
 	// RTVです
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
@@ -287,7 +293,7 @@ void DxCommon::CommandLoad() {
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
 	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
 	///トランジションバリア
-	
+
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	barrier.Transition.pResource = swapChainResources[backBufferIndex];
@@ -297,7 +303,7 @@ void DxCommon::CommandLoad() {
 	//
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
 	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
-	
+
 }
 
 void DxCommon::Commandkick() {
@@ -348,31 +354,34 @@ void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
 
 void DxCommon::BeginFrame() {
 	CommandLoad();
-	
+
 }
 void DxCommon::EndFrame()
 {
 	Commandkick();
-	
+
 }
+
+
+
 void  DxCommon::POS() {
 
 	/*---------ルートシグネチャの設定---------*/
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	// 
-	D3D12_ROOT_PARAMETER rootParameters[2]={};
-	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV; 
-	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL; 
-	rootParameters[0].Descriptor.ShaderRegister = 0; 
+	D3D12_ROOT_PARAMETER rootParameters[2] = {};
+	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[0].Descriptor.ShaderRegister = 0;
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 	rootParameters[1].Descriptor.ShaderRegister = 0;
-	descriptionRootSignature.pParameters = rootParameters; 
-	descriptionRootSignature.NumParameters = _countof(rootParameters); 
+	descriptionRootSignature.pParameters = rootParameters;
+	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
-	
-	
+
+
 	//シリアライズしてバイナリ
 	signatureBlob = nullptr;
 	errorBlob = nullptr;
@@ -475,4 +484,18 @@ void DxCommon::Release(HWND hwnd) {
 		debug->Release();
 	}
 
+}
+ID3D12DescriptorHeap* DxCommon::CreateDescriptorHeap2(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+{
+	ID3D12DescriptorHeap* descriptorHeap = nullptr;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
+	descriptorHeapDesc.Type = heapType;
+	descriptorHeapDesc.NumDescriptors = numDescriptors;
+	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+
+	hr = device->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+
+	assert(SUCCEEDED(hr));
+
+	return descriptorHeap;
 }

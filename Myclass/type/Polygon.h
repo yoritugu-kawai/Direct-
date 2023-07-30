@@ -14,10 +14,10 @@ public:
 	void Move();
 	ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
 	
-	void Triangle(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color);
+	void Triangle(Vector4 lefe, Vector4 top, Vector4 right, Vector4 color);
 	void Call();
 	//void Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource);
-	void Draw(Vector4 lefe, Vector4 top, Vector4 right, unsigned int color);
+	void Draw(Vector4 lefe, Vector4 top, Vector4 right, Vector4 color);
 	Vector4 Color(unsigned int color);
 private:
 

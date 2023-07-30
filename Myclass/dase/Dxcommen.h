@@ -54,6 +54,17 @@ public:
 	IDxcBlob* vertexShaderBlobGet() {return vertexShaderBlob;}
 	ID3DBlob* signatureBlobGet() { return signatureBlob; }
 	ID3DBlob* errorBlobGet() { return errorBlob; }
+	//imgui
+	ID3D12DescriptorHeap* CreateDescriptorHeap2(
+		ID3D12Device* device,
+		D3D12_DESCRIPTOR_HEAP_TYPE heapType,
+		UINT numDescriptors,
+		bool shaderVisible);
+	//
+	DXGI_SWAP_CHAIN_DESC1 swapChainDescGet() { return swapChainDesc; }
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDescGet() { return rtvDesc; }
+	ID3D12DescriptorHeap* srvDescriptorHeapGet() { return srvDescriptorHeap; }
+
 private:
 	/// <summary>
 	/// ファクトリーの作成
@@ -78,10 +89,12 @@ private:
 	/// スワップチェーン
 	/// </summary>
 	IDXGISwapChain4* swapChain;
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 	/// <summary>
 	/// ヒープ
 	/// </summary>
 	ID3D12DescriptorHeap* rtvDescriptorHeap;
+	ID3D12DescriptorHeap* srvDescriptorHeap;
 	/// <summary>
 	/// スワップチェーンのリリースを出す
 	/// </summary>
@@ -115,4 +128,6 @@ private:
 	IDxcUtils* dxcUtils;
 	IDxcCompiler3* dxcCompiler;
 	IDxcIncludeHandler* includeHandler;
+	//
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 };
