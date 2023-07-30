@@ -6,7 +6,7 @@ const wchar_t Title[] = { L"CG2WindowClass" };
 
 struct TrianglePropaty
 {
-	Vector4 left;
+	Vector4 lefe;
 	Vector4  top;
 	Vector4 right;
 	Vector4 color;
@@ -95,7 +95,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygoType* polygon_[triangleCount]{};
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
-		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right, triangle[i].color);
+		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right);
 	}
 	//　メインループ
 	MSG msg{};
@@ -109,17 +109,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon_->BeginFrame();
 			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
-			for (int i = 0; i < triangleCount; i++) {
-
-				polygon_[i]->Update(winApp_->Width(), winApp_->Height());
-			}
+		
 			ImGui::Begin("TriangleColor");
 			ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
 			ImGui::End();
 			//
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
-				polygon_[i]->Draw();
+				polygon_[i]->Draw(triangle[i].color);
 			}
 			imguiManager->EndFrame(dxCommon_->commandListGet());
 			dxCommon_->EndFrame();

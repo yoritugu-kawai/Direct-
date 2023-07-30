@@ -9,11 +9,11 @@ public:
 	PolygoType();
 	~PolygoType();
 
-	void Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right, unsigned int color);
+	void Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right);
 	void Update(int32_t windowsizeWidth, int32_t windowsizeHeight);
 	void Move();
 	ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
-	void Draw();
+	void Draw(Vector4 color);
 	Vector4 Color(unsigned int color);
 private:
 
@@ -33,6 +33,6 @@ private:
 	Vector4 lefe_;
 	Vector4 top_;
 	Vector4 right_;
-	unsigned int color_;
+	Vector4 color_;
 };
 

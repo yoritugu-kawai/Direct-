@@ -8,19 +8,19 @@ PolygoType::~PolygoType()
 {
 }
 
-Vector4 PolygoType::Color(unsigned int color)
-{
-	Vector4 color_ = {
-			((color >> 24) & 0xff) / 255.0f, // R
-			((color >> 16) & 0xff) / 255.0f, // G
-			((color >> 8) & 0xff) / 255.0f,  // B
-			((color >> 0) & 0xff) / 255.0f   // A
-	};
+//Vector4 PolygoType::Color(unsigned int color)
+//{
+//	Vector4 color_ = {
+//			((color >> 24) & 0xff) / 255.0f, // R
+//			((color >> 16) & 0xff) / 255.0f, // G
+//			((color >> 8) & 0xff) / 255.0f,  // B
+//			((color >> 0) & 0xff) / 255.0f   // A
+//	};
+//
+//	return color_;
+//}
 
-	return color_;
-}
-
-void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right, unsigned int color)
+void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right)
 {
 	dxcommon_ = dxcommon;
 	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
@@ -36,7 +36,7 @@ void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kC
 	this->lefe_ = lefe,
 	this->top_ = top;
 	this->right_ = right;
-	this->color_ = color;
+
 }
 
 void PolygoType::Update(int32_t  kClientWidth, int32_t kClientHeight)
@@ -83,7 +83,7 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Draw()
+void PolygoType::Draw(Vector4 color)
 {
 
 	//描画許可範囲
@@ -102,7 +102,7 @@ void PolygoType::Draw()
 	//PS
 	Vector4* materialData = nullptr;
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
-	*materialData = Color(color_);
+	*materialData = color_;
 	//VS
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
@@ -125,7 +125,6 @@ void PolygoType::Draw()
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 
 }
-
 
 
 //void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
