@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{-0.5f,-0.5f,0.0f,1.0f},
 		{-0.0f,0.5f,0.0f,1.0f},
 		{0.5f,-0.5f,0.0f,1.0f},
-		{1.0f,1.0f,1.0f,1.0f}
+		{1.0f,0.0f,0.0f,1.0f}
 
 	};
 
@@ -95,7 +95,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygoType* polygon_[triangleCount]{};
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
-		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right);
+		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right, triangle[i].color);
 	}
 	//　メインループ
 	MSG msg{};

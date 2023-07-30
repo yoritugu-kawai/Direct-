@@ -9,7 +9,7 @@ public:
 	PolygoType();
 	~PolygoType();
 
-	void Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right);
+	void Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right, Vector4 color);
 	void Update(int32_t windowsizeWidth, int32_t windowsizeHeight);
 	void Move();
 	ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
