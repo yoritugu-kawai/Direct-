@@ -34,7 +34,7 @@ void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kC
 	this->kClientWidth_ = kClientWidth;
 	this->kClientHeight_ = kClientHeight;
 	this->lefe_ = lefe,
-		this->top_ = top;
+	this->top_ = top;
 	this->right_ = right;
 	this->color_ = color;
 }
