@@ -48,15 +48,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//};
 
-	triangle[1] =
-	{
-		{-0.4f,-0.0f,0.0f,1.0f},
-		{-0.35f,0.5f,0.0f,1.0f},
-		{-0.2f,-0.0f,0.0f,1.0f},
-		{1.0f,0.0f,1.0f,1.0f}
+	//triangle[1] =
+	//{
+	//	{-0.4f,-0.0f,0.0f,1.0f},
+	//	{-0.35f,0.5f,0.0f,1.0f},
+	//	{-0.2f,-0.0f,0.0f,1.0f},
+	//	{1.0f,0.0f,1.0f,1.0f}
 
 
-	};
+	//};
 
 	//triangle[2] =
 	//{
@@ -112,7 +112,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 				ImGui::Begin("TriangleColor");
 				ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
-				ImGui::ColorEdit3("traiangle2", (float*)&triangle[1].color);
+				
 				ImGui::End();
 			
 			//
