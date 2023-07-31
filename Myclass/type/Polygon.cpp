@@ -95,8 +95,8 @@ void PolygoType::Draw(Vector4 color)
 	//表示許可範囲
 	viewport.Width = float(kClientWidth_);
 	viewport.Height = float(kClientHeight_);
-	viewport.TopLeftX = 100;
-	viewport.TopLeftY = 100;
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	//PS
