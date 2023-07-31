@@ -113,7 +113,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 				ImGui::Begin("Triangle");
 				ImGui::ColorEdit3("color", (float*)&triangle[0].color);
-				
 				ImGui::End();
 			
 			//
