@@ -37,33 +37,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	};
 
-	/*triangle[0] =
-	{
-
-	    {-0.8f,-0.0f,0.0f,1.0f},
-	    {-0.6f,0.5f,0.0f,1.0f},
-		{-0.5f,-0.0f,0.0f,1.0f},
-		{0x783964ff}
-
-
-	};*/
-
-	//triangle[1] =
+	//triangle[0] =
 	//{
-	//	{-0.4f,-0.0f,0.0f,1.0f},
-	//	{-0.35f,0.5f,0.0f,1.0f},
-	//	{-0.2f,-0.0f,0.0f,1.0f},
-	//    {0xff44ffff}
+
+	//    {-0.8f,-0.0f,0.0f,1.0f},
+	//    {-0.6f,0.5f,0.0f,1.0f},
+	//	{-0.5f,-0.0f,0.0f,1.0f},
+	//    {1.0f,0.0f,0.0f,1.0f}
 
 
 	//};
+
+	triangle[1] =
+	{
+		{-0.4f,-0.0f,0.0f,1.0f},
+		{-0.35f,0.5f,0.0f,1.0f},
+		{-0.2f,-0.0f,0.0f,1.0f},
+		{1.0f,0.0f,1.0f,1.0f}
+
+
+	};
 
 	//triangle[2] =
 	//{
 	//	{-0.1f,-0.0f,0.0f,1.0f},
 	//	{0.1f,0.5f,0.0f,1.0f},
 	//	{0.2f,-0.0f,0.0f,1.0f},
-	//	{0x22ffffff}
+	//	{1.0f,0.0f,0.0f,0.0f}
 
 
 	//};
@@ -72,7 +72,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//	{-0.1f,-0.3f,0.0f,1.0f},
 	//	{0.1f,-0.1f,0.0f,1.0f},
 	//	{0.2f,-0.3f,0.0f,1.0f},
-	//	{0xff00ffff}
+	//	{1.0f,0.0f,0.5f,1.0f}
 
 
 	//};
@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//	{-0.8f,-0.3f,0.0f,1.0f},
 	//	{-0.65f,-0.1f,0.0f,1.0f},
 	//	{-0.5f,-0.3f,0.0f,1.0f},
-	//	{0xffffafaf}
+	//    {0.2f,0.0f,0.0f,1.0f}
 
 	//};
 	//triangle[5] =
@@ -89,9 +89,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//	{-0.4f,-0.3f,0.0f,1.0f},
 	//	{-0.35f,-0.1f,0.0f,1.0f},
 	//	{-0.2f,-0.3f,0.0f,1.0f},
-	//	{0xffffffff}
+	//	{0.0f,0.0f,0.0f,0.0f}
 	//};
-	// 
+	 
 	PolygoType* polygon_[triangleCount]{};
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
@@ -109,10 +109,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			dxCommon_->BeginFrame();
 			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
-		
-			ImGui::Begin("TriangleColor");
-			ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
-			ImGui::End();
+			
+				ImGui::Begin("TriangleColor");
+				ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
+				ImGui::ColorEdit3("traiangle2", (float*)&triangle[1].color);
+				ImGui::End();
+			
 			//
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
