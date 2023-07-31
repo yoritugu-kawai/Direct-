@@ -87,16 +87,16 @@ void PolygoType::Draw(Vector4 color)
 {
 
 	//描画許可範囲
-
-	scissorRect.left = 0;
+	//シザー
+	scissorRect.left =0;
 	scissorRect.right = kClientWidth_;
 	scissorRect.top = 0;
 	scissorRect.bottom = kClientHeight_;
 	//表示許可範囲
 	viewport.Width = float(kClientWidth_);
 	viewport.Height = float(kClientHeight_);
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
+	viewport.TopLeftX = 100;
+	viewport.TopLeftY = 100;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	//PS
