@@ -124,6 +124,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 	}
+	
 
 	winApp_->Release();
 	dxCommon_->Release(winApp_->Gethwnd());
