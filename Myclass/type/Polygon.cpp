@@ -128,3 +128,21 @@ void PolygoType::Draw(Vector4 color)
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 
 }
+
+
+
+//void PolygoType::Release( IDxcBlob* pixelShaderBlob, IDxcBlob* vertexShaderBlob, ID3DBlob* signatureBlob, ID3DBlob* errorBlob, ID3D12Resource* vertexResource)
+//{
+//	vertexResource->Release();
+//	graphicsPipelineState->Release();
+//	signatureBlob->Release();
+//	if (errorBlob) {
+//		errorBlob->Release();
+//
+//	}
+//	dxcommon_->rootSignatureGet()->Release();
+//	pixelShaderBlob->Release();
+//	vertexShaderBlob->Release();
+//
+//}
+
