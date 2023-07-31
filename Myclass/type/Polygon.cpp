@@ -83,7 +83,7 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Draw(Vector4 color)
+void PolygoType::Draw(Vector4 color,Matrix4x4 m)
 {
 
 	//描画許可範囲
@@ -107,10 +107,10 @@ void PolygoType::Draw(Vector4 color)
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	//*wvpData = MakeIdentity4x4();
-	transfom.rotate.y += 0.03f;
-	Matrix4x4 worldMatrix = MakeAffineMatrix(transfom.scale, transfom.rotate, transfom.translate);
-	
-	*wvpData = worldMatrix;
+	//transfom.rotate.y += 0.03f;
+	//Matrix4x4 worldMatrix = MakeAffineMatrix(transfom.scale, transfom.rotate, transfom.translate);
+	//
+	*wvpData = m;
 	//TR
 	Vector4* vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));

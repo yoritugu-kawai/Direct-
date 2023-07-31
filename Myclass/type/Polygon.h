@@ -13,7 +13,7 @@ public:
 	void Update(int32_t windowsizeWidth, int32_t windowsizeHeight);
 	void Move();
 	ID3D12Resource* CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
-	void Draw(Vector4 color);
+	void Draw(Vector4 color,Matrix4x4 m);
 	Vector4 Color(unsigned int color);
 private:
 

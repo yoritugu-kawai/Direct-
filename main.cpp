@@ -48,15 +48,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//};
 
-	//triangle[1] =
-	//{
-	//	{-0.4f,-0.0f,0.0f,1.0f},
-	//	{-0.35f,0.5f,0.0f,1.0f},
-	//	{-0.2f,-0.0f,0.0f,1.0f},
-	//	{1.0f,0.0f,1.0f,1.0f}
+	triangle[1] =
+	{
+		{-0.4f,-0.0f,0.0f,1.0f},
+		{-0.35f,0.5f,0.0f,1.0f},
+		{-0.2f,-0.0f,0.0f,1.0f},
+		{1.0f,0.0f,1.0f,1.0f}
 
 
-	//};
+	};
 
 	//triangle[2] =
 	//{
@@ -96,8 +96,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygoType;
 		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right);
-	}
 
+	}
+	Matrix4x4 matrix[triangleCount];
+	Vector3 scale[triangleCount];
+	Vector3 rotate[triangleCount];
+	Vector3 translate[triangleCount];
+	for (int i = 0; i < triangleCount; i++) {
+		matrix[i] = MakeIdentity4x4();
+		scale[i] = {1,1,1};
+		rotate[i] = { 0,0,0 };
+		translate[i] = { 0,0,0 };
+
+	}
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -113,12 +124,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			
 				ImGui::Begin("Triangle");
 				ImGui::ColorEdit3("color", (float*)&triangle[0].color);
+				ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
+				ImGui::SliderFloat3("rotate", &rotate[0].x, -1.0f, 1.0f);
+				ImGui::SliderFloat3("translate", &translate[0].x, -1.0f, 1.0f);
 				ImGui::End();
 			
 			//
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
-				polygon_[i]->Draw(triangle[i].color);
+				matrix[i] = MakeAffineMatrix(scale[i], rotate[i],translate[i]);
+				polygon_[i]->Draw(triangle[i].color,matrix[i]);
 			}
 			imguiManager->EndFrame(dxCommon_->commandListGet());
 			dxCommon_->EndFrame();
