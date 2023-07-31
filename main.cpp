@@ -122,11 +122,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
 			
-				ImGui::Begin("Triangle");
+				ImGui::Begin("Triangle1");
 				ImGui::ColorEdit3("color", (float*)&triangle[0].color);
 				ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
 				ImGui::SliderFloat3("rotate", &rotate[0].x, -1.0f, 1.0f);
 				ImGui::SliderFloat3("translate", &translate[0].x, -1.0f, 1.0f);
+				ImGui::End();
+
+				ImGui::Begin("Triangle2");
+				ImGui::ColorEdit3("color", (float*)&triangle[1].color);
+				ImGui::SliderFloat3("scale", &scale[1].x, -0.0f, 5.0f);
+				ImGui::SliderFloat3("rotate", &rotate[1].x, -1.0f, 1.0f);
+				ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 				ImGui::End();
 			
 			//
