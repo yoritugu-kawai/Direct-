@@ -27,6 +27,7 @@ private:
 	//
 	ID3D12Resource* materialResource;
 	ID3D12Resource* wvpResource;
+	Transfom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	//
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
@@ -34,5 +35,6 @@ private:
 	Vector4 top_;
 	Vector4 right_;
 	Vector4 color_;
+
 };
 
