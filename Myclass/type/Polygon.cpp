@@ -107,8 +107,9 @@ void PolygoType::Draw(Vector4 color)
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	//*wvpData = MakeIdentity4x4();
-	transfom.rotate.y += 0.03f;
+	//	transfom.rotate.y += 0.03f;
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transfom.scale, transfom.rotate, transfom.translate);
+	
 	*wvpData = worldMatrix;
 	//TR
 	Vector4* vertexData = nullptr;

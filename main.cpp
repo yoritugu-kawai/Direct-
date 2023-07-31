@@ -25,7 +25,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ImguiManager* imguiManager = new ImguiManager;
 	imguiManager->Initialize(winApp_->Gethwnd(),dxCommon_->deviceGet(),dxCommon_->swapChainDescGet(),dxCommon_->rtvDescGet(),dxCommon_->srvDescriptorHeapGet());
 	const int triangleCount = 6;
-	
+
 
 	TrianglePropaty triangle[triangleCount];
 	triangle[0] =
@@ -97,6 +97,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		polygon_[i] = new PolygoType;
 		polygon_[i]->Initiluze(dxCommon_, winApp_->Width(), winApp_->Height(), triangle[i].lefe, triangle[i].top, triangle[i].right);
 	}
+
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -110,8 +111,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
 			
-				ImGui::Begin("TriangleColor");
-				ImGui::ColorEdit3("traiangle1", (float*)&triangle[0].color);
+				ImGui::Begin("Triangle");
+				ImGui::ColorEdit3("color", (float*)&triangle[0].color);
 				
 				ImGui::End();
 			
