@@ -141,6 +141,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			for (int i = 0; i < triangleCount; i++) {
 				matrix[i] = MakeAffineMatrix(scale[i], rotate[i],translate[i]);
 				polygon_[i]->Draw(triangle[i].color,matrix[i]);
+
 			}
 			imguiManager->EndFrame(dxCommon_->commandListGet());
 			dxCommon_->EndFrame();
