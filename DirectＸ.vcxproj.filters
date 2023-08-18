@@ -81,6 +81,9 @@
     <ClCompile Include="Myclass\type\ImguiManager.cpp">
       <Filter>ソース ファイル\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Myclass\type\Texture.cpp">
+      <Filter>ソース ファイル\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="Myclass\type\ImguiManager.h">
       <Filter>ヘッダー ファイル\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Myclass\type\Texture.h">
+      <Filter>ヘッダー ファイル\Type</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

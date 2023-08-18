@@ -106,6 +106,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Myclass\math\Math.cpp" />
     <ClCompile Include="Myclass\type\ImguiManager.cpp" />
     <ClCompile Include="Myclass\type\Polygon.cpp" />
+    <ClCompile Include="Myclass\type\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig" />
@@ -139,6 +140,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Myclass\math\mathStrt.h" />
     <ClInclude Include="Myclass\type\ImguiManager.h" />
     <ClInclude Include="Myclass\type\Polygon.h" />
+    <ClInclude Include="Myclass\type\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
