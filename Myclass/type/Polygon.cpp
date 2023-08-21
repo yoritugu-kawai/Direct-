@@ -126,6 +126,8 @@ void PolygoType::Draw(Vector4 color,Matrix4x4 m, TexProeerty  tex)
 	//右下
 	vertexData[2].position = { right_ };
 	vertexData[2].texcoord = { 1.0f,1.0f };
+	
+
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
