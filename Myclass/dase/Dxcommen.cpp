@@ -1,43 +1,5 @@
 #include"Dxcommen.h"
 
-std::wstring ConvertString(const std::string& str)
-{
-	if (str.empty())
-	{
-		return std::wstring();
-	}
-
-	auto sizeNeeded = MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<const char*>(&str[0]), static_cast<int>(str.size()), NULL, 0);
-	if (sizeNeeded == 0)
-	{
-		return std::wstring();
-	}
-	std::wstring result(sizeNeeded, 0);
-	MultiByteToWideChar(CP_UTF8, 0, reinterpret_cast<const char*>(&str[0]), static_cast<int>(str.size()), &result[0], sizeNeeded);
-	return result;
-}
-
-std::string ConvertString(const std::wstring& str)
-{
-	if (str.empty())
-	{
-		return std::string();
-	}
-
-	auto sizeNeeded = WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), NULL, 0, NULL, NULL);
-	if (sizeNeeded == 0)
-	{
-		return std::string();
-	}
-	std::string result(sizeNeeded, 0);
-	WideCharToMultiByte(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), sizeNeeded, NULL, NULL);
-	return result;
-}
-
-void Log(const std::string& message) {
-	OutputDebugStringA(message.c_str());
-}
-
 //コンパイルシェイダ
 IDxcBlob* CompileShader(
 	const std::wstring& filePath,
@@ -92,9 +54,6 @@ IDxcBlob* CompileShader(
 	return  shaderBlob;
 }
 
-
-
-
 void DxCommon::DIX()
 {
 
@@ -136,7 +95,6 @@ void DxCommon::DebugInfoQueue()
 #endif // _DEBUG
 }
 
-
 /*DIXの初期設定*/
 void DxCommon::CreateFactory()
 {
@@ -150,6 +108,7 @@ void DxCommon::CreateFactory()
 	assert(SUCCEEDED(hr));
 
 }
+
 void DxCommon::CreateAdapter() {
 	//アダプタ決定
 	useAdapter = nullptr;
@@ -214,8 +173,7 @@ void DxCommon::CreateCommandList() {
 }
 
 
-void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
-) {
+void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 	//   スワップチェーン作成
 	swapChain = nullptr;
 
@@ -233,9 +191,9 @@ void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 
 
 void DxCommon::CreateDescriptorHeap() {
-	rtvDescriptorHeap = CreateDescriptorHeap2(device,D3D12_DESCRIPTOR_HEAP_TYPE_RTV,2,false);
+	rtvDescriptorHeap = CreateDescriptorHeap2(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	srvDescriptorHeap = CreateDescriptorHeap2(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
-	
+
 
 	////ディスクトップヒープ作成
 	//rtvDescriptorHeap = nullptr;
@@ -256,6 +214,7 @@ void DxCommon::CreateSwapResce() {
 	assert(SUCCEEDED(hr));
 
 }
+
 void DxCommon::CreateRTV() {
 	// RTVです
 
@@ -356,13 +315,12 @@ void DxCommon::BeginFrame() {
 	CommandLoad();
 
 }
+
 void DxCommon::EndFrame()
 {
 	Commandkick();
 
 }
-
-
 
 void  DxCommon::POS() {
 
@@ -370,13 +328,37 @@ void  DxCommon::POS() {
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	// 
-	D3D12_ROOT_PARAMETER rootParameters[2] = {};
+	D3D12_ROOT_PARAMETER rootParameters[3] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 	rootParameters[1].Descriptor.ShaderRegister = 0;
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+	//
+	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+	//
+	D3D12_STATIC_SAMPLER_DESC staicSamplers[1] = {};
+	staicSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	staicSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staicSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staicSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staicSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staicSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staicSamplers[0].ShaderRegister = 0;
+	staicSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	//
+	descriptionRootSignature.pStaticSamplers = staicSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staicSamplers);
+//
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
@@ -401,11 +383,18 @@ void  DxCommon::POS() {
 	/*----------インプットレイアウトの設定------------*/
 
 	//InputLayoutの設定
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
 	inputElementDescs[0].SemanticName = "POSITION";
 	inputElementDescs[0].SemanticIndex = 0;
 	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	//
+	inputElementDescs[1].SemanticName = "TEXCOORD";
+	inputElementDescs[1].SemanticIndex = 0;
+	inputElementDescs[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
@@ -485,6 +474,7 @@ void DxCommon::Release(HWND hwnd) {
 	}
 
 }
+
 ID3D12DescriptorHeap* DxCommon::CreateDescriptorHeap2(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
 {
 	ID3D12DescriptorHeap* descriptorHeap = nullptr;

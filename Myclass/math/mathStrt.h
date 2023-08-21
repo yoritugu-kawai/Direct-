@@ -13,6 +13,10 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxcompiler.lib")
+struct Vector2 {
+	float x;
+	float y;
+};
 struct  Vector3
 {
 	float x;
@@ -50,3 +54,4 @@ struct  Transfom
 	Vector3 rotate;
 	Vector3 translate;
 };
+

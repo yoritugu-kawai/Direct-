@@ -84,6 +84,9 @@
     <ClCompile Include="Myclass\type\Texture.cpp">
       <Filter>ソース ファイル\Type</Filter>
     </ClCompile>
+    <ClCompile Include="Myclass\dase\Log.cpp">
+      <Filter>ソース ファイル\Dase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -140,5 +143,11 @@
     <ClInclude Include="Myclass\type\Texture.h">
       <Filter>ヘッダー ファイル\Type</Filter>
     </ClInclude>
+    <ClInclude Include="Myclass\dase\Log.h">
+      <Filter>ヘッダー ファイル\Dase</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Object3d.hlsli" />
   </ItemGroup>
 </Project>

@@ -23,13 +23,15 @@ PolygoType::~PolygoType()
 void PolygoType::Initiluze(DxCommon* dxcommon, int32_t  kClientWidth, int32_t kClientHeight, Vector4 lefe, Vector4 top, Vector4 right)
 {
 	dxcommon_ = dxcommon;
-	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
+
+	vertexResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(VerteData) * 3);
 	materialResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
 	wvpResource = CreateBufferResource(dxcommon_->deviceGet(), sizeof(Vector4) * 3);
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
 
-	vertexBufferView.StrideInBytes = sizeof(Vector4);
+	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
+	vertexBufferView.SizeInBytes = sizeof(VerteData) * 3;
+
+	vertexBufferView.StrideInBytes = sizeof(VerteData);
 
 	this->kClientWidth_ = kClientWidth;
 	this->kClientHeight_ = kClientHeight;
@@ -83,7 +85,7 @@ ID3D12Resource* PolygoType::CreateBufferResource(ID3D12Device* device, size_t si
 	return resultResource_;
 }
 
-void PolygoType::Draw(Vector4 color,Matrix4x4 m)
+void PolygoType::Draw(Vector4 color,Matrix4x4 m, TexProeerty  tex)
 {
 
 	//描画許可範囲
@@ -112,20 +114,30 @@ void PolygoType::Draw(Vector4 color,Matrix4x4 m)
 	//
 	*wvpData = m;
 	//TR
-	Vector4* vertexData = nullptr;
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	vertexData[0] = { lefe_ };
-	vertexData[1] = { top_ };
-	vertexData[2] = { right_ };
+	VerteData* vertexData = nullptr;
+	vertexResource->Map(0, nullptr, 
+		reinterpret_cast<void**>(&vertexData));
+	//左下
+	vertexData[0].position = { lefe_ };
+	vertexData[0].texcoord = { 0.0f,1.0f };
+	//上
+	vertexData[1].position = { top_ };
+	vertexData[1].texcoord = { 0.5f,0.0f };
+	//右下
+	vertexData[2].position = { right_ };
+	vertexData[2].texcoord = { 1.0f,1.0f };
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
 	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
-	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
+
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
 	dxcommon_->commandListGet()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	dxcommon_->commandListGet()->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	dxcommon_->commandListGet()->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
 	dxcommon_->commandListGet()->DrawInstanced(3, 1, 0, 0);
 
 }

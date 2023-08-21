@@ -95,6 +95,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Myclass\dase\Dxcommen.cpp" />
+    <ClCompile Include="Myclass\dase\Log.cpp" />
     <ClCompile Include="Myclass\dase\WinApp.cpp" />
     <ClCompile Include="Myclass\externals\imgui\imgui.cpp" />
     <ClCompile Include="Myclass\externals\imgui\imgui_demo.cpp" />
@@ -128,6 +129,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Myclass\dase\Dxcommen.h" />
+    <ClInclude Include="Myclass\dase\Log.h" />
     <ClInclude Include="Myclass\dase\WinApp.h" />
     <ClInclude Include="Myclass\externals\imgui\imconfig.h" />
     <ClInclude Include="Myclass\externals\imgui\imgui.h" />
@@ -141,6 +143,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Myclass\type\ImguiManager.h" />
     <ClInclude Include="Myclass\type\Polygon.h" />
     <ClInclude Include="Myclass\type\Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Myclass\externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Object3d.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

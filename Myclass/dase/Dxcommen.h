@@ -1,6 +1,6 @@
 #pragma once
 #include"../math/mathStrt.h"
-
+#include"Log.h"
 class DxCommon
 {
 public:
@@ -64,7 +64,8 @@ public:
 	DXGI_SWAP_CHAIN_DESC1 swapChainDescGet() { return swapChainDesc; }
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDescGet() { return rtvDesc; }
 	ID3D12DescriptorHeap* srvDescriptorHeapGet() { return srvDescriptorHeap; }
-
+	//
+	ID3D12DescriptorHeap* GetSrvDescripterHeap() { return srvDescriptorHeap; }
 private:
 	/// <summary>
 	/// ファクトリーの作成

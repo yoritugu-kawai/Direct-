@@ -2,6 +2,7 @@
 #include"Myclass/dase/Dxcommen.h"
 #include"Myclass/type/Polygon.h"
 #include"Myclass/type/ImguiManager.h"
+#include"Myclass/type/Texture.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 struct TrianglePropaty
@@ -17,16 +18,25 @@ struct TrianglePropaty
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-
+	//ウインドウズ
 	WinApp* winApp_ = new WinApp(Title, kClientWidth, kClientHeight);
 	winApp_->Initialize();
+	//DX
 	DxCommon* dxCommon_ = new DxCommon;
 	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
+	//IG
 	ImguiManager* imguiManager = new ImguiManager;
 	imguiManager->Initialize(winApp_->Gethwnd(),dxCommon_->deviceGet(),dxCommon_->swapChainDescGet(),dxCommon_->rtvDescGet(),dxCommon_->srvDescriptorHeapGet());
 	const int triangleCount = 6;
+	//テキスト
+	Texture* tex_ = new Texture;
+	tex_->Initiluze(dxCommon_);
+
+	TexProeerty  tex;
+	tex = tex_->Load();
 
 
+	//三角形
 	TrianglePropaty triangle[triangleCount];
 	triangle[0] =
 	{
@@ -122,6 +132,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
 			
+			/******************************************************/
 				ImGui::Begin("Triangle1");
 				ImGui::ColorEdit3("color", (float*)&triangle[0].color);
 				ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
@@ -140,7 +151,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//描画処理
 			for (int i = 0; i < triangleCount; i++) {
 				matrix[i] = MakeAffineMatrix(scale[i], rotate[i],translate[i]);
-				polygon_[i]->Draw(triangle[i].color,matrix[i]);
+				polygon_[i]->Draw(triangle[i].color,matrix[i],tex);
 
 
 			}
@@ -150,7 +161,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 	}
-
+	tex_->End();
 	winApp_->Release();
 	dxCommon_->Release(winApp_->Gethwnd());
 
