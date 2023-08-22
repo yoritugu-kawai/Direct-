@@ -6,13 +6,13 @@ class DxCommon
 {
 public:
 
-	void Initialize(WinApp* winApp);
+	void Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
 
-	void k();
-	void Release();
+	void k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
+	void Release(HWND hwnd);
 
 private:
-	WinApp* winApp_ = nullptr;
+	//WinApp* winApp_ = nullptr;
 
 
 	/////

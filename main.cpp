@@ -11,7 +11,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	winApp_->Initialize(Title, kClientWidth, kClientHeight);
-	dxCommon_->Initialize(winApp_);
+	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(),winApp_->GetHwnd());
 	
 	//　メインループ
 	MSG msg{};
@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	
 	winApp_->Release();
-	dxCommon_->Release();
+	dxCommon_->Release(winApp_->GetHwnd());
 
 	delete dxCommon_;
 	delete winApp_;

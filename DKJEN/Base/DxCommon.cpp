@@ -1,11 +1,11 @@
 #include"DxCommon.h"
 
-void DxCommon::Initialize(WinApp* winApp) {
+void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 	
-	winApp_ = winApp;
+	k( kClientWidth,kClientHeight,hwnd);
 }
 
-void DxCommon::k()
+void DxCommon::k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd)
 {
 	//GXGFactoryの生成
 
@@ -95,14 +95,14 @@ void DxCommon::k()
 	//   スワップチェーン作成
 
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
-	swapChainDesc.Width = winApp_->Width();
-	swapChainDesc.Height = winApp_->Height();
+	swapChainDesc.Width = kClientWidth;
+	swapChainDesc.Height = kClientHeight;
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, winApp_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
+	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue,hwnd, &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	assert(SUCCEEDED(hr));
 
 	//ディスクトップヒープ作成
@@ -196,7 +196,7 @@ void DxCommon::k()
 
 }
 
-void DxCommon::Release() {
+void DxCommon::Release(HWND hwnd) {
 
 	CloseHandle(fenceEvent);
 	fence->Release();
@@ -211,7 +211,7 @@ void DxCommon::Release() {
 	useAdapter->Release();
 	dxgiFactory->Release();
 
-	CloseWindow(winApp_->GetHwnd());
+	CloseWindow(hwnd);
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;
