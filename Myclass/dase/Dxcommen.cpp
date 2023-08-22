@@ -293,6 +293,7 @@ void DxCommon::Commandkick() {
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	//
 	commandList->ResourceBarrier(1, &barrier);
+	//
 	hr = commandList->Close();
 	assert(SUCCEEDED(hr));
 	//コマンドキック

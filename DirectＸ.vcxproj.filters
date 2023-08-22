@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\Type">
-      <UniqueIdentifier>{44b14bf2-fc18-494c-9f35-7afcfcaa84ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Dase">
       <UniqueIdentifier>{e43ab90e-3eee-4edb-85be-810d1964ba07}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,9 @@
     <Filter Include="ヘッダー ファイル\imgui">
       <UniqueIdentifier>{002d17f9-ea78-4658-b749-bef21ebda85c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\imgui\Type">
+      <UniqueIdentifier>{44b14bf2-fc18-494c-9f35-7afcfcaa84ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -55,7 +55,7 @@
       <Filter>ソース ファイル\Dase</Filter>
     </ClCompile>
     <ClCompile Include="Myclass\type\Polygon.cpp">
-      <Filter>ソース ファイル\Type</Filter>
+      <Filter>ソース ファイル\imgui\Type</Filter>
     </ClCompile>
     <ClCompile Include="Myclass\externals\imgui\imgui.cpp">
       <Filter>imgui</Filter>
@@ -82,7 +82,7 @@
       <Filter>ソース ファイル\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Myclass\type\Texture.cpp">
-      <Filter>ソース ファイル\Type</Filter>
+      <Filter>ソース ファイル\imgui\Type</Filter>
     </ClCompile>
     <ClCompile Include="Myclass\dase\Log.cpp">
       <Filter>ソース ファイル\Dase</Filter>
