@@ -453,6 +453,15 @@ void DxCommon::Release(HWND hwnd) {
 	///
 	CloseHandle(fenceEvent);
 	fence->Release();
+	/*graphicsPipelineState_->Release();
+	signatureBlob_->Release();
+	if (errorBlob_) {
+		errorBlob_->Release();
+	}
+	rootSignature_->Release();
+	pixelShaderBlob_->Release();
+	vertexShaderBlob_->Release();*/
+
 	rtvDescriptorHeap->Release();
 	swapChainResources[0]->Release();
 	swapChainResources[1]->Release();
