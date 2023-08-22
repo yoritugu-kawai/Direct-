@@ -12,7 +12,7 @@ public:
 	void Release(HWND hwnd);
 
 private:
-	WinApp* winApp_ = new WinApp;
+	WinApp* winApp_ = nullptr;
 
 
 	/////
