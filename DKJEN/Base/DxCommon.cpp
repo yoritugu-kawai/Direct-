@@ -196,7 +196,7 @@ void DxCommon::k()
 
 }
 
-void DxCommon::Release(HWND hwnd) {
+void DxCommon::Release() {
 
 	CloseHandle(fenceEvent);
 	fence->Release();
@@ -211,7 +211,7 @@ void DxCommon::Release(HWND hwnd) {
 	useAdapter->Release();
 	dxgiFactory->Release();
 
-	CloseWindow(hwnd);
+	CloseWindow(winApp_->GetHwnd());
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;

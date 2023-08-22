@@ -9,7 +9,7 @@ public:
 	void Initialize(WinApp* winApp);
 
 	void k();
-	void Release(HWND hwnd);
+	void Release();
 
 private:
 	WinApp* winApp_ = nullptr;
