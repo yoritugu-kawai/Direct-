@@ -16,6 +16,7 @@ LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 
 }
+
 WinApp::WinApp(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
 	this->title_ = title;
 	this->kClientWidth_ = kClientWidth;
@@ -67,6 +68,7 @@ void  WinApp::Initialize() {
 
 #endif // _DEBUG
 }
+
 void WinApp::Release() {
 #ifdef _DEBUG
 	deugController->Release();

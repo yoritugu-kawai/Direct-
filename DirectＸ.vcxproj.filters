@@ -13,13 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="DKJEN">
+      <UniqueIdentifier>{c9afca65-667e-47ce-850b-acabeb77ecee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base">
+      <UniqueIdentifier>{1969ba23-81e6-45af-a12f-a81c1e425c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\Dx">
+      <UniqueIdentifier>{93b536b2-f4db-4348-8e43-861c34404579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\Log">
+      <UniqueIdentifier>{7a14829a-20ac-4d1b-aa4e-a16fd6648eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\Win">
+      <UniqueIdentifier>{4deedf8b-5f19-43e1-8828-390406ee1302}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Math">
+      <UniqueIdentifier>{6d6c5c32-03c9-4aac-b2e7-1e79b92d4058}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="class\WindowsClass.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="DKJEN\Math\Math.cpp">
+      <Filter>DKJEN\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\DxCommon.cpp">
+      <Filter>DKJEN\Base\Dx</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\Log.cpp">
+      <Filter>DKJEN\Base\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\WinApp.cpp">
+      <Filter>DKJEN\Base\Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,8 +59,17 @@
     <FxCompile Include="Odject3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\WindowsClass.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="DKJEN\Math\Math.h">
+      <Filter>DKJEN\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\DxCommon.h">
+      <Filter>DKJEN\Base\Dx</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\Log.h">
+      <Filter>DKJEN\Base\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\WinApp.h">
+      <Filter>DKJEN\Base\Win</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
