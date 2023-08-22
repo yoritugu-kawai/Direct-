@@ -10,6 +10,10 @@ public:
 	/// </summary>
 	void CreateCommandQueue();
 	void CreateCommandList();
+	void CommandLoad();
+	void Commandkick();
+	void BeginFrame();
+
 	/// <summary>
 	/// スワップチェーン
 	/// </summary>
