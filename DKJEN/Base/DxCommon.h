@@ -5,10 +5,35 @@
 class DxCommon
 {
 public:
+	/// <summary>
+	/// コマンド系
+	/// </summary>
+	void CreateCommandQueue();
+	void CreateCommandList();
+	/// <summary>
+	/// スワップチェーン
+	/// </summary>
+	void CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
+	void CreateSwapResce();
+	/// <summary>
+	/// ヒープ
+	/// </summary>
+	void CreateDescriptorHeap();
+	/// <summary>
+	/// RTV
+	/// </summary>
+	void CreateRTV();
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="kClientWidth"></param>
+	/// <param name="kClientHeight"></param>
+	/// <param name="hwnd"></param>
 	void Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
 
 	void k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
+	//解放
 	void Release(HWND hwnd);
 
 private:
