@@ -11,17 +11,72 @@ public:
 	void Release(HWND hwnd);
 
 private:
-	IDXGIFactory7* dxgiFactory = nullptr;
-	HRESULT hr;
-	IDXGIAdapter4* useAdapter = nullptr;
-	ID3D12Device* device = nullptr;
-	ID3D12InfoQueue* infoQueue = nullptr;
-	ID3D12CommandQueue* commandQueue = nullptr;
-	ID3D12CommandAllocator* commandAllocator = nullptr;
-	ID3D12GraphicsCommandList* commandList = nullptr;
-	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
-	ID3D12Resource* swapChainResources[2] = { nullptr };
-	ID3D12Fence* fence = nullptr;
-	IDXGISwapChain4* swapChain = nullptr;
-	HANDLE fenceEvent;
+	
+	/////
+	/// <summary>
+	/// ファクトリーの作成
+	/// </summary>
+	IDXGIFactory7* dxgiFactory;//
+	HRESULT hr;//
+	/// <summary>
+	/// アダプターの作成
+	/// </summary>
+	IDXGIAdapter4* useAdapter;//
+	/// <summary>
+	/// Deviceの作成
+	/// </summary>
+	ID3D12Device* device;//
+	/// <summary>
+	/// エラー警告
+	/// </summary>
+	ID3D12InfoQueue* infoQueue = nullptr;//
+
+
+	/// <summary>
+	/// コマンド
+	/// </summary>
+	ID3D12CommandQueue* commandQueue;//
+	ID3D12GraphicsCommandList* commandList;//
+	D3D12_RESOURCE_BARRIER barrier{};//
+	/// <summary>
+	/// スワップチェーン
+	/// </summary>
+	IDXGISwapChain4* swapChain;//
+	/// <summary>
+	/// ヒープ
+	/// </summary>
+	ID3D12DescriptorHeap* rtvDescriptorHeap;//
+	/// <summary>
+	/// スワップチェーンのリリースを出す
+	/// </summary>
+	ID3D12Resource* swapChainResources[2];//
+	/// <summary>
+	/// 
+	/// </summary>
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];//
+	/// <summary>
+	/// コマンド
+	/// </summary>
+	ID3D12CommandAllocator* commandAllocator;//
+	/// <summary>
+	/// デバック
+	/// </summary>
+
+	//フェンスイベント
+	ID3D12Fence* fence;//
+	uint64_t fenceValue = 0;//
+	HANDLE fenceEvent;//
+	//POS
+	ID3D12PipelineState* graphicsPipelineState;/*後々の可能性あり*/
+	/*---------ルートシグネチャの設定---------*/
+	ID3DBlob* signatureBlob;//
+	ID3DBlob* errorBlob;//
+	ID3D12RootSignature* rootSignature;//
+	/*-----シェイダ－コンパイル-------*/
+	IDxcBlob* vertexShaderBlob;/*後々の可能性あり*/
+	IDxcBlob* pixelShaderBlob;/*後々の可能性あり*/
+	/*DIX*/
+	IDxcUtils* dxcUtils;/*後々の可能性あり*/
+	IDxcCompiler3* dxcCompiler;/*後々の可能性あり*/
+	IDxcIncludeHandler* includeHandler;/*後々の可能性あり*/
 };
