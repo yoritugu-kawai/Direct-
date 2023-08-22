@@ -23,4 +23,3 @@ private:
 	ID3D12Debug1* deugController;
 };
 
-
