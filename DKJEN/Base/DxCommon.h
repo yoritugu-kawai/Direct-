@@ -6,12 +6,15 @@ class DxCommon
 {
 public:
 
-	void Initialize(int32_t windowsizeWidth, int32_t windowsizeHeight, HWND hwnd);
+	void Initialize(WinApp* winApp);
 
+	void k();
 	void Release(HWND hwnd);
 
 private:
-	
+	WinApp* winApp_ = new WinApp;
+
+
 	/////
 	/// <summary>
 	/// ファクトリーの作成

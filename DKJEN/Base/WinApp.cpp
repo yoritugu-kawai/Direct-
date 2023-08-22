@@ -17,16 +17,12 @@ LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 
 }
 
-WinApp::WinApp(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
+
+void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
 	this->title_ = title;
 	this->kClientWidth_ = kClientWidth;
 	this->kClientHeight_ = kClientHeight;
-
 	this->hwnd_ = nullptr;
-}
-
-void  WinApp::Initialize() {
-
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名

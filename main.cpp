@@ -6,12 +6,12 @@ const wchar_t Title[] = { L"CG2WindowClass" };
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-	WinApp* winApp_ = new WinApp(Title, kClientWidth, kClientHeight);
-	DxCommon* dxCommon_ = new DxCommon();
+	WinApp* winApp_ = new WinApp;
+	DxCommon* dxCommon_ = new DxCommon;
 
 
-	winApp_->Initialize();
-	dxCommon_->Initialize(winApp_->Width(),winApp_->Height(),winApp_->Gethwnd());
+	winApp_->Initialize(Title, kClientWidth, kClientHeight);
+	dxCommon_->Initialize(winApp_);
 	
 	//　メインループ
 	MSG msg{};
@@ -27,7 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	
 	winApp_->Release();
-	dxCommon_->Release(winApp_->Gethwnd());
+	dxCommon_->Release(winApp_->GetHwnd());
 
 	delete dxCommon_;
 	delete winApp_;
