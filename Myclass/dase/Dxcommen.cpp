@@ -320,7 +320,7 @@ void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
 	/*DIXの初期設定*/
 	CreateFactory();
 	CreateDevice();
-//	DebugInfoQueue();
+	DebugInfoQueue();
 	CreateCommandQueue();
 	CreateCommandList();
 
