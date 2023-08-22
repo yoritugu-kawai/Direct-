@@ -1,6 +1,6 @@
 #include"WinApp.h"
 //　ウィンドウプロシャージャ
-LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
+LRESULT   WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;
 	}
@@ -68,6 +68,8 @@ void  WinApp::Initialize() {
 
 #endif // _DEBUG
 }
+
+
 void WinApp::Release() {
 #ifdef _DEBUG
 	deugController->Release();

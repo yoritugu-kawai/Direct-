@@ -25,8 +25,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DxCommon* dxCommon_ = new DxCommon;
 	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
 	//IG
-	ImguiManager* imguiManager = new ImguiManager;
-	imguiManager->Initialize(winApp_->Gethwnd(),dxCommon_->deviceGet(),dxCommon_->swapChainDescGet(),dxCommon_->rtvDescGet(),dxCommon_->srvDescriptorHeapGet());
+	ImguiManager* imguiManager_ = new ImguiManager;
+	imguiManager_->Initialize(winApp_->Gethwnd(),dxCommon_->deviceGet(),dxCommon_->swapChainDescGet(),dxCommon_->rtvDescGet(),dxCommon_->srvDescriptorHeapGet());
 	const int triangleCount = 6;
 	//テキスト
 	Texture* tex_ = new Texture;
@@ -129,7 +129,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else {
 			dxCommon_->BeginFrame();
-			imguiManager->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
+			imguiManager_->BeginFrame(dxCommon_->srvDescriptorHeapGet(),dxCommon_->commandListGet());
 			//更新処理
 			
 			/******************************************************/
@@ -155,7 +155,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 			}
-			imguiManager->EndFrame(dxCommon_->commandListGet());
+			imguiManager_->EndFrame(dxCommon_->commandListGet());
 			dxCommon_->EndFrame();
 			//　ゲーム処理
 
@@ -171,6 +171,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	delete dxCommon_;
 	delete winApp_;
+	delete imguiManager_;
+	delete tex_;
 	return 0;
 }
 

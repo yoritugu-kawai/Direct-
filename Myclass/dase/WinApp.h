@@ -10,7 +10,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg
 class WinApp
 {
 public:
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	static LRESULT  WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 	WinApp(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight);
 	void Initialize();
 	void Release();

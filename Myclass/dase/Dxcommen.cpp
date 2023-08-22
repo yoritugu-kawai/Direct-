@@ -72,24 +72,39 @@ void DxCommon::DIX()
 
 void DxCommon::DebugInfoQueue()
 {
+
 #ifdef _DEBUG
-	ID3D12InfoQueue* infoQueue = nullptr;
+	
 	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
+
+		// ヤバいエラー時に止まる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+
+		// エラー時に止まる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
-		infoQueue->Release();
-		D3D12_MESSAGE_ID denyIds[]{
+
+		// 警告時に止まる
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+
+
+		// 抑制するメッセージのID
+		D3D12_MESSAGE_ID denyIds_[] = {
 			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
 		};
-		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
-		D3D12_INFO_QUEUE_FILTER filter{};
-		filter.DenyList.NumIDs = _countof(denyIds);
-		filter.DenyList.pIDList = denyIds;
-		filter.DenyList.NumSeverities = _countof(severities);
-		filter.DenyList.pSeverityList = severities;
 
+		//抑制するレベル
+		D3D12_MESSAGE_SEVERITY severities_[] = { D3D12_MESSAGE_SEVERITY_INFO };
+		D3D12_INFO_QUEUE_FILTER filter{};
+		filter.DenyList.NumIDs = _countof(denyIds_);
+		filter.DenyList.pIDList = denyIds_;
+		filter.DenyList.NumSeverities = _countof(severities_);
+		filter.DenyList.pSeverityList = severities_;
+		// 指定したメッセージの表示を抑制する
 		infoQueue->PushStorageFilter(&filter);
+
+
+		// 解放
+		infoQueue->Release();
 	}
 
 #endif // _DEBUG
@@ -106,7 +121,7 @@ void DxCommon::CreateFactory()
 
 	//初期化の根本的な部分でエラーが出た場合はプログラムが間違っているか、どうにもできない場合が多いのでassertにしておく
 	assert(SUCCEEDED(hr));
-
+	CreateAdapter();
 }
 
 void DxCommon::CreateAdapter() {
@@ -135,9 +150,12 @@ void DxCommon::CreateDevice() {
 	//D3D12Deviceの作成
 	device = nullptr;
 	D3D_FEATURE_LEVEL featureLevels[] = {
-			D3D_FEATURE_LEVEL_12_2,	D3D_FEATURE_LEVEL_12_1,	D3D_FEATURE_LEVEL_12_0
+			D3D_FEATURE_LEVEL_12_2,	
+			D3D_FEATURE_LEVEL_12_1,	
+			D3D_FEATURE_LEVEL_12_0
 	};
-	const char* featureLevelStrings[] = { "12.2","12.1","12.0" };
+	const char* featureLevelStrings[] = { 
+		"12.2","12.1","12.0" };
 	for (size_t i = 0; i < _countof(featureLevels); ++i) {
 		hr = D3D12CreateDevice(useAdapter, featureLevels[i], IID_PPV_ARGS(&device));
 		if (SUCCEEDED(hr)) {
@@ -191,23 +209,17 @@ void DxCommon::CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND
 
 
 void DxCommon::CreateDescriptorHeap() {
-	rtvDescriptorHeap = CreateDescriptorHeap2(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
-	srvDescriptorHeap = CreateDescriptorHeap2(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+	rtvDescriptorHeap = DescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	srvDescriptorHeap = DescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 
-
-	////ディスクトップヒープ作成
-	//rtvDescriptorHeap = nullptr;
-	//D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
-	//rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	//rtvDescriptorHeapDesc.NumDescriptors = 2;
-	//hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
-	//assert(SUCCEEDED(hr));
+	CreateSwapResce();
+	CreateRTV();
 
 }
 
 void DxCommon::CreateSwapResce() {
 	//リソースを引っ張る
-	swapChainResources[2] = { nullptr };
+	
 	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResources[0]));
 	assert(SUCCEEDED(hr));
 	hr = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResources[1]));
@@ -223,14 +235,24 @@ void DxCommon::CreateRTV() {
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvStarHandle = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 
-	rtvHandles[2];
 
 	rtvHandles[0] = rtvStarHandle;
 	device->CreateRenderTargetView(swapChainResources[0], &rtvDesc, rtvHandles[0]);
 
 	rtvHandles[1].ptr = rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
+	device->CreateRenderTargetView(swapChainResources[1],
+		&rtvDesc, rtvHandles[1]);
+	////DescriptorHandleとDescriptorHeap
+	typedef struct D3D12_CPU_DESCRIPTOR_HANDLE {
+		SIZE_T ptr;
+	}D3D12_CPU_DESCRIPTOR_HANDLE;
+
+	////Descriptorの位置を決める
+	rtvHandles[0] = rtvStarHandle;
+
+	rtvHandles[1].ptr =
+		rtvHandles[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 }
 
@@ -297,15 +319,16 @@ void DxCommon::Commandkick() {
 void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
 	/*DIXの初期設定*/
 	CreateFactory();
-	CreateAdapter();
 	CreateDevice();
-	/*青画面*/
+//	DebugInfoQueue();
 	CreateCommandQueue();
 	CreateCommandList();
+
+	/*青画面*/
 	CreateSwapChain(kClientWidth, kClientHeight, hwnd);
 	CreateDescriptorHeap();
-	CreateSwapResce();
-	CreateRTV();
+
+	
 	/*クリア*/
 	CreateFeneEvent();
 	DIX();
@@ -453,14 +476,14 @@ void DxCommon::Release(HWND hwnd) {
 	///
 	CloseHandle(fenceEvent);
 	fence->Release();
-	/*graphicsPipelineState_->Release();
-	signatureBlob_->Release();
-	if (errorBlob_) {
-		errorBlob_->Release();
+	graphicsPipelineState->Release();
+	signatureBlob->Release();
+	if (errorBlob) {
+		errorBlob->Release();
 	}
-	rootSignature_->Release();
-	pixelShaderBlob_->Release();
-	vertexShaderBlob_->Release();*/
+	rootSignature->Release();
+	pixelShaderBlob->Release();
+	vertexShaderBlob->Release();
 
 	rtvDescriptorHeap->Release();
 	swapChainResources[0]->Release();
@@ -484,7 +507,7 @@ void DxCommon::Release(HWND hwnd) {
 
 }
 
-ID3D12DescriptorHeap* DxCommon::CreateDescriptorHeap2(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+ID3D12DescriptorHeap* DxCommon::DescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
 {
 	ID3D12DescriptorHeap* descriptorHeap = nullptr;
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};

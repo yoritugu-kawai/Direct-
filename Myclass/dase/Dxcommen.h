@@ -55,7 +55,7 @@ public:
 	ID3DBlob* signatureBlobGet() { return signatureBlob; }
 	ID3DBlob* errorBlobGet() { return errorBlob; }
 	//imgui
-	ID3D12DescriptorHeap* CreateDescriptorHeap2(
+	ID3D12DescriptorHeap* DescriptorHeap(
 		ID3D12Device* device,
 		D3D12_DESCRIPTOR_HEAP_TYPE heapType,
 		UINT numDescriptors,
@@ -99,7 +99,7 @@ private:
 	/// <summary>
 	/// スワップチェーンのリリースを出す
 	/// </summary>
-	ID3D12Resource* swapChainResources[2];
+	ID3D12Resource* swapChainResources[2] = { nullptr };
 	/// <summary>
 	/// 
 	/// </summary>
@@ -131,4 +131,7 @@ private:
 	IDxcIncludeHandler* includeHandler;
 	//
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+	//
+	ID3D12InfoQueue* infoQueue = nullptr;
+
 };
