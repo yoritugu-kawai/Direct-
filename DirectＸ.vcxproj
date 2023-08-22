@@ -90,8 +90,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="class\DixApp.cpp" />
-    <ClCompile Include="class\WinApp.cpp" />
+    <ClCompile Include="DKJEN\Base\DxCommon.cpp" />
+    <ClCompile Include="DKJEN\Base\Log.cpp" />
+    <ClCompile Include="DKJEN\Base\WinApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,8 +113,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\DixApp.h" />
-    <ClInclude Include="class\WinApp.h" />
+    <ClInclude Include="DKJEN\Base\DxCommon.h" />
+    <ClInclude Include="DKJEN\Base\Log.h" />
+    <ClInclude Include="DKJEN\Base\WinApp.h" />
+    <ClInclude Include="DKJEN\Math\Math.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

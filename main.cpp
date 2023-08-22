@@ -1,5 +1,5 @@
-#include"class/WinApp.h"
-#include"class/DixApp.h"
+#include"DKJEN/Base/DxCommon.h"
+#include"DKJEN/Base/WinApp.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
@@ -7,13 +7,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 	WinApp* winApp_ = new WinApp(Title, kClientWidth, kClientHeight);
-	DixApp* dixApp_ = new DixApp;
+	DxCommon* dxCommon_ = new DxCommon();
 
 
 	winApp_->Initialize();
-
-	dixApp_->Initialize(winApp_->Width(), winApp_->Height(), winApp_->Gethwnd());
-
+	dxCommon_->Initialize(winApp_->Width(),winApp_->Height(),winApp_->Gethwnd());
+	
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -26,10 +25,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			//　ゲーム処理
 		}
 	}
-	dixApp_->Release(winApp_->Gethwnd());
+	
 	winApp_->Release();
+	dxCommon_->Release(winApp_->Gethwnd());
 
-	delete dixApp_;
+	delete dxCommon_;
 	delete winApp_;
 	return 0;
 }

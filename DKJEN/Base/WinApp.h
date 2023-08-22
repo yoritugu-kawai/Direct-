@@ -1,8 +1,6 @@
 #pragma once
-#include<Windows.h>
-#include <cstdint>
-#include"Dxcommen.h"
-
+#include"DxCommon.h"
+#include"../Math/Math.h"
 class WinApp
 {
 public:
@@ -20,7 +18,7 @@ private:
 	const wchar_t* title_;
 	int32_t kClientWidth_;
 	int32_t kClientHeight_;
-	ID3D12Debug1* deugController;
+	ID3D12Debug1* deugController = nullptr;
 };
 
 
