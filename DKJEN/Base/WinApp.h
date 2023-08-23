@@ -7,7 +7,7 @@ public:
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 	
 	void Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight);
-	void Release();
+	//void Release();
 	int Width() { return kClientWidth_; }
 	int Height() { return kClientHeight_; }
 	HWND GetHwnd() { return hwnd_; }

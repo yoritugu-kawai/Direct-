@@ -28,7 +28,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 	
-	winApp_->Release();
+	//winApp_->Release();
 	dxCommon_->Release(winApp_->GetHwnd());
 
 	delete dxCommon_;

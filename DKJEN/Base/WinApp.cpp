@@ -65,8 +65,8 @@ void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const
 #endif // _DEBUG
 }
 
-void WinApp::Release() {
-#ifdef _DEBUG
-	deugController->Release();
-#endif // _DEBUG
-}
+//void WinApp::Release() {
+//#ifdef _DEBUG
+//	deugController->Release();
+//#endif // _DEBUG
+//}
