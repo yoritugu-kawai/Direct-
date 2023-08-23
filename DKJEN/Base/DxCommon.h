@@ -12,7 +12,9 @@ public:
 	void CreateCommandList();
 	void CommandLoad();
 	void Commandkick();
+	//ループ
 	void BeginFrame();
+	void EndFrame();
 
 	/// <summary>
 	/// スワップチェーン
@@ -27,7 +29,15 @@ public:
 	/// RTV
 	/// </summary>
 	void CreateRTV();
+	/// <summary>
+	/// エラー
+	/// </summary>
+	void DebugInfoQueue();
+	void CreateDxgiFactory();
 
+	//
+	void CreateFeneEvent();
+	void CreateDevice();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -63,7 +73,7 @@ private:
 	/// </summary>
 	ID3D12InfoQueue* infoQueue = nullptr;//
 
-
+	ID3D12Debug1* debugController = nullptr;
 	/// <summary>
 	/// コマンド
 	/// </summary>
@@ -95,7 +105,7 @@ private:
 	/// </summary>
 
 	//フェンスイベント
-	ID3D12Fence* fence;//
+	ID3D12Fence* fence=nullptr;//
 	uint64_t fenceValue = 0;//
 	HANDLE fenceEvent;//
 	//POS

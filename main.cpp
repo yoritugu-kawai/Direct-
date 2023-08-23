@@ -23,6 +23,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else {
 			//　ゲーム処理
+			dxCommon_->BeginFrame();
+			dxCommon_->EndFrame();
 		}
 	}
 	

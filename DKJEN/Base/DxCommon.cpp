@@ -12,7 +12,7 @@ void DxCommon::CreateCommandQueue()
 	// コマンドキュー作成がうまくいかなかった
 	assert(SUCCEEDED(hr));
 
-}
+}//
 
 void DxCommon::CreateCommandList()
 {
@@ -33,12 +33,6 @@ void DxCommon::CommandLoad()
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	barrier.Transition.pResource = swapChainResources[backBufferIndex];
-	///
-	//barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	//barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	//commandList->ResourceBarrier(1, &barrier);
-	//
-	//
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
 	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
 	
@@ -46,19 +40,42 @@ void DxCommon::CommandLoad()
 
 void DxCommon::Commandkick()
 {
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	commandList->ResourceBarrier(1, &barrier);
-	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	//
+	hr = commandList->Close();
 	assert(SUCCEEDED(hr));
+	//コマンドキック
+	ID3D12CommandList* commandLists[] = { commandList };
 
-	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	assert(fenceEvent != nullptr);
+	commandQueue->ExecuteCommandLists(1, commandLists);
+
+	swapChain->Present(1, 0);
+	///
+	hr = commandAllocator->Reset();
+	assert(SUCCEEDED(hr));
+	hr = commandList->Reset(commandAllocator, nullptr);
+	assert(SUCCEEDED(hr));
+	//シグナル
+	fenceValue++;
+	commandQueue->Signal(fence, fenceValue);
+	if (fence->GetCompletedValue() < fenceValue) {
+		fence->SetEventOnCompletion(fenceValue, fenceEvent);
+		WaitForSingleObject(fenceEvent, INFINITE);
+	}
+
+
 }
 
 void DxCommon::BeginFrame()
 {
 	CommandLoad();
+}
+void DxCommon::EndFrame()
+{
+	Commandkick();
+
 }
 
 /************************************************/
@@ -104,6 +121,8 @@ void DxCommon::CreateDescriptorHeap()
 	rtvDescriptorHeapDesc.NumDescriptors = 2;
 	hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));
+	CreateSwapResce();
+	CreateRTV();
 
 }
 
@@ -127,22 +146,40 @@ void DxCommon::CreateRTV()
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
 
 }
+/************************************************/
+/****************   　エラー　   ****************/
+/************************************************/
 
-/************************************************/
-/****************   　初期化　   ****************/
-/************************************************/
-void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
-	
-	CreateCommandQueue();
-	CreateCommandList();
-	CreateSwapChain(kClientWidth, kClientHeight, hwnd);
-	CreateDescriptorHeap();
-	CreateSwapResce();
-	CreateRTV();
-	k( kClientWidth,kClientHeight,hwnd);
+void DxCommon::DebugInfoQueue() {
+
+#ifdef _DEBUG
+
+	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+
+		D3D12_MESSAGE_ID denyIds[]{
+			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+		};
+		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+		D3D12_INFO_QUEUE_FILTER filter{};
+		filter.DenyList.NumIDs = _countof(denyIds);
+		filter.DenyList.pIDList = denyIds;
+		filter.DenyList.NumSeverities = _countof(severities);
+		filter.DenyList.pSeverityList = severities;
+
+		infoQueue->PushStorageFilter(&filter);
+		infoQueue->Release();
+
+	}
+
+#endif // _DEBUG
+
+
+
 }
-
-void DxCommon::k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd)
+void DxCommon::CreateDxgiFactory()
 {
 	//GXGFactoryの生成
 
@@ -173,6 +210,20 @@ void DxCommon::k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd)
 	}
 	assert(useAdapter != nullptr);
 
+}
+/************************************************/
+/***********   　よくわからない　   *************/
+/************************************************/
+void DxCommon::CreateFeneEvent()
+{
+	hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	assert(SUCCEEDED(hr));
+
+	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
+}
+void DxCommon::CreateDevice()
+{
 	//D3D12Deviceの作成
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
@@ -188,81 +239,57 @@ void DxCommon::k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd)
 	}
 	assert(device != nullptr);
 	Log("Complete Create D3D12Device!!!\n");
+
+}
+/************************************************/
+/****************   　初期化　   ****************/
+/************************************************/
+void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd) {
+	
+	/* ----- デバッグレイヤー -----*/
 #ifdef _DEBUG
 
-	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
-
-		D3D12_MESSAGE_ID denyIds[]{
-			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
-		};
-		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
-		D3D12_INFO_QUEUE_FILTER filter{};
-		filter.DenyList.NumIDs = _countof(denyIds);
-		filter.DenyList.pIDList = denyIds;
-		filter.DenyList.NumSeverities = _countof(severities);
-		filter.DenyList.pSeverityList = severities;
-
-		infoQueue->PushStorageFilter(&filter);
-		infoQueue->Release();
-
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
+		// デバッグレイヤーを有効にする
+		debugController->EnableDebugLayer();
+		// さらにGPU側でもチェックを行うようにする
+		debugController->SetEnableGPUBasedValidation(TRUE);
 	}
 
-#endif // _DEBUG
-
-
-	
-
-	
-
-	
-	//コマンド積んでいく
-	
-	///張る
+#endif // _DEBUGCreateCommandQueue();
+	CreateDxgiFactory();
+	CreateDevice();
+	DebugInfoQueue();
+	CreateCommandQueue();
+	CreateCommandList();
+	CreateSwapChain(kClientWidth, kClientHeight, hwnd);
 
 	
+	CreateDescriptorHeap();
 
+	CreateFeneEvent();
+}
+
+
+
+void DxCommon::k(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd)
+{
 	
 
-	// インプットLayoutの設定
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
-	inputElementDescs[0].SemanticName = "POSITION";
-	inputElementDescs[0].SemanticIndex = 0;
-	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
-	inputLayoutDesc.pInputElementDescs = inputElementDescs;
-	inputLayoutDesc.NumElements = _countof(inputElementDescs);
+	//// インプットLayoutの設定
+	//D3D12_INPUT_ELEMENT_DESC inputElementDescs[1] = {};
+	//inputElementDescs[0].SemanticName = "POSITION";
+	//inputElementDescs[0].SemanticIndex = 0;
+	//inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	//inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	//D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	//inputLayoutDesc.pInputElementDescs = inputElementDescs;
+	//inputLayoutDesc.NumElements = _countof(inputElementDescs);
+	////
 	//
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-	commandList->ResourceBarrier(1, &barrier);
-	//
-	hr = commandList->Close();
-	assert(SUCCEEDED(hr));
-
-	//コマンドキック
-	ID3D12CommandList* commandLists[] = { commandList };
-
-	commandQueue->ExecuteCommandLists(1, commandLists);
-
-	swapChain->Present(1, 0);
-	//
-	fenceValue++;
-	commandQueue->Signal(fence, fenceValue);
-	if (fence->GetCompletedValue() < fenceValue) {
-		fence->SetEventOnCompletion(fenceValue, fenceEvent);
-		WaitForSingleObject(fenceEvent, INFINITE);
-	}
-
-	///
-	hr = commandAllocator->Reset();
-	assert(SUCCEEDED(hr));
-	hr = commandList->Reset(commandAllocator, nullptr);
-	assert(SUCCEEDED(hr));
-
+	
+	
+	
 }
 
 void DxCommon::Release(HWND hwnd) {
