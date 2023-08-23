@@ -263,10 +263,7 @@ void DxCommon::Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd
 	CreateCommandQueue();
 	CreateCommandList();
 	CreateSwapChain(kClientWidth, kClientHeight, hwnd);
-
-	
 	CreateDescriptorHeap();
-
 	CreateFeneEvent();
 }
 
