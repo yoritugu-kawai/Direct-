@@ -4,14 +4,14 @@ const wchar_t Title[] = { L"CG2WindowClass" };
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	const int32_t kClientWidth = 1280;
-	const int32_t kClientHeight = 720;
-	WinApp* winApp_ = new WinApp;
-	DxCommon* dxCommon_ = new DxCommon;
+	
+	WinApp::Initialize(Title);
+	DxCommon::Initialize();
+	//DxCommon* dxCommon_ = new DxCommon;
 
 
-	winApp_->Initialize(Title, kClientWidth, kClientHeight);
-	dxCommon_->Initialize(winApp_->Width(), winApp_->Height(),winApp_->GetHwnd());
+	
+	//dxCommon_->Initialize(winApp_->Width(), winApp_->Height(),winApp_->GetHwnd());
 	
 	//　メインループ
 	MSG msg{};
@@ -21,17 +21,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else {
+		DxCommon::BeginFrame();
 			//　ゲーム処理
-			dxCommon_->BeginFrame();
-			dxCommon_->EndFrame();
-		}
+			//　ゲーム処理
+
+		DxCommon::EndFrame();
+		
 	}
 	
-	//winApp_->Release();
-	dxCommon_->Release(winApp_->GetHwnd());
+	
+	DxCommon::Release();
 
-	delete dxCommon_;
-	delete winApp_;
+	
+	
 	return 0;
 }

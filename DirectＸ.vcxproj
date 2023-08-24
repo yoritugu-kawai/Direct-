@@ -92,6 +92,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="DKJEN\Base\DxCommon.cpp" />
     <ClCompile Include="DKJEN\Base\Log.cpp" />
+    <ClCompile Include="DKJEN\Base\PipelineState.cpp" />
     <ClCompile Include="DKJEN\Base\WinApp.cpp" />
     <ClCompile Include="DKJEN\Math\Math.cpp" />
     <ClCompile Include="main.cpp" />
@@ -116,6 +117,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="DKJEN\Base\DxCommon.h" />
     <ClInclude Include="DKJEN\Base\Log.h" />
+    <ClInclude Include="DKJEN\Base\PipelineState.h" />
     <ClInclude Include="DKJEN\Base\WinApp.h" />
     <ClInclude Include="DKJEN\Math\Math.h" />
   </ItemGroup>

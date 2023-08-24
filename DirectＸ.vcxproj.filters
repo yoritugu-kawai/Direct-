@@ -31,6 +31,12 @@
     <Filter Include="DKJEN\Math">
       <UniqueIdentifier>{6d6c5c32-03c9-4aac-b2e7-1e79b92d4058}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DKJEN\Type">
+      <UniqueIdentifier>{b064972e-6dec-4ef2-91d5-edda52cddd75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\PSO">
+      <UniqueIdentifier>{9abaec95-9284-419e-8f1b-d103e9a9e6c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +53,9 @@
     </ClCompile>
     <ClCompile Include="DKJEN\Base\WinApp.cpp">
       <Filter>DKJEN\Base\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\PipelineState.cpp">
+      <Filter>DKJEN\Base\PSO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Base\WinApp.h">
       <Filter>DKJEN\Base\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\PipelineState.h">
+      <Filter>DKJEN\Base\PSO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

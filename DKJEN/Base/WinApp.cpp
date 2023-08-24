@@ -1,5 +1,13 @@
 #include"WinApp.h"
 
+WinApp* WinApp::GetInstance()
+{
+	static WinApp instance;
+
+	return &instance;
+
+}
+
 //　ウィンドウプロシャージャ
 LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 
@@ -18,11 +26,11 @@ LRESULT CALLBACK  WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM 
 }
 
 
-void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const int32_t kClientHeight) {
-	this->title_ = title;
-	this->kClientWidth_ = kClientWidth;
-	this->kClientHeight_ = kClientHeight;
-	this->hwnd_ = nullptr;
+void  WinApp::Initialize(const wchar_t* title) {
+	WNDCLASS wc{};
+	HWND hwnd_;
+	const wchar_t* title_=title;
+	
 	//ウィンドウプロシャージャ
 	wc.lpfnWndProc = WindowProc;
 	// ウィンドウクラス名
@@ -36,7 +44,7 @@ void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const
 	// クライアント領域サイズ
 
 	//  ウィンドウサイズを表す構造体にクライアント領域を入れる
-	RECT wrc_ = { 0,0,kClientWidth_ ,kClientHeight_ };
+	RECT wrc_ = { 0,0,WinApp::GetInstance()->kClientWidth_ ,WinApp::GetInstance()->kClientHeight_ };
 	// クライアント領域を元に実際のサイズにwrcを変更
 	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 	// ウィンドウ生成
@@ -55,14 +63,18 @@ void  WinApp::Initialize(const wchar_t* title, const int32_t kClientWidth, const
 	);
 	//ウィンドウを表示
 	ShowWindow(hwnd_, SW_SHOW);
-#ifdef _DEBUG
-
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
-		deugController->EnableDebugLayer();
-		deugController->SetEnableGPUBasedValidation(TRUE);
-	}
-
-#endif // _DEBUG
+	WinApp::GetInstance()->hwnd_ = hwnd_;
+	WinApp::GetInstance()->wc = wc;
+	WinApp::GetInstance()->title_ = title_;
+	
+//#ifdef _DEBUG
+//
+//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
+//		deugController->EnableDebugLayer();
+//		deugController->SetEnableGPUBasedValidation(TRUE);
+//	}
+//
+//#endif // _DEBUG
 }
 
 //void WinApp::Release() {

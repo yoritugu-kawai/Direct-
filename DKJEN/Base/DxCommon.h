@@ -5,50 +5,62 @@
 class DxCommon
 {
 public:
+	static DxCommon* GetInstance();
+
+	static IDxcBlob* CompileShader(
+		// CompilerするShaderファイルへのパス
+		const std::wstring& filePath,
+		// Compilerに使用するProfile
+		const wchar_t* profile,
+		// 初期化で生成したものを3つ
+		IDxcUtils* dxcUtils,
+		IDxcCompiler3* dxcCompiler,
+		IDxcIncludeHandler* includeHandler);
+
 	/// <summary>
 	/// コマンド系
 	/// </summary>
-	void CreateCommandQueue();
-	void CreateCommandList();
-	void CommandLoad();
-	void Commandkick();
+	static void CreateCommands();
+
+	static void CommandLoad();
+	static void Commandkick();
 	//ループ
-	void BeginFrame();
-	void EndFrame();
+	static void BeginFrame();
+	static void EndFrame();
 
 	/// <summary>
 	/// スワップチェーン
 	/// </summary>
-	void CreateSwapChain(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
-	void CreateSwapResce();
+	static void CreateSwapChain();
+	static void CreateSwapResce();
 	/// <summary>
 	/// ヒープ
 	/// </summary>
-	void CreateDescriptorHeap();
+	static void CreateDescriptorHeap();
 	/// <summary>
 	/// RTV
 	/// </summary>
-	void CreateRTV();
+	static void CreateRTV();
 	/// <summary>
 	/// エラー
 	/// </summary>
-	void DebugInfoQueue();
-	void CreateDxgiFactory();
+	static void DebugInfoQueue();
+	static void CreateDxgiFactory();
 
 	//
-	void CreateFeneEvent();
-	void CreateDevice();
+	static void CreateFeneEvent();
+	static void CreateDevice();
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="kClientWidth"></param>
 	/// <param name="kClientHeight"></param>
 	/// <param name="hwnd"></param>
-	void Initialize(int32_t kClientWidth, int32_t kClientHeight, HWND hwnd);
+	static void Initialize();
 
 	
 	//解放
-	void Release(HWND hwnd);
+	static void Release();
 
 private:
 	//WinApp* winApp_ = nullptr;
@@ -71,7 +83,7 @@ private:
 	/// <summary>
 	/// エラー警告
 	/// </summary>
-	ID3D12InfoQueue* infoQueue = nullptr;//
+	
 
 	ID3D12Debug1* debugController = nullptr;
 	/// <summary>
@@ -117,8 +129,5 @@ private:
 	/*-----シェイダ－コンパイル-------*/
 	IDxcBlob* vertexShaderBlob;/*後々の可能性あり*/
 	IDxcBlob* pixelShaderBlob;/*後々の可能性あり*/
-	/*DIX*/
-	IDxcUtils* dxcUtils;/*後々の可能性あり*/
-	IDxcCompiler3* dxcCompiler;/*後々の可能性あり*/
-	IDxcIncludeHandler* includeHandler;/*後々の可能性あり*/
+	
 };
