@@ -2,7 +2,11 @@
 
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
-	Vertex=
+	Vertex = CreateBufferResource(sizeof(Vector4)*3);
+	bufferView_ = VertexCreateBufferView(sizeof(Vector4), Vertex, 3);
+	CenterPos_ = pos;
+	Color_ = Color;
+
 }
 
 

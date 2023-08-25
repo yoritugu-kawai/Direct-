@@ -17,4 +17,5 @@ private:
 	const float size = 0.1f;
 	DxCommon dxCommmon_;
 	ID3D12Resource* Vertex;
+	D3D12_VERTEX_BUFFER_VIEW bufferView_;
 };
