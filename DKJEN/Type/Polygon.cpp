@@ -3,7 +3,7 @@
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
 	Vertex = CreateBufferResource(sizeof(Vector4)*3);
-	bufferView_ = VertexCreateBufferView(sizeof(Vector4), Vertex, 3);
+	bufferView_ = VertexCreateBufferView(sizeof(Vector4)*3, Vertex, 3);
 	CenterPos_ = pos;
 	Color_ = Color;
 
@@ -37,6 +37,8 @@ void PolygonType::Draw()
 
 void PolygonType::Release()
 {
+	Vertex->Release();
+
 }
 
 ID3D12Resource* PolygonType::CreateBufferResource(size_t sizeInbyte)

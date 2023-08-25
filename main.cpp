@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CompileShader::ShaderCompile();
 	PipelineState::CreatePSO();
 	PolygonType* polygon_ = new PolygonType;
-	polygon_->Initialize({ 0.0f,0.0f,0.0f,0.0f }, { 1.0f,1.0f,1.0f,1.0f });
+	polygon_->Initialize({ 0.0f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
 	//DxCommon* dxCommon_ = new DxCommon;
 
 
@@ -36,7 +36,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DxCommon::EndFrame();
 		
 	}
-	
+	polygon_->Release();
 	CompileShader::Release();
 
 	PipelineState::Release();
