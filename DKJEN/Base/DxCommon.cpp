@@ -15,7 +15,7 @@ void DxCommon::CreateCommands()
 	// コマンドキュー作成
 
 	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
-	ID3D12Device* device=DxCommon::GetInstance()->device;//
+	ID3D12Device* device = DxCommon::GetInstance()->device;//
 	HRESULT hr;//
 	ID3D12CommandQueue* commandQueue;//
 	ID3D12GraphicsCommandList* commandList;//
@@ -47,7 +47,7 @@ void DxCommon::CommandLoad()
 	ID3D12Resource* swapChainResources[2];//
 	swapChainResources[0] = DxCommon::GetInstance()->swapChainResources[0];
 	swapChainResources[1] = DxCommon::GetInstance()->swapChainResources[1];
-	ID3D12DescriptorHeap* rtvDescriptorHeap= DxCommon::GetInstance()->rtvDescriptorHeap;//
+	ID3D12DescriptorHeap* rtvDescriptorHeap = DxCommon::GetInstance()->rtvDescriptorHeap;//
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];//
 	rtvHandles[0] = DxCommon::GetInstance()->rtvHandles[0];
 	rtvHandles[1] = DxCommon::GetInstance()->rtvHandles[1];
@@ -127,6 +127,34 @@ void DxCommon::Commandkick()
 void DxCommon::BeginFrame()
 {
 	CommandLoad();
+
+	D3D12_VIEWPORT viewport{};
+	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->commandList;//
+
+	//クライアント領域のサイズを一緒にして画面全体に表示
+	viewport.Width = float(WinApp::GetInstance()->Width());
+	viewport.Height = float(WinApp::GetInstance()->Height());
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+
+	//シザー矩形
+	D3D12_RECT scissorRect{};
+	scissorRect.left = 0;
+	scissorRect.right = WinApp::GetInstance()->Width();
+	scissorRect.top = 0;
+	scissorRect.bottom = WinApp::GetInstance()->Height();
+
+	//コマンドを積む
+
+
+	commandList->RSSetViewports(1, &viewport); //
+	commandList->RSSetScissorRects(1, &scissorRect);
+
+
+
 }
 void DxCommon::EndFrame()
 {
@@ -154,7 +182,7 @@ void DxCommon::CreateSwapChain()
 	swapChainDesc.BufferCount = 2;
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	HRESULT hr = dxgiFactory->CreateSwapChainForHwnd(
-		commandQueue, WinApp::GetInstance()->GetHwnd(), 
+		commandQueue, WinApp::GetInstance()->GetHwnd(),
 		&swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	assert(SUCCEEDED(hr));
 	DxCommon::GetInstance()->commandQueue = commandQueue;//
@@ -185,7 +213,7 @@ void DxCommon::CreateSwapResce()
 /************************************************/
 void DxCommon::CreateDescriptorHeap()
 {
-	ID3D12DescriptorHeap* rtvDescriptorHeap; 
+	ID3D12DescriptorHeap* rtvDescriptorHeap;
 	ID3D12Device* device = DxCommon::GetInstance()->device;
 	///
 	//ディスクトップヒープ作成
@@ -196,8 +224,8 @@ void DxCommon::CreateDescriptorHeap()
 	HRESULT hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));
 	CreateSwapResce();
-	
-	DxCommon::GetInstance()->device=device;
+
+	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
 	CreateRTV();
 
@@ -209,7 +237,7 @@ void DxCommon::CreateDescriptorHeap()
 
 void DxCommon::CreateRTV()
 {
-	ID3D12DescriptorHeap* rtvDescriptorHeap= DxCommon::GetInstance()->rtvDescriptorHeap;
+	ID3D12DescriptorHeap* rtvDescriptorHeap = DxCommon::GetInstance()->rtvDescriptorHeap;
 	ID3D12Resource* swapChainResources[2];//
 	swapChainResources[0] = DxCommon::GetInstance()->swapChainResources[0];
 	swapChainResources[1] = DxCommon::GetInstance()->swapChainResources[1];
@@ -306,7 +334,7 @@ void DxCommon::CreateDxgiFactory()
 	assert(useAdapter != nullptr);
 	DxCommon::GetInstance()->dxgiFactory = dxgiFactory;
 	DxCommon::GetInstance()->useAdapter = useAdapter;
-	
+
 
 }
 /************************************************/
@@ -353,7 +381,7 @@ void DxCommon::CreateDevice()
 	Log("Complete Create D3D12Device!!!\n");
 	////
 	DxCommon::GetInstance()->device = device;
-	DxCommon::GetInstance()->useAdapter= useAdapter;
+	DxCommon::GetInstance()->useAdapter = useAdapter;
 }
 /************************************************/
 /****************   　初期化　   ****************/
