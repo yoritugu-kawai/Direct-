@@ -1,15 +1,33 @@
 #pragma once
 #include"DxCommon.h"
+#include"../Shader/CompileShader.h"
+struct PSOProperty
+{
+	ID3D12PipelineState* GraphicsPipelineState = nullptr;
+	ID3D12RootSignature* rootSignature = nullptr;
+	ID3DBlob* signatureBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+
+};
+struct PSO
+{
+	PSOProperty shape;
+	
+
+};
 class PipelineState
 {
 public:
-	void DXC();
-	void CreatePSO();
-
+	static PipelineState* GetInstance();
+	
+	//PSO
+	
+	static void CreatePSO();
+	static void Release();
 private:
+	//
+	static void ShapePSO();
 	HRESULT hr;//
-	/*DIX*/
-	IDxcUtils* dxcUtils;/*後々の可能性あり*/
-	IDxcCompiler3* dxcCompiler;/*後々の可能性あり*/
-	IDxcIncludeHandler* includeHandler;/*後々の可能性あり*/
+	
+	PSO pso_;
 };

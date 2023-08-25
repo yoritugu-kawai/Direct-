@@ -7,16 +7,7 @@ class DxCommon
 public:
 	static DxCommon* GetInstance();
 
-	static IDxcBlob* CompileShader(
-		// CompilerするShaderファイルへのパス
-		const std::wstring& filePath,
-		// Compilerに使用するProfile
-		const wchar_t* profile,
-		// 初期化で生成したものを3つ
-		IDxcUtils* dxcUtils,
-		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler);
-
+	
 	/// <summary>
 	/// コマンド系
 	/// </summary>
@@ -58,10 +49,15 @@ public:
 	/// <param name="hwnd"></param>
 	static void Initialize();
 
-	
+
 	//解放
 	static void Release();
 
+	/// <summary>
+	/// 完璧でゲッター
+	/// </summary>
+	static ID3D12Device* GetDevice() {return DxCommon::GetInstance()->device;}
+	static ID3D12GraphicsCommandList* GetCommandList() {return DxCommon::GetInstance()->commandList;}
 private:
 	//WinApp* winApp_ = nullptr;
 
@@ -83,7 +79,7 @@ private:
 	/// <summary>
 	/// エラー警告
 	/// </summary>
-	
+
 
 	ID3D12Debug1* debugController = nullptr;
 	/// <summary>
@@ -117,7 +113,7 @@ private:
 	/// </summary>
 
 	//フェンスイベント
-	ID3D12Fence* fence=nullptr;//
+	ID3D12Fence* fence = nullptr;//
 	uint64_t fenceValue = 0;//
 	HANDLE fenceEvent;//
 	//POS
@@ -129,5 +125,5 @@ private:
 	/*-----シェイダ－コンパイル-------*/
 	IDxcBlob* vertexShaderBlob;/*後々の可能性あり*/
 	IDxcBlob* pixelShaderBlob;/*後々の可能性あり*/
-	
+
 };

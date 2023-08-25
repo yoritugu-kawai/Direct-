@@ -95,6 +95,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Base\PipelineState.cpp" />
     <ClCompile Include="DKJEN\Base\WinApp.cpp" />
     <ClCompile Include="DKJEN\Math\Math.cpp" />
+    <ClCompile Include="DKJEN\Shader\CompileShader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Base\PipelineState.h" />
     <ClInclude Include="DKJEN\Base\WinApp.h" />
     <ClInclude Include="DKJEN\Math\Math.h" />
+    <ClInclude Include="DKJEN\Shader\CompileShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

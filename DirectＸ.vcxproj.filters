@@ -57,6 +57,9 @@
     <ClCompile Include="DKJEN\Base\PipelineState.cpp">
       <Filter>DKJEN\Base\PSO</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Shader\CompileShader.cpp">
+      <Filter>DKJEN</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -82,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Base\PipelineState.h">
       <Filter>DKJEN\Base\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Shader\CompileShader.h">
+      <Filter>DKJEN</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

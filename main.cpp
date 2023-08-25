@@ -1,5 +1,7 @@
 #include"DKJEN/Base/DxCommon.h"
 #include"DKJEN/Base/WinApp.h"
+#include "DKJEN/Shader/CompileShader.h"
+#include"DKJEN/Base/PipelineState.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
@@ -7,6 +9,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
+	CompileShader::DXC();
+	CompileShader::ShaderCompile();
+	PipelineState::CreatePSO();
 	//DxCommon* dxCommon_ = new DxCommon;
 
 
@@ -29,7 +34,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 	}
 	
-	
+	CompileShader::Release();
+
+	PipelineState::Release();
 	DxCommon::Release();
 
 	
