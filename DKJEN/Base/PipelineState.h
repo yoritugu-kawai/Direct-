@@ -24,6 +24,7 @@ public:
 	
 	static void CreatePSO();
 	static void Release();
+	static PSO GetPSO() {return PipelineState::GetInstance()->pso_;}
 private:
 	//
 	static void ShapePSO();

@@ -12,6 +12,27 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 
 void PolygonType::Draw()
 {
+	Vector4* vertexData = nullptr;
+	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	//座標
+	//左下
+	vertexData[0]= 
+	{ CenterPos_.x - size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+
+	//上
+	vertexData[1] = { CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
+
+	//右上
+	vertexData[2] = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+
+	//
+	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
+	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
+	commandList->SetGraphicsRootSignature(pso_.rootSignature);
+	commandList->SetPipelineState(pso_.GraphicsPipelineState);
+	commandList->IASetVertexBuffers(0, 1, &bufferView_);
+	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commandList->DrawInstanced(3, 1, 0, 0);
 }
 
 void PolygonType::Release()
