@@ -12,7 +12,11 @@ void PipelineState::CreatePSO()
 
 void PipelineState::Release()
 {
-	PipelineState::GetInstance()->pso_.shape.errorBlob->Release();
+	if (PipelineState::GetInstance()->pso_.shape.errorBlob)
+	{
+		PipelineState::GetInstance()->pso_.shape.errorBlob->Release();
+	}
+	
 	PipelineState::GetInstance()->pso_.shape.GraphicsPipelineState->Release();
 	PipelineState::GetInstance()->pso_.shape.rootSignature->Release();
 	PipelineState::GetInstance()->pso_.shape.signatureBlob->Release();
