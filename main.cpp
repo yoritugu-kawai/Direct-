@@ -13,8 +13,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CompileShader::DXC();
 	CompileShader::ShaderCompile();
 	PipelineState::CreatePSO();
-	PolygonType* polygon_ = new PolygonType;
-	polygon_->Initialize({ 0.0f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
+	PolygonType* polygon_[2] ;
+	polygon_[0] = new PolygonType;
+	polygon_[1] = new PolygonType;
+	polygon_[0]->Initialize({ 0.5f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
+	polygon_[1]->Initialize({0.0f,0.0f,0.0f,1.0f}, {1.0f,1.0f,1.0f,1.0f});
 	//DxCommon* dxCommon_ = new DxCommon;
 
 
@@ -32,11 +35,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DxCommon::BeginFrame();
 			//　ゲーム処理
 			//　ゲーム処理
-		polygon_->Draw();
+		polygon_[0]->Draw();
+		polygon_[1]->Draw();
 		DxCommon::EndFrame();
 		
 	}
-	polygon_->Release();
+	polygon_[0]->Release();
+	polygon_[1]->Release();
 	CompileShader::Release();
 
 	PipelineState::Release();
