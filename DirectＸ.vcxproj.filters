@@ -60,6 +60,9 @@
     <ClCompile Include="DKJEN\Shader\CompileShader.cpp">
       <Filter>DKJEN</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Type\Polygon.cpp">
+      <Filter>DKJEN\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Shader\CompileShader.h">
       <Filter>DKJEN</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Type\Polygon.h">
+      <Filter>DKJEN\Type</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
