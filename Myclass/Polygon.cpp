@@ -85,6 +85,7 @@ void PolygoType::Draw()
 	//コマンドつむ２
 	dxcommon_->commandListGet()->RSSetViewports(1, &viewport);
 	dxcommon_->commandListGet()->RSSetScissorRects(1, &scissorRect);
+	
 	dxcommon_->commandListGet()->SetGraphicsRootSignature(dxcommon_->rootSignatureGet());
 	dxcommon_->commandListGet()->SetPipelineState(dxcommon_->graphicsPipelineStateGet());
 	dxcommon_->commandListGet()->IASetVertexBuffers(0, 1, &vertexBufferView);
