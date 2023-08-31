@@ -97,6 +97,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Base\Log.cpp" />
     <ClCompile Include="DKJEN\Base\PipelineState.cpp" />
     <ClCompile Include="DKJEN\Base\WinApp.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_demo.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_draw.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_tables.cpp" />
+    <ClCompile Include="DKJEN\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="DKJEN\Math\Math.cpp" />
     <ClCompile Include="DKJEN\Shader\CompileShader.cpp" />
     <ClCompile Include="DKJEN\Type\Polygon.cpp" />
@@ -104,6 +111,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig" />
+    <Text Include="DKJEN\externals\imgui\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Obiject3d.VS.hlsl">
@@ -124,6 +132,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Base\Log.h" />
     <ClInclude Include="DKJEN\Base\PipelineState.h" />
     <ClInclude Include="DKJEN\Base\WinApp.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imconfig.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imgui.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imgui_internal.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imstb_rectpack.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imstb_textedit.h" />
+    <ClInclude Include="DKJEN\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="DKJEN\Math\Math.h" />
     <ClInclude Include="DKJEN\Shader\CompileShader.h" />
     <ClInclude Include="DKJEN\Type\Polygon.h" />
