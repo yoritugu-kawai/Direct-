@@ -24,6 +24,8 @@ void PolygonType::Draw()
 	wvpResource->Map(0, nullptr, 
 		reinterpret_cast<void**>(&wvpData));
 	*wvpData = MakeIdentity4x4();
+
+
 	
 	//
 	Vector4* vertexData = nullptr;
