@@ -14,16 +14,17 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 
 void PolygonType::Draw()
 {
-	//移動
-	Matrix4x4* wvpData = nullptr;
-	wvpResource->Map(0, nullptr,
-		reinterpret_cast<void**>(wvpData));
-	*wvpData = MakeIdentity4x4();
 	//色
 	Vector4* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&materialDeta));
 	*materialDeta = Color_;
+	//移動
+	Matrix4x4* wvpData = nullptr;
+	wvpResource->Map(0, nullptr, 
+		reinterpret_cast<void**>(&wvpData));
+	*wvpData = MakeIdentity4x4();
+	
 	//
 	Vector4* vertexData = nullptr;
 	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
