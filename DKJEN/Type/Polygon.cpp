@@ -25,7 +25,12 @@ void PolygonType::Draw()
 		reinterpret_cast<void**>(&wvpData));
 	*wvpData = MakeIdentity4x4();
 
-
+	transfom.rotate.y += 0.03f;
+	Matrix4x4 worldMatrix = MakeAffineMatrix
+	(transfom.scale, 
+		transfom.rotate,
+		transfom.translate);
+	*wvpData = worldMatrix;
 	
 	//
 	Vector4* vertexData = nullptr;
@@ -58,6 +63,7 @@ void PolygonType::Release()
 {
 	Vertex->Release();
 	materialResource->Release();
+	wvpResource->Release();
 }
 
 ID3D12Resource* PolygonType::CreateBufferResource(size_t sizeInbyte)
