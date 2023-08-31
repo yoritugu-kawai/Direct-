@@ -2,8 +2,9 @@
 
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
-	Vertex = CreateBufferResource(sizeof(Vector4)*3);
-	bufferView_ = VertexCreateBufferView(sizeof(Vector4)*3, Vertex, 3);
+	Vertex = CreateBufferResource(sizeof(Vector4) * 3);
+	bufferView_ = VertexCreateBufferView(sizeof(Vector4) * 3, Vertex, 3);
+	materialResource = CreateBufferResource(sizeof(Vector4));
 	CenterPos_ = pos;
 	Color_ = Color;
 
@@ -12,11 +13,17 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 
 void PolygonType::Draw()
 {
+	//色
+	Vector4* materialDeta = nullptr;
+	materialResource->Map(0, nullptr,
+		reinterpret_cast<void**>(&materialDeta));
+	*materialDeta = Color_;
+	//
 	Vector4* vertexData = nullptr;
 	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	//座標
 	//左下
-	vertexData[0]= 
+	vertexData[0] =
 	{ CenterPos_.x - size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
 
 	//上
@@ -24,9 +31,8 @@ void PolygonType::Draw()
 
 	//右上
 	vertexData[2] = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
-	//色
 
-	
+
 	//
 	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
@@ -34,13 +40,14 @@ void PolygonType::Draw()
 	commandList->SetPipelineState(pso_.GraphicsPipelineState);
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 
 void PolygonType::Release()
 {
 	Vertex->Release();
-
+	materialResource->Release();
 }
 
 ID3D12Resource* PolygonType::CreateBufferResource(size_t sizeInbyte)

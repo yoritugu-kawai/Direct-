@@ -17,7 +17,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	polygon_[0] = new PolygonType;
 	polygon_[1] = new PolygonType;
 	polygon_[0]->Initialize({ 0.5f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
-	polygon_[1]->Initialize({0.0f,0.0f,0.0f,1.0f}, {1.0f,1.0f,1.0f,1.0f});
+	polygon_[1]->Initialize({0.0f,0.0f,0.0f,1.0f}, {1.0f,1.0f,0.0f,0.0f});
 	//DxCommon* dxCommon_ = new DxCommon;
 
 
