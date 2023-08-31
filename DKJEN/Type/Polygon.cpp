@@ -48,7 +48,7 @@ void PolygonType::Draw()
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootShaderResourceView(1, wvpResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 
