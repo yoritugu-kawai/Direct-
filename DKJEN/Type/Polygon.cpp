@@ -5,6 +5,7 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 	Vertex = CreateBufferResource(sizeof(Vector4) * 3);
 	bufferView_ = VertexCreateBufferView(sizeof(Vector4) * 3, Vertex, 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
+	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
 	CenterPos_ = pos;
 	Color_ = Color;
 
@@ -13,6 +14,11 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 
 void PolygonType::Draw()
 {
+	//移動
+	Matrix4x4* wvpData = nullptr;
+	wvpResource->Map(0, nullptr,
+		reinterpret_cast<void**>(wvpData));
+	*wvpData = MakeIdentity4x4();
 	//色
 	Vector4* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
@@ -41,6 +47,7 @@ void PolygonType::Draw()
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootShaderResourceView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 
