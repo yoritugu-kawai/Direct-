@@ -6,6 +6,7 @@
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
+
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 	WinApp::Initialize(Title);
