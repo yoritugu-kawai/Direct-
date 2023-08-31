@@ -24,7 +24,9 @@ void PolygonType::Draw()
 
 	//右上
 	vertexData[2] = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+	//色
 
+	
 	//
 	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
