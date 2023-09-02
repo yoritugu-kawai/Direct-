@@ -60,6 +60,7 @@ public:
 	static ID3D12Device* GetDevice() {return DxCommon::GetInstance()->device;}
 	static ID3D12GraphicsCommandList* GetCommandList() {return DxCommon::GetInstance()->commandList;}
 	static ID3D12DescriptorHeap* GetsrvDescriptorHeap() { return DxCommon::GetInstance()->srvDescriptorHeap; }
+	//ここから新しく追加
 	static DXGI_SWAP_CHAIN_DESC1 GetswapChainDesc() { return DxCommon::GetInstance()->swapChainDesc; }
 	static D3D12_RENDER_TARGET_VIEW_DESC rtvDescGet() { return DxCommon::GetInstance()->rtvDesc; }
 private:
