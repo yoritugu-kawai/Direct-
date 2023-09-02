@@ -35,7 +35,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector4 color[2];
 
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i <2 ; i++) {
 		matrix[i] = MakeIdentity4x4();
 		scale[i] = { 1,1,1 };
 		rotate[i] = { 0,0,0 };
