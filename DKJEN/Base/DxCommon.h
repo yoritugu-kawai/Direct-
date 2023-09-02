@@ -28,6 +28,7 @@ public:
 	/// ヒープ
 	/// </summary>
 	static void CreateDescriptorHeap();
+	static ID3D12DescriptorHeap* CreateDescriptorDesc(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 	/// <summary>
 	/// RTV
 	/// </summary>
@@ -58,6 +59,9 @@ public:
 	/// </summary>
 	static ID3D12Device* GetDevice() {return DxCommon::GetInstance()->device;}
 	static ID3D12GraphicsCommandList* GetCommandList() {return DxCommon::GetInstance()->commandList;}
+	static ID3D12DescriptorHeap* GetsrvDescriptorHeap() { return DxCommon::GetInstance()->srvDescriptorHeap; }
+	static DXGI_SWAP_CHAIN_DESC1 GetswapChainDesc() { return DxCommon::GetInstance()->swapChainDesc; }
+	static D3D12_RENDER_TARGET_VIEW_DESC rtvDescGet() { return DxCommon::GetInstance()->rtvDesc; }
 private:
 	//WinApp* winApp_ = nullptr;
 
@@ -92,10 +96,12 @@ private:
 	/// スワップチェーン
 	/// </summary>
 	IDXGISwapChain4* swapChain;//
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};//
 	/// <summary>
 	/// ヒープ
 	/// </summary>
 	ID3D12DescriptorHeap* rtvDescriptorHeap;//
+	ID3D12DescriptorHeap* srvDescriptorHeap;//
 	/// <summary>
 	/// スワップチェーンのリリースを出す
 	/// </summary>
@@ -125,5 +131,6 @@ private:
 	/*-----シェイダ－コンパイル-------*/
 	IDxcBlob* vertexShaderBlob;/*後々の可能性あり*/
 	IDxcBlob* pixelShaderBlob;/*後々の可能性あり*/
-
+	//RTV
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
 };

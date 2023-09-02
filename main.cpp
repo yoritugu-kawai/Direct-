@@ -3,28 +3,46 @@
 #include "DKJEN/Shader/CompileShader.h"
 #include"DKJEN/Base/PipelineState.h"
 #include"DKJEN/Type/Polygon.h"
+#include"DKJEN/Imgui/imguiManager.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	
+
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
 	CompileShader::DXC();
 	CompileShader::ShaderCompile();
 	PipelineState::CreatePSO();
-	PolygonType* polygon_[2] ;
+
+	ImguiManager* imguiManager = new ImguiManager;
+	imguiManager->Initialize();
+
+
+
+	PolygonType* polygon_[2];
 	polygon_[0] = new PolygonType;
 	polygon_[1] = new PolygonType;
+
 	polygon_[0]->Initialize({ 0.5f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
-	polygon_[1]->Initialize({0.0f,0.0f,0.0f,1.0f}, {1.0f,1.0f,0.0f,0.0f});
-	//DxCommon* dxCommon_ = new DxCommon;
+	polygon_[1]->Initialize({ 0.0f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,0.0f,0.0f });
+
+	Matrix4x4 matrix[2];
+	Vector3 scale[2];
+	Vector3 rotate[2];
+	Vector3 translate[2];
+	Vector4 color[2];
 
 
-	
-	//dxCommon_->Initialize(winApp_->Width(), winApp_->Height(),winApp_->GetHwnd());
-	
+	for (int i = 0; i < 3; i++) {
+		matrix[i] = MakeIdentity4x4();
+		scale[i] = { 1,1,1 };
+		rotate[i] = { 0,0,0 };
+		translate[i] = { 0,0,0 };
+		color[i] = { 1.0f,1.0f,0.0f,0.0f };
+
+	}
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -34,21 +52,39 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DispatchMessage(&msg);
 		}
 		DxCommon::BeginFrame();
-			//　ゲーム処理
-			//　ゲーム処理
+		imguiManager->BeginFrame();
+		//　ゲーム処理
+		//　ゲーム処理
+
+
+		ImGui::Begin("Triangle1");
+		ImGui::ColorEdit3("color", (float*)&color);
+		ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &rotate[0].x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("translate", &translate[0].x, -1.0f, 1.0f);
+		ImGui::End();
+
+		ImGui::Begin("Triangle2");
+		ImGui::ColorEdit3("color", (float*)&color);
+		ImGui::SliderFloat3("scale", &scale[1].x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &rotate[1].x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
+		ImGui::End();
 		polygon_[0]->Draw();
 		polygon_[1]->Draw();
+		///
+		imguiManager->EndFrame();
 		DxCommon::EndFrame();
-		
+
 	}
 	polygon_[0]->Release();
 	polygon_[1]->Release();
 	CompileShader::Release();
-
+	delete imguiManager;
 	PipelineState::Release();
 	DxCommon::Release();
 
-	
-	
+
+
 	return 0;
 }

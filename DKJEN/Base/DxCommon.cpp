@@ -168,12 +168,13 @@ void DxCommon::EndFrame()
 void DxCommon::CreateSwapChain()
 {
 	IDXGISwapChain4* swapChain = DxCommon::GetInstance()->swapChain;
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = DxCommon::GetInstance()->swapChainDesc;
 	ID3D12CommandQueue* commandQueue = DxCommon::GetInstance()->commandQueue;//
 	IDXGIFactory7* dxgiFactory = DxCommon::GetInstance()->dxgiFactory;//
 	///
 	//   スワップチェーン作成
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+
 	swapChainDesc.Width = WinApp::GetInstance()->Width();
 	swapChainDesc.Height = WinApp::GetInstance()->Height();
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -188,7 +189,7 @@ void DxCommon::CreateSwapChain()
 	DxCommon::GetInstance()->commandQueue = commandQueue;//
 	DxCommon::GetInstance()->dxgiFactory = dxgiFactory;//
 	DxCommon::GetInstance()->swapChain = swapChain;
-
+	DxCommon::GetInstance()->swapChainDesc = swapChainDesc;
 }
 void DxCommon::CreateSwapResce()
 {
@@ -214,21 +215,40 @@ void DxCommon::CreateSwapResce()
 void DxCommon::CreateDescriptorHeap()
 {
 	ID3D12DescriptorHeap* rtvDescriptorHeap;
+	ID3D12DescriptorHeap* srvDescriptorHeap;
 	ID3D12Device* device = DxCommon::GetInstance()->device;
 	///
 	//ディスクトップヒープ作成
+	rtvDescriptorHeap= CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	srvDescriptorHeap = CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 
-	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
+	/*D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
 	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvDescriptorHeapDesc.NumDescriptors = 2;
 	HRESULT hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr));*/
 	CreateSwapResce();
 
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
+	DxCommon::GetInstance()->srvDescriptorHeap = srvDescriptorHeap;
 	CreateRTV();
 
+}
+
+ID3D12DescriptorHeap* DxCommon::CreateDescriptorDesc(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+{
+	ID3D12DescriptorHeap* descriptorHeap = nullptr;
+	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
+	descriptorHeapDesc.Type = heapType;
+	descriptorHeapDesc.NumDescriptors = numDescriptors;
+	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+
+	HRESULT hr = device->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+
+	assert(SUCCEEDED(hr));
+
+	return descriptorHeap;
 }
 
 /************************************************/
@@ -245,9 +265,10 @@ void DxCommon::CreateRTV()
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];//
 	rtvHandles[0] = DxCommon::GetInstance()->rtvHandles[0];
 	rtvHandles[1] = DxCommon::GetInstance()->rtvHandles[1];
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc=DxCommon::GetInstance()->rtvDesc;
 	////
 	// RTVです
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+
 	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
@@ -260,6 +281,7 @@ void DxCommon::CreateRTV()
 
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
 	//
+	DxCommon::GetInstance()->rtvDesc = rtvDesc;
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
 	DxCommon::GetInstance()->swapChainResources[0] = swapChainResources[0];
@@ -418,9 +440,11 @@ void DxCommon::Release() {
 	CloseHandle(DxCommon::GetInstance()->fenceEvent);
 	DxCommon::GetInstance()->fence->Release();
 	DxCommon::GetInstance()->rtvDescriptorHeap->Release();
+	DxCommon::GetInstance()->srvDescriptorHeap->Release();
 	DxCommon::GetInstance()->swapChainResources[0]->Release();
 	DxCommon::GetInstance()->swapChainResources[1]->Release();
 	DxCommon::GetInstance()->swapChain->Release();
+
 	DxCommon::GetInstance()->commandList->Release();
 	DxCommon::GetInstance()->commandAllocator->Release();
 	DxCommon::GetInstance()->commandQueue->Release();

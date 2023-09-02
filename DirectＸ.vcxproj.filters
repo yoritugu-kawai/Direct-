@@ -37,6 +37,12 @@
     <Filter Include="DKJEN\Base\PSO">
       <UniqueIdentifier>{9abaec95-9284-419e-8f1b-d103e9a9e6c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{e210cbb9-210c-498f-9682-2e37b8a87ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Imgui">
+      <UniqueIdentifier>{7bed791a-69a4-45c4-8dba-ac37d078ff69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,10 +69,37 @@
     <ClCompile Include="DKJEN\Type\Polygon.cpp">
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_impl_dx12.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\externals\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Imgui\imguiManager.cpp">
+      <Filter>DKJEN\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
       <Filter>ソース ファイル</Filter>
+    </Text>
+    <Text Include="DKJEN\externals\imgui\LICENSE.txt">
+      <Filter>imgui</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +127,33 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Type\Polygon.h">
       <Filter>DKJEN\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imgui_impl_dx12.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\externals\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Imgui\imguiManager.h">
+      <Filter>DKJEN\Imgui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
