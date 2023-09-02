@@ -80,9 +80,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	polygon_[0]->Release();
 	polygon_[1]->Release();
 	CompileShader::Release();
-	delete imguiManager;
+	//delete imguiManager;
 	PipelineState::Release();
 	DxCommon::Release();
+	imguiManager->Release();
 
 
 

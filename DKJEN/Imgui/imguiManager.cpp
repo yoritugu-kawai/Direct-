@@ -39,4 +39,5 @@ void ImguiManager::EndFrame()
 
 void ImguiManager::Release()
 {
+	ImGui_ImplDX12_Shutdown();
 }
