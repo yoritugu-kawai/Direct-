@@ -93,6 +93,9 @@
     <ClCompile Include="DKJEN\Imgui\imguiManager.cpp">
       <Filter>DKJEN\Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Type\Texture.cpp">
+      <Filter>DKJEN\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -155,5 +158,11 @@
     <ClInclude Include="DKJEN\Imgui\imguiManager.h">
       <Filter>DKJEN\Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="DKJEN\Type\Texture.h">
+      <Filter>DKJEN\Type</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Object3d.hlsli" />
   </ItemGroup>
 </Project>

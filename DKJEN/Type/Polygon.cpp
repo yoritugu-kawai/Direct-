@@ -2,8 +2,8 @@
 
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
-	Vertex = CreateBufferResource(sizeof(Vector4) * 3);
-	bufferView_ = VertexCreateBufferView(sizeof(Vector4) * 3, Vertex, 3);
+	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
+	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
 	CenterPos_ = pos;
@@ -12,7 +12,7 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 }
 
 
-void PolygonType::Draw()
+void PolygonType::Draw(TexProeerty  tex)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -23,29 +23,32 @@ void PolygonType::Draw()
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr, 
 		reinterpret_cast<void**>(&wvpData));
-	*wvpData = MakeIdentity4x4();
+	/**wvpData = MakeIdentity4x4();
 
 	transfom.rotate.y += 0.03f;
 	Matrix4x4 worldMatrix = MakeAffineMatrix
 	(transfom.scale, 
 		transfom.rotate,
-		transfom.translate);
-	*wvpData = worldMatrix;
+		transfom.translate);*/
+	//*wvpData = worldMatrix;
 	
 	//
-	Vector4* vertexData = nullptr;
+	VerteData* vertexData = nullptr;
 	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	//
+	// 
+	
 	//座標
 	//左下
-	vertexData[0] =
+	vertexData[0].position =
 	{ CenterPos_.x - size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
-
+	vertexData[0].texcoord = { 0.0f,1.0f };
 	//上
-	vertexData[1] = { CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
-
+	vertexData[1].position = { CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
+	vertexData[1].texcoord = { 0.5f,0.0f };
 	//右上
-	vertexData[2] = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
-
+	vertexData[2].position = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+	vertexData[2].texcoord = { 1.0f,1.0f };
 
 	//
 	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
@@ -56,6 +59,7 @@ void PolygonType::Draw()
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 
