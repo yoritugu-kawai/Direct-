@@ -5,14 +5,8 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
-	//bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
-	bufferView_.BufferLocation = Vertex->GetGPUVirtualAddress();
-
-	//使用するリソースのサイズは頂点3つ分のサイズ
-	bufferView_.SizeInBytes = sizeof(VerteData) * 3;
-
-	//1頂点あたりのサイズ
-	bufferView_.StrideInBytes = sizeof(VerteData);
+	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
+	
 
 	CenterPos_ = pos;
 	Color_ = Color;
