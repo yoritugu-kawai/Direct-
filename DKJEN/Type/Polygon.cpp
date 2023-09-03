@@ -12,7 +12,7 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 }
 
 
-void PolygonType::Draw(TexProeerty  tex)
+void PolygonType::Draw()
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -59,7 +59,7 @@ void PolygonType::Draw(TexProeerty  tex)
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
+	//commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 

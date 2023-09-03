@@ -29,12 +29,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	polygon_[0]->Initialize({ 0.5f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
 	polygon_[1]->Initialize({ 0.0f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,0.0f,0.0f });
 
-	//テキスト
-	Texture* tex_ = new Texture;
-	tex_->Initiluze();
-
-	TexProeerty  tex;
-	tex = tex_->Load();
+	
+	
 
 	Matrix4x4 matrix[2];
 	Vector3 scale[2];
@@ -78,8 +74,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("rotate", &rotate[1].x, -1.0f, 1.0f);
 		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 		ImGui::End();
-		polygon_[0]->Draw(tex);
-		polygon_[1]->Draw(tex);
+		polygon_[0]->Draw();
+		polygon_[1]->Draw();
 		///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
