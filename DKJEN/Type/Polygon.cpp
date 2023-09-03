@@ -116,6 +116,6 @@ D3D12_VERTEX_BUFFER_VIEW PolygonType::VertexCreateBufferView(size_t sizeInbyte, 
 	resultBufferView.SizeInBytes = UINT(sizeInbyte);
 
 	//1頂点あたりのサイズ
-	resultBufferView.StrideInBytes = UINT(sizeInbyte / size);
+	resultBufferView.StrideInBytes = UINT(sizeInbyte / 3);
 	return resultBufferView;
 }
