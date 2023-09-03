@@ -3,16 +3,24 @@
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
-	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
+	//bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
+	bufferView_.BufferLocation = Vertex->GetGPUVirtualAddress();
+
+	//使用するリソースのサイズは頂点3つ分のサイズ
+	bufferView_.SizeInBytes = sizeof(VerteData) * 3;
+
+	//1頂点あたりのサイズ
+	bufferView_.StrideInBytes = sizeof(VerteData);
+
 	CenterPos_ = pos;
 	Color_ = Color;
 
 }
 
 
-void PolygonType::Draw()
+void PolygonType::Draw(TexProeerty  tex)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -34,7 +42,8 @@ void PolygonType::Draw()
 	
 	//
 	VerteData* vertexData = nullptr;
-	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	Vertex->Map(0, nullptr,
+		reinterpret_cast<void**>(&vertexData));
 	//
 	// 
 	
@@ -59,7 +68,7 @@ void PolygonType::Draw()
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
-	//commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
+	commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 

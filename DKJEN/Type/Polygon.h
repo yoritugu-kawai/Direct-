@@ -7,7 +7,7 @@ class PolygonType
 {
 public:
 	void Initialize( Vector4 pos, Vector4 Color);
-	void Draw();
+	void Draw(TexProeerty  tex);
 	void Release();
 	//
 	static ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
@@ -22,7 +22,7 @@ private:
 	DxCommon dxCommmon_;
 	//
 	ID3D12Resource* Vertex;
-	ID3D12Resource* vertexResource = nullptr;
+
 	ID3D12Resource* materialResource;
 	ID3D12Resource* wvpResource;
 	//
