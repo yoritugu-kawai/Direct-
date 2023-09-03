@@ -90,11 +90,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	polygon_[1]->Release();
 	CompileShader::Release();
 	imguiManager->Release();
+	tex_->End();
 	PipelineState::Release();
 	DxCommon::Release();
 
 
 
 	return 0;
-	tex_->End();
 }
