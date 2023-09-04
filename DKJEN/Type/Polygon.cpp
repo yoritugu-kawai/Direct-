@@ -47,10 +47,12 @@ void PolygonType::Draw(TexProeerty  tex)
 	{ CenterPos_.x - size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 	//上
-	vertexData[1].position = { CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
+	vertexData[1].position =
+	{ CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
 	vertexData[1].texcoord = { 0.5f,0.0f };
 	//右上
-	vertexData[2].position = { CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+	vertexData[2].position = 
+	{ CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 
 	//
