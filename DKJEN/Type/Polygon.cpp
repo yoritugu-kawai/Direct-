@@ -2,10 +2,10 @@
 
 void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
-	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
+	Vertex = CreateBufferResource(sizeof(VerteData) * 6);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
-	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
+	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 6, Vertex, 3);
 	
 
 	CenterPos_ = pos;
@@ -65,7 +65,7 @@ void PolygonType::Draw(TexProeerty  tex)
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
-	commandList->DrawInstanced(3, 1, 0, 0);
+	commandList->DrawInstanced(6, 1, 0, 0);
 }
 
 void PolygonType::Release()

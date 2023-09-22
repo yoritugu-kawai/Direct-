@@ -80,14 +80,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 		ImGui::End();
 		polygon_[0]->Draw(tex);
-		//polygon_[1]->Draw(tex);
+		polygon_[1]->Draw(tex);
 		///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
 
 	}
 	polygon_[0]->Release();
-	//polygon_[1]->Release();
+	polygon_[1]->Release();
 	CompileShader::Release();
 	imguiManager->Release();
 	tex.Resource->Release();
