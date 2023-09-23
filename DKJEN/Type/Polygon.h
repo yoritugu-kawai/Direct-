@@ -6,7 +6,7 @@
 class PolygonType
 {
 public:
-	void Initialize( Vector4 pos, Vector4 Color);
+	void Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 Color);
 	void Draw(TexProeerty  tex);
 	void Release();
 	//
@@ -14,7 +14,11 @@ public:
 	static D3D12_VERTEX_BUFFER_VIEW VertexCreateBufferView(size_t sizeInbyte, ID3D12Resource* Resource, int size);
 
 private:
-	Vector4 CenterPos_ = { 0.0f,0.0f,0.0f };
+
+	Vector4 lefe_ = { 0.0f,0.0f,0.0f };
+	Vector4 top_ = { 0.0f,0.0f,0.0f };
+	Vector4 right_ = { 0.0f,0.0f,0.0f };
+	
 	Vector4 Color_ = { 0.0f,0.0f,1.0f,1.0f };
 	Transfom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 

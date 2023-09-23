@@ -1,14 +1,15 @@
 #include "Polygon.h"
 
-void PolygonType::Initialize(Vector4 pos, Vector4 Color)
+void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 Color)
 {
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
 	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
-	
 
-	CenterPos_ = pos;
+	lefe_ = lefe,
+	top_ = top;
+	right_ = right;
 	Color_ = Color;
 
 }
@@ -23,36 +24,36 @@ void PolygonType::Draw(TexProeerty  tex)
 	*materialDeta = Color_;
 	//移動
 	Matrix4x4* wvpData = nullptr;
-	wvpResource->Map(0, nullptr, 
+	wvpResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&wvpData));
 	*wvpData = MakeIdentity4x4();
 
 	transfom.rotate.y += 0.03f;
 	Matrix4x4 worldMatrix = MakeAffineMatrix
-	(transfom.scale, 
+	(transfom.scale,
 		transfom.rotate,
 		transfom.translate);
 	*wvpData = worldMatrix;
-	
+
 	//
 	VerteData* vertexData = nullptr;
 	Vertex->Map(0, nullptr,
 		reinterpret_cast<void**>(&vertexData));
 	//
 	// 
-	
+
 	//座標
 	//左下
 	vertexData[0].position =
-	{ CenterPos_.x - size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+	{ lefe_ };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 	//上
 	vertexData[1].position =
-	{ CenterPos_.x,CenterPos_.y + size,CenterPos_.z,CenterPos_.w };
+	{ top_ };
 	vertexData[1].texcoord = { 0.5f,0.0f };
 	//右上
-	vertexData[2].position = 
-	{ CenterPos_.x + size,CenterPos_.y - size,CenterPos_.z,CenterPos_.w };
+	vertexData[2].position =
+	{ right_ };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 
 	//

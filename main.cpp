@@ -8,6 +8,14 @@
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
+struct TrianglePropaty
+{
+	Vector4 lefe;
+	Vector4  top;
+	Vector4 right;
+	Vector4 color;
+
+};
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -22,21 +30,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 
-	PolygonType* polygon_[2];
-	polygon_[0] = new PolygonType;
-	polygon_[1] = new PolygonType;
-
-	polygon_[0]->Initialize({ 0.5f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,1.0f,1.0f });
-	polygon_[1]->Initialize({ 0.0f,0.0f,0.0f,1.0f }, { 1.0f,1.0f,0.0f,0.0f });
-
+	
 	//テキスト
 	Texture* tex_ = new Texture;
 	tex_->Initiluze();
 
 	TexProeerty  tex;
 	tex = tex_->Load();
-	
+	///座標
+	const int triangleCount = 6;
 
+
+	TrianglePropaty triangle[triangleCount];
+	triangle[0] =
+	{
+		{-0.5f,-0.5f,0.0f,1.0f},
+		{-0.0f,0.5f,0.0f,1.0f},
+		{0.5f,-0.5f,0.0f,1.0f},
+		{1.0f,0.0f,0.0f,1.0f}
+
+	};
+	//imgui
 	Matrix4x4 matrix[2];
 	Vector3 scale[2];
 	Vector3 rotate[2];
@@ -52,6 +66,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		color[i] = { 1.0f,1.0f,0.0f,0.0f };
 
 	}
+
+		PolygonType* polygon_[triangleCount];
+	for (int i = 0; i < triangleCount; i++) {
+		polygon_[0] = new PolygonType;
+		polygon_[0]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right,triangle[i].color);
+	}
+
+
+
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -79,15 +102,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("rotate", &rotate[1].x, -1.0f, 1.0f);
 		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 		ImGui::End();
-		polygon_[0]->Draw(tex);
-		polygon_[1]->Draw(tex);
+		for (int i = 0; i < triangleCount; i++) {
+			polygon_[i]->Draw(tex);
+		
+		}
 		///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
 
 	}
-	polygon_[0]->Release();
-	polygon_[1]->Release();
+	for (int i = 0; i < triangleCount; i++) {
+		polygon_[i]->Release();
+	}
+	
 	CompileShader::Release();
 	imguiManager->Release();
 	tex.Resource->Release();
