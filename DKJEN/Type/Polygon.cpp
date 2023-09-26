@@ -15,7 +15,7 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 C
 }
 
 
-void PolygonType::Draw(TexProeerty  tex,float speed)
+void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -26,31 +26,31 @@ void PolygonType::Draw(TexProeerty  tex,float speed)
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&wvpData));
-	*wvpData = MakeIdentity4x4();
+	//*wvpData = MakeIdentity4x4();
 
-	transfom.rotate.y += speed;
-	Matrix4x4 worldMatrix = MakeAffineMatrix
+	//transfom.rotate.y += speed;
+	/*Matrix4x4 worldMatrix = MakeAffineMatrix
 	(transfom.scale,
 		transfom.rotate,
 		transfom.translate);
-	*wvpData = worldMatrix;
+	*wvpData = worldMatrix;*/
 
 	//
 	VerteData* vertexData = nullptr;
 	Vertex->Map(0, nullptr,
 		reinterpret_cast<void**>(&vertexData));
-	//
-	// 
-
-	////射影
+	////
+	//// 
+	//////射影
 	//Transfom cameraTransfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},0.0f,0.0f,-5.0f };
 	//Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, (WinApp::GetInstance()->Width) / (WinApp::GetInstance()->Height), 0.1f, 100.0f);
 
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameratransform.scale, cameratransform.rotate, cameratransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
-	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+	Matrix4x4 worldViewProjectionMatrix = Multiply(m, Multiply(viewMatrix, projectionMatrix));
 	*wvpData = worldViewProjectionMatrix;
+	//*wvpData = m;
 
 	//座標
 	//左下

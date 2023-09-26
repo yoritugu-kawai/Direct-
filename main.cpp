@@ -113,8 +113,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 		ImGui::End();
 		for (int i = 0; i < triangleCount; i++) {
-			polygon_[0]->Draw(tex,0.03f);
-			polygon_[1]->Draw(tex, 0.02f);
+			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
+			polygon_[0]->Draw(tex,0.03f, matrix[0]);
+			polygon_[1]->Draw(tex, 0.02f, matrix[1]);
 		
 		}
 		///
