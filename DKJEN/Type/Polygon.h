@@ -31,4 +31,6 @@ private:
 	ID3D12Resource* wvpResource;
 	//
 	D3D12_VERTEX_BUFFER_VIEW bufferView_;
+	//
+	Transfom cameratransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 };

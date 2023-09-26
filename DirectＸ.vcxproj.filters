@@ -96,6 +96,9 @@
     <ClCompile Include="DKJEN\Type\Texture.cpp">
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Type\Camera.cpp">
+      <Filter>DKJEN\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -159,6 +162,9 @@
       <Filter>DKJEN\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Type\Texture.h">
+      <Filter>DKJEN\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Type\Camera.h">
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
   </ItemGroup>

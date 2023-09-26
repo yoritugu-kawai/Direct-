@@ -46,6 +46,11 @@ void PolygonType::Draw(TexProeerty  tex,float speed)
 	//Transfom cameraTransfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},0.0f,0.0f,-5.0f };
 	//Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, (WinApp::GetInstance()->Width) / (WinApp::GetInstance()->Height), 0.1f, 100.0f);
 
+	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameratransform.scale, cameratransform.rotate, cameratransform.translate);
+	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
+	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+	*wvpData = worldViewProjectionMatrix;
 
 	//座標
 	//左下
