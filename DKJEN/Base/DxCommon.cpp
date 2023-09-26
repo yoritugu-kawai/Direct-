@@ -52,6 +52,8 @@ void DxCommon::CommandLoad()
 	rtvHandles[0] = DxCommon::GetInstance()->rtvHandles[0];
 	rtvHandles[1] = DxCommon::GetInstance()->rtvHandles[1];
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->commandList;//
+	ID3D12DescriptorHeap* dsvDescriptorHeap = DxCommon::GetInstance()->dsvDescriptorHeap;
+
 	///
 	UINT backBufferIndex = swapChain->GetCurrentBackBufferIndex();
 
@@ -65,7 +67,14 @@ void DxCommon::CommandLoad()
 	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, nullptr);
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
 	commandList->ClearRenderTargetView(rtvHandles[backBufferIndex], clearColor, 0, nullptr);
+
+
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	commandList->OMSetRenderTargets(1, &rtvHandles[backBufferIndex], false, &dsvHandle);
+
+	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	//
+	DxCommon::GetInstance()->dsvDescriptorHeap = dsvDescriptorHeap;
 	DxCommon::GetInstance()->swapChain = swapChain;
 	DxCommon::GetInstance()->barrier = barrier;
 	DxCommon::GetInstance()->swapChainResources[0] = swapChainResources[0];
@@ -152,6 +161,7 @@ void DxCommon::BeginFrame()
 
 	commandList->RSSetViewports(1, &viewport); //
 	commandList->RSSetScissorRects(1, &scissorRect);
+	//
 
 
 
@@ -216,10 +226,11 @@ void DxCommon::CreateDescriptorHeap()
 {
 	ID3D12DescriptorHeap* rtvDescriptorHeap;
 	ID3D12DescriptorHeap* srvDescriptorHeap;
+	ID3D12DescriptorHeap* dsvDescriptorHeap;
 	ID3D12Device* device = DxCommon::GetInstance()->device;
 	///
 	//ディスクトップヒープ作成
-	rtvDescriptorHeap= CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	rtvDescriptorHeap = CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	srvDescriptorHeap = CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
 
 	/*D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
@@ -228,12 +239,22 @@ void DxCommon::CreateDescriptorHeap()
 	HRESULT hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));*/
 	CreateSwapResce();
+	//DSV
+	ID3D12Resource* depthStencilResource = CreateDepthStencilTextureRsource(device, WinApp::GetInstance()->Width(), WinApp::GetInstance()->Height());
+	dsvDescriptorHeap = CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
+	device->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+
+
+	//引き渡し
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
 	DxCommon::GetInstance()->srvDescriptorHeap = srvDescriptorHeap;
+	DxCommon::GetInstance()->dsvDescriptorHeap = dsvDescriptorHeap;
 	CreateRTV();
-
 }
 
 ID3D12DescriptorHeap* DxCommon::CreateDescriptorDesc(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
@@ -265,7 +286,7 @@ void DxCommon::CreateRTV()
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];//
 	rtvHandles[0] = DxCommon::GetInstance()->rtvHandles[0];
 	rtvHandles[1] = DxCommon::GetInstance()->rtvHandles[1];
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc=DxCommon::GetInstance()->rtvDesc;
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = DxCommon::GetInstance()->rtvDesc;
 	////
 	// RTVです
 
@@ -281,6 +302,9 @@ void DxCommon::CreateRTV()
 
 	device->CreateRenderTargetView(swapChainResources[1], &rtvDesc, rtvHandles[1]);
 	//
+
+
+
 	DxCommon::GetInstance()->rtvDesc = rtvDesc;
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
@@ -405,6 +429,45 @@ void DxCommon::CreateDevice()
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->useAdapter = useAdapter;
 }
+/***************************************/
+/****************          *************/
+/***************************************/
+ID3D12Resource* DxCommon::CreateDepthStencilTextureRsource(ID3D12Device* device, int32_t width, int32_t height)
+{
+
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Width = width;
+	resourceDesc.Height = height;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	resourceDesc.SampleDesc.Count = 1;
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+	//
+	D3D12_HEAP_PROPERTIES heapProperties{ };
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+	//
+	D3D12_CLEAR_VALUE depthClearValue{};
+	depthClearValue.DepthStencil.Depth = 1.0f; // 1.0f(最大値)でクリア
+	depthClearValue.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // フォーマット。Resourceと合わせる
+
+
+	// Resourceの生成
+	ID3D12Resource* resource = nullptr;
+	HRESULT hr = device->CreateCommittedResource(
+		&heapProperties, // Heapの設定
+		D3D12_HEAP_FLAG_NONE, // Hepaの特殊な設定。特になし
+		&resourceDesc, // Resourceの設定
+		D3D12_RESOURCE_STATE_DEPTH_WRITE, // 深度値を書き込む状態にしておく
+		&depthClearValue, // Clear最適値
+		IID_PPV_ARGS(&resource)); // 作成するResourceポインタへのポインタ
+
+	assert(SUCCEEDED(hr));
+
+	return resource;
+}
 /************************************************/
 /****************   　初期化　   ****************/
 /************************************************/
@@ -441,6 +504,8 @@ void DxCommon::Release() {
 	DxCommon::GetInstance()->fence->Release();
 	DxCommon::GetInstance()->rtvDescriptorHeap->Release();
 	DxCommon::GetInstance()->srvDescriptorHeap->Release();
+	DxCommon::GetInstance()->dsvDescriptorHeap->Release();
+
 	DxCommon::GetInstance()->swapChainResources[0]->Release();
 	DxCommon::GetInstance()->swapChainResources[1]->Release();
 	DxCommon::GetInstance()->swapChain->Release();
@@ -450,7 +515,10 @@ void DxCommon::Release() {
 	DxCommon::GetInstance()->commandQueue->Release();
 	DxCommon::GetInstance()->device->Release();
 	DxCommon::GetInstance()->useAdapter->Release();
+
 	DxCommon::GetInstance()->dxgiFactory->Release();
+
+
 #ifdef _DEBUG
 	DxCommon::GetInstance()->debugController->Release();
 #endif // _DEBUG

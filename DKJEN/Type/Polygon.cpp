@@ -15,7 +15,7 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 C
 }
 
 
-void PolygonType::Draw(TexProeerty  tex)
+void PolygonType::Draw(TexProeerty  tex,float speed)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -28,7 +28,7 @@ void PolygonType::Draw(TexProeerty  tex)
 		reinterpret_cast<void**>(&wvpData));
 	*wvpData = MakeIdentity4x4();
 
-	transfom.rotate.y += 0.03f;
+	transfom.rotate.y += speed;
 	Matrix4x4 worldMatrix = MakeAffineMatrix
 	(transfom.scale,
 		transfom.rotate,

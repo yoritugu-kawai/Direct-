@@ -38,7 +38,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty  tex;
 	tex = tex_->Load();
 	///座標
-	const int triangleCount = 6;
+	const int triangleCount = 2;
 
 
 	TrianglePropaty triangle[triangleCount];
@@ -50,6 +50,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{1.0f,0.0f,0.0f,1.0f}
 
 	};
+
+	triangle[1] =
+	{
+		{-0.5f,-0.0f,0.0f,1.0f},
+		{-0.0f,0.5f,0.0f,1.0f},
+		{0.5f,-0.5f,0.0f,1.0f},
+		{1.0f,0.0f,1.0f,1.0f}
+
+	};
+	float Speed =0.03f;
 	//imgui
 	Matrix4x4 matrix[2];
 	Vector3 scale[2];
@@ -69,8 +79,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		PolygonType* polygon_[triangleCount];
 	for (int i = 0; i < triangleCount; i++) {
-		polygon_[0] = new PolygonType;
-		polygon_[0]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right,triangle[i].color);
+		polygon_[i] = new PolygonType;
+		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right,triangle[i].color);
 	}
 
 
@@ -103,7 +113,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
 		ImGui::End();
 		for (int i = 0; i < triangleCount; i++) {
-			polygon_[i]->Draw(tex);
+			polygon_[0]->Draw(tex,0.03f);
+			polygon_[1]->Draw(tex, 0.02f);
 		
 		}
 		///

@@ -173,6 +173,13 @@ D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	assert(SUCCEEDED(hr));
 	
 	PipelineState::GetInstance()->pso_.shape = ShapePSO;
-
+	//ステイト追加
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	//
+	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
+	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 }

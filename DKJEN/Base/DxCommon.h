@@ -42,6 +42,9 @@ public:
 	//
 	static void CreateFeneEvent();
 	static void CreateDevice();
+	////
+	static	ID3D12Resource* CreateDepthStencilTextureRsource(ID3D12Device* device, int32_t width, int32_t height);
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -103,6 +106,7 @@ private:
 	/// </summary>
 	ID3D12DescriptorHeap* rtvDescriptorHeap;//
 	ID3D12DescriptorHeap* srvDescriptorHeap;//
+	ID3D12DescriptorHeap* dsvDescriptorHeap;
 	/// <summary>
 	/// スワップチェーンのリリースを出す
 	/// </summary>
