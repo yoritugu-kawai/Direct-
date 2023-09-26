@@ -504,7 +504,7 @@ void DxCommon::Release() {
 	DxCommon::GetInstance()->fence->Release();
 	DxCommon::GetInstance()->rtvDescriptorHeap->Release();
 	DxCommon::GetInstance()->srvDescriptorHeap->Release();
-	DxCommon::GetInstance()->dsvDescriptorHeap->Release();
+	DxCommon::GetInstance()->dsvDescriptorHeap->Release();//新しく追加
 
 	DxCommon::GetInstance()->swapChainResources[0]->Release();
 	DxCommon::GetInstance()->swapChainResources[1]->Release();
