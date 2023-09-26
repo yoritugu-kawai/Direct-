@@ -28,12 +28,12 @@ void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m)
 		reinterpret_cast<void**>(&wvpData));
 	//*wvpData = MakeIdentity4x4();
 
-	transfom.rotate.y += speed;
-	Matrix4x4 worldMatrix = MakeAffineMatrix
+	/*transfom.rotate.y += speed;*/
+	/*Matrix4x4 worldMatrix = MakeAffineMatrix
 	(transfom.scale,
 		transfom.rotate,
 		transfom.translate);
-	*wvpData = worldMatrix;
+	*wvpData = worldMatrix;*/
 
 	//
 	VerteData* vertexData = nullptr;
