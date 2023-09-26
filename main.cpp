@@ -102,8 +102,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::Begin("Triangle1");
 		ImGui::ColorEdit3("color", (float*)&color);
 		ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &rotate[0].x, -1.0f, 1.0f);
-		ImGui::SliderFloat3("translate", &translate[0].x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("rotate", &rotate[0].x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &translate[0].x, -5.0f, 5.0f);
+		
 		ImGui::End();
 
 		ImGui::Begin("Triangle2");
