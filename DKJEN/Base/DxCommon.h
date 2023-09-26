@@ -138,4 +138,7 @@ private:
 	IDxcBlob* pixelShaderBlob;/*後々の可能性あり*/
 	//RTV
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+
+	//
+	ID3D12Resource* depthStencilResource;
 };

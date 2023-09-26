@@ -227,6 +227,7 @@ void DxCommon::CreateDescriptorHeap()
 	ID3D12DescriptorHeap* rtvDescriptorHeap;
 	ID3D12DescriptorHeap* srvDescriptorHeap;
 	ID3D12DescriptorHeap* dsvDescriptorHeap;
+	ID3D12Resource* depthStencilResource;
 	ID3D12Device* device = DxCommon::GetInstance()->device;
 	///
 	//ディスクトップヒープ作成
@@ -240,7 +241,7 @@ void DxCommon::CreateDescriptorHeap()
 	assert(SUCCEEDED(hr));*/
 	CreateSwapResce();
 	//DSV
-	ID3D12Resource* depthStencilResource = CreateDepthStencilTextureRsource(device, WinApp::GetInstance()->Width(), WinApp::GetInstance()->Height());
+     depthStencilResource = CreateDepthStencilTextureRsource(device, WinApp::GetInstance()->Width(), WinApp::GetInstance()->Height());
 	dsvDescriptorHeap = CreateDescriptorDesc(device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
 	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -250,6 +251,7 @@ void DxCommon::CreateDescriptorHeap()
 
 
 	//引き渡し
+	DxCommon::GetInstance()->depthStencilResource = depthStencilResource;
 	DxCommon::GetInstance()->device = device;
 	DxCommon::GetInstance()->rtvDescriptorHeap = rtvDescriptorHeap;
 	DxCommon::GetInstance()->srvDescriptorHeap = srvDescriptorHeap;
@@ -434,6 +436,8 @@ void DxCommon::CreateDevice()
 /***************************************/
 ID3D12Resource* DxCommon::CreateDepthStencilTextureRsource(ID3D12Device* device, int32_t width, int32_t height)
 {
+	
+
 
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = width;
@@ -465,7 +469,7 @@ ID3D12Resource* DxCommon::CreateDepthStencilTextureRsource(ID3D12Device* device,
 		IID_PPV_ARGS(&resource)); // 作成するResourceポインタへのポインタ
 
 	assert(SUCCEEDED(hr));
-
+	
 	return resource;
 }
 /************************************************/
@@ -518,7 +522,7 @@ void DxCommon::Release() {
 
 	DxCommon::GetInstance()->dxgiFactory->Release();
 
-
+	DxCommon::GetInstance()->depthStencilResource->Release();
 #ifdef _DEBUG
 	DxCommon::GetInstance()->debugController->Release();
 #endif // _DEBUG

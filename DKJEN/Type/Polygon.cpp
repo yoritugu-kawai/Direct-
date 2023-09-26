@@ -42,6 +42,11 @@ void PolygonType::Draw(TexProeerty  tex,float speed)
 	//
 	// 
 
+	////射影
+	//Transfom cameraTransfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},0.0f,0.0f,-5.0f };
+	//Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, (WinApp::GetInstance()->Width) / (WinApp::GetInstance()->Height), 0.1f, 100.0f);
+
+
 	//座標
 	//左下
 	vertexData[0].position =

@@ -56,4 +56,6 @@ Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 MakeRotateXYZMatrix(float radianX, float radianY, float radianZ);
 Matrix4x4 MakeTranslateMatrix(const Vector3 translate);
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+Matrix4x4 MakePerspectiveFovMatrix(
+	float fovY, float aspecrRatio, float nearClip, float farClip);
 
