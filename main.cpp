@@ -101,7 +101,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		ImGui::Begin("Triangle1");
-		ImGui::ColorEdit3("color", (float*)&color);
+		ImGui::ColorEdit3("color", (float*)&color[0]);
 		ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &rotate[0].x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &translate[0].x, -5.0f, 5.0f);
@@ -109,15 +109,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::End();
 
 		ImGui::Begin("Triangle2");
-		ImGui::ColorEdit3("color", (float*)&color);
+		ImGui::ColorEdit3("color", (float*)&color[1]);
 		ImGui::SliderFloat3("scale", &scale[1].x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &rotate[1].x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &translate[1].x, -5.0f, 5.0f);
 		ImGui::End();
 		for (int i = 0; i < triangleCount; i++) {
 			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
-			polygon_[0]->Draw(tex,0.03f, matrix[0], color[i]);
-			polygon_[1]->Draw(tex, 0.02f, matrix[1], color[i]);
+			polygon_[0]->Draw(tex,0.03f, matrix[0], color[0]);
+			polygon_[1]->Draw(tex, 0.02f, matrix[1], color[1]);
 		
 		}
 		///
