@@ -117,8 +117,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		for (int i = 0; i < triangleCount; i++) {
 			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
 			polygon_[i]->Draw(tex, matrix[i], color[i]);
-			//polygon_[0]->Draw(tex, matrix[0], color[0]);
-			//polygon_[1]->Draw(tex, matrix[1], color[1]);
+		
 		
 		}
 		///
