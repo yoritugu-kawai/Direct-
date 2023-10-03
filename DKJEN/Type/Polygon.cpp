@@ -41,8 +41,8 @@ void PolygonType::Draw()
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 	commandList->SetGraphicsRootSignature(pso_.rootSignature);
 	commandList->SetPipelineState(pso_.GraphicsPipelineState);
-	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
+	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->DrawInstanced(3, 1, 0, 0);
