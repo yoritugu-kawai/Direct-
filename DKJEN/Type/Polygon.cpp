@@ -54,15 +54,15 @@ void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m)
 	//左下
 	vertexData[0].position =
 	{ lefe_ };
-	//vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
 	//上
 	vertexData[1].position =
 	{ top_ };
-	//vertexData[1].texcoord = { 0.5f,0.0f };
+	vertexData[1].texcoord = { 0.5f,0.0f };
 	//右上
 	vertexData[2].position =
 	{ right_ };
-	//vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].texcoord = { 1.0f,1.0f };
 
 	//
 	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
