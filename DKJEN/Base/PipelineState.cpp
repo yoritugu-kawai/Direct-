@@ -110,7 +110,7 @@ void PipelineState::ShapePSO()
 	//
 	inputElementDescs[1].SemanticName = "TEXCOORD";
 	inputElementDescs[1].SemanticIndex = 0;
-	inputElementDescs[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
 	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
 
@@ -131,7 +131,7 @@ void PipelineState::ShapePSO()
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
 
 	//裏面（時計回り）を表示しない
-	rasterizerDesc.CullMode = D3D12_CULL_MODE_FRONT;
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	//三角形の中を塗りつぶす
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 

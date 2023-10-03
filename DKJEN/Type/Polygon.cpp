@@ -59,7 +59,7 @@ void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m)
 	vertexData[1].position =
 	{ top_ };
 	vertexData[1].texcoord = { 0.5f,0.0f };
-	//右上
+	//右下
 	vertexData[2].position =
 	{ right_ };
 	vertexData[2].texcoord = { 1.0f,1.0f };
