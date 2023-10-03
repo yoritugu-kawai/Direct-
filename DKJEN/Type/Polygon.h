@@ -6,8 +6,8 @@
 class PolygonType
 {
 public:
-	void Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 Color);
-	void Draw(TexProeerty  tex, float speed, Matrix4x4 m);
+	void Initialize(Vector4 lefe, Vector4 top, Vector4 right);
+	void Draw(TexProeerty  tex, float speed, Matrix4x4 m, Vector4 Color);
 	void Release();
 	//
 	static ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
@@ -19,7 +19,7 @@ private:
 	Vector4 top_ = { 0.0f,0.0f,0.0f };
 	Vector4 right_ = { 0.0f,0.0f,0.0f };
 	
-	Vector4 Color_ = { 0.0f,0.0f,1.0f,1.0f };
+	//Vector4 Color_ = { 0.0f,0.0f,1.0f,1.0f };
 	Transfom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	const float size = 0.1f;

@@ -74,14 +74,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		scale[i] = { 1,1,1 };
 		rotate[i] = { 0,0,0 };
 		translate[i] = { 0,0,0 };
-		color[i] = { 1.0f,1.0f,0.0f,0.0f };
+		color[i] = { 1.0f,1.0f,1.0f,1.0f };
 
 	}
 
 		PolygonType* polygon_[triangleCount];
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygonType;
-		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right,triangle[i].color);
+		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right);
 	}
 
 
@@ -116,8 +116,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::End();
 		for (int i = 0; i < triangleCount; i++) {
 			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
-			polygon_[0]->Draw(tex,0.03f, matrix[0]);
-			polygon_[1]->Draw(tex, 0.02f, matrix[1]);
+			polygon_[0]->Draw(tex,0.03f, matrix[0], color[i]);
+			polygon_[1]->Draw(tex, 0.02f, matrix[1], color[i]);
 		
 		}
 		///

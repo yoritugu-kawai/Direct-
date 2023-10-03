@@ -1,6 +1,6 @@
 #include "Polygon.h"
 
-void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 Color)
+void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 {
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
@@ -10,18 +10,18 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right, Vector4 C
 	lefe_ = lefe,
 	top_ = top;
 	right_ = right;
-	Color_ = Color;
+	//Color_ = Color;
 
 }
 
 
-void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m)
+void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m,Vector4 Color)
 {
 	//色
 	Vector4* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&materialDeta));
-	*materialDeta = Color_;
+	*materialDeta = Color;
 	//移動
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr,
