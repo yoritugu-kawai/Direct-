@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		PolygonType* polygon_[triangleCount];
 	for (int i = 0; i < triangleCount; i++) {
 		polygon_[i] = new PolygonType;
-		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right, color[i]);
+		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right,triangle[i].color);
 	}
 
 
