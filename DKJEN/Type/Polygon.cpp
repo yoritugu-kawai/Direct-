@@ -10,7 +10,7 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 	lefe_ = lefe,
 	top_ = top;
 	right_ = right;
-	//Color_ = Color;
+	
 
 }
 
