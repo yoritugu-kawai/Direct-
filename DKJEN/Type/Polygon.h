@@ -7,7 +7,7 @@ class PolygonType
 {
 public:
 	void Initialize(Vector4 lefe, Vector4 top, Vector4 right);
-	void Draw(TexProeerty  tex, float speed, Matrix4x4 m, Vector4 Color);
+	void Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color);
 	void Release();
 	//
 	static ID3D12Resource* CreateBufferResource(size_t sizeInbyte);

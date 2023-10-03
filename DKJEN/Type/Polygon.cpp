@@ -15,7 +15,7 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 }
 
 
-void PolygonType::Draw(TexProeerty  tex,float speed, Matrix4x4 m,Vector4 Color)
+void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m,Vector4 Color)
 {
 	//色
 	Vector4* materialDeta = nullptr;
