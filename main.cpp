@@ -109,9 +109,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		ImGui::Begin("Triangle2");
 		ImGui::ColorEdit3("color", (float*)&color);
-		ImGui::SliderFloat3("scale", &scale[1].x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &rotate[1].x, -1.0f, 1.0f);
-		ImGui::SliderFloat3("translate", &translate[1].x, -1.0f, 1.0f);
+		ImGui::SliderFloat3("scale", &scale[1].x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &rotate[1].x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &translate[1].x, -5.0f, 5.0f);
 		ImGui::End();
 		for (int i = 0; i < triangleCount; i++) {
 			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
