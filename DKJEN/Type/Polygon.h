@@ -15,8 +15,13 @@ public:
 private:
 	Vector4 CenterPos_ = { 0.0f,0.0f,0.0f };
 	Vector4 Color_ = { 0.0f,0.0f,1.0f,1.0f };
+	Transform transform{ {1.0f,1.0f,1.0f,},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f,} };
+
+
 	const float size = 0.1f;
 	DxCommon dxCommmon_;
 	ID3D12Resource* Vertex;
+	ID3D12Resource* wvpResource;
+
 	D3D12_VERTEX_BUFFER_VIEW bufferView_;
 };

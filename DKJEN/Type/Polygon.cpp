@@ -4,6 +4,8 @@ void PolygonType::Initialize(Vector4 pos, Vector4 Color)
 {
 	Vertex = CreateBufferResource(sizeof(Vector4)*3);
 	bufferView_ = VertexCreateBufferView(sizeof(Vector4)*3, Vertex, 3);
+	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
+	
 	CenterPos_ = pos;
 	Color_ = Color;
 
@@ -14,6 +16,15 @@ void PolygonType::Draw()
 {
 	Vector4* vertexData = nullptr;
 	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	Matrix4x4* wvpData = nullptr;
+
+	wvpResource->Map(0, nullptr,
+		reinterpret_cast<void**>(&wvpData));
+	*wvpData = MakeIdentity4x4();
+	transform.rotate.y += 0.03f;
+	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	*wvpData = worldMatrix;
+
 	//座標
 	//左下
 	vertexData[0]= 
@@ -30,7 +41,9 @@ void PolygonType::Draw()
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 	commandList->SetGraphicsRootSignature(pso_.rootSignature);
 	commandList->SetPipelineState(pso_.GraphicsPipelineState);
+	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
+	
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
@@ -38,7 +51,7 @@ void PolygonType::Draw()
 void PolygonType::Release()
 {
 	Vertex->Release();
-
+	wvpResource->Release();
 }
 
 ID3D12Resource* PolygonType::CreateBufferResource(size_t sizeInbyte)
