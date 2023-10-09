@@ -138,9 +138,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CompileShader::Release();
 	imguiManager->Release();
 	tex.Resource->Release();
+	SpriteTex->Release();
 	PipelineState::Release();
 	DxCommon::Release();
-	SpriteTex->Release();
 
 
 	return 0;
