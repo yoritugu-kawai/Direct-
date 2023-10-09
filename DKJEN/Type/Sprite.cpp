@@ -14,7 +14,7 @@ void Sprite::Vertex()
 	vertexBufferViewSprite.StrideInBytes = sizeof(VerteData);
 	//頂点データ
 
-	VerteData* VertexDataSprite = nullptr;
+	
 	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&VertexDataSprite));
 	//1枚目
 	//左下
@@ -69,4 +69,5 @@ void Sprite::Release()
 {
 	vertexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
+	
 }

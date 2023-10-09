@@ -11,6 +11,7 @@ private:
 	PolygonType* polygon_ = new  PolygonType;
 	//
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
+	VerteData* VertexDataSprite = nullptr;
 	ID3D12Resource* vertexResourceSprite;
 	ID3D12Resource* transformationMatrixResourceSprote;
 	Matrix4x4* transformationMatrixDataSprite = nullptr;
