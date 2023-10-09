@@ -1,0 +1,44 @@
+#include "Sprite.h"
+
+void Sprite::Initialize()
+{
+	vertexResourceSprite = polygon_->CreateBufferResource(sizeof(VerteData) * 6);
+	transformationMatrixResourceSprote = polygon_->CreateBufferResource(sizeof(Matrix4x4));
+}
+
+void Sprite::Vertex()
+{
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
+	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
+	vertexBufferViewSprite.SizeInBytes = sizeof(VerteData) * 6;
+	vertexBufferViewSprite.StrideInBytes = sizeof(VerteData);
+	//頂点データ
+
+	VerteData* VertexDataSprite = nullptr;
+	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&VertexDataSprite));
+	//1枚目
+	//左下
+	VertexDataSprite[0].position = { 0.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[0].texcoord = { 0.0f,1.0f };
+	//左上
+	VertexDataSprite[1].position = { 0.0f,0.0f,0.0f,1.0f };
+	VertexDataSprite[1].texcoord = { 0.0f,0.0f };
+	//右下
+	VertexDataSprite[2].position = { 640.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[2].texcoord = { 1.0f,1.0f };
+	//二枚目
+	//左上
+	VertexDataSprite[3].position = { 0.0f,0.0f,0.0f,1.0f };
+	VertexDataSprite[3].texcoord = { 0.0f,0.0f };
+	//右上
+	VertexDataSprite[4].position = { 640.f,0.0f,0.0f,1.0f };
+	VertexDataSprite[4].texcoord = { 1.0f,0.0f };
+	//右下
+	VertexDataSprite[5].position = { 640.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[5].texcoord = { 1.0f,1.0f };
+
+
+}
+void Sprite::Darw()
+{
+}

@@ -99,6 +99,9 @@
     <ClCompile Include="DKJEN\Type\Camera.cpp">
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Type\Sprite.cpp">
+      <Filter>DKJEN\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -165,6 +168,9 @@
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Type\Camera.h">
+      <Filter>DKJEN\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Type\Sprite.h">
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
   </ItemGroup>
