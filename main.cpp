@@ -5,6 +5,7 @@
 #include"DKJEN/Type/Polygon.h"
 #include"DKJEN/Type/Texture.h"
 #include"DKJEN/Imgui/imguiManager.h"
+#include"DKJEN/Type/Sprite.h"
 const wchar_t Title[] = { L"CG2WindowClass" };
 
 
@@ -28,7 +29,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	ImguiManager* imguiManager = new ImguiManager;
 	imguiManager->Initialize();
 
-
+	//スプライト
+	Sprite* SpriteTex = new Sprite;
+	SpriteTex->Initialize();
 
 	
 	//テキスト
@@ -120,6 +123,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		
 		}
+
+		SpriteTex->Darw();
+
 		///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
@@ -134,7 +140,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	tex.Resource->Release();
 	PipelineState::Release();
 	DxCommon::Release();
-
+	SpriteTex->Release();
 
 
 	return 0;

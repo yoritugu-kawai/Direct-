@@ -8,7 +8,7 @@ void Sprite::Initialize()
 
 void Sprite::Vertex()
 {
-	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
+
 	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
 	vertexBufferViewSprite.SizeInBytes = sizeof(VerteData) * 6;
 	vertexBufferViewSprite.StrideInBytes = sizeof(VerteData);
@@ -41,4 +41,32 @@ void Sprite::Vertex()
 }
 void Sprite::Darw()
 {
+	Vertex();
+
+
+
+	transformationMatrixResourceSprote->Map(0, nullptr, reinterpret_cast<void**>
+		(&transformationMatrixDataSprite));
+	*transformationMatrixDataSprite = MakeIdentity4x4();
+	
+	Matrix4x4 SpriteMatrix = MakeAffineMatrix(transformSprite.scale, transformSprite.rotate, transformSprite.translate);
+	Matrix4x4 viewMatrix = MakeIdentity4x4();
+	Matrix4x4 projectionMatrix = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::GetInstance()->Width()) ,float(WinApp::GetInstance()->Height()), 0.0f, 100.0f);
+	Matrix4x4 worldViewProjectionMatrix = Multiply(SpriteMatrix, Multiply(viewMatrix, projectionMatrix));
+	*transformationMatrixDataSprite = worldViewProjectionMatrix;
+
+
+	//
+	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
+
+	commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
+	commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprote->GetGPUVirtualAddress());
+	commandList->DrawInstanced(6, 1, 0, 0);
+
+}
+
+void Sprite::Release()
+{
+	vertexResourceSprite->Release();
+	transformationMatrixResourceSprote->Release();
 }
