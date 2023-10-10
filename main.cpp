@@ -6,7 +6,9 @@
 #include"DKJEN/Type/Texture.h"
 #include"DKJEN/Imgui/imguiManager.h"
 #include"DKJEN/Type/Sprite.h"
-const wchar_t Title[] = { L"CG2WindowClass" };
+
+
+const wchar_t Title[] = { L"ド根性エンジン" };
 
 
 struct TrianglePropaty
@@ -123,8 +125,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		
 		
 		}
-
 		SpriteTex->Darw();
+
 
 		///
 		imguiManager->EndFrame();

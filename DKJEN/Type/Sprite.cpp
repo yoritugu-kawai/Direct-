@@ -60,7 +60,20 @@ void Sprite::Darw()
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 
 	commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
+
+	
+	
+
+    commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+   // commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+
 	commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprote->GetGPUVirtualAddress());
+   
+    
+	//commandList->SetGraphicsRootDescriptorTable(2, textureManager->GetTextureSrvHandleGPU());
+
+	
+	
 	commandList->DrawInstanced(6, 1, 0, 0);
 
 }
