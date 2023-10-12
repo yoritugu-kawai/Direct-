@@ -1,9 +1,8 @@
 #include"DKJEN/Base/DxCommon.h"
 #include"DKJEN/Base/WinApp.h"
-#include "DKJEN/Shader/CompileShader.h"
+#include"DKJEN/Shader/CompileShader.h"
 #include"DKJEN/Base/PipelineState.h"
 #include"DKJEN/Type/Polygon.h"
-#include"DKJEN/Type/Texture.h"
 #include"DKJEN/Imgui/imguiManager.h"
 #include"DKJEN/Type/Sprite.h"
 

@@ -2,7 +2,7 @@
 #include"../Math/Math.h"
 #include"../Base/DxCommon.h"
 #include"../Base/PipelineState.h"
-#include"Texture.h"
+#include"../Base/RoadTexture.h"
 class PolygonType
 {
 public:

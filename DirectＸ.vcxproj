@@ -97,6 +97,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Base\Log.cpp" />
     <ClCompile Include="DKJEN\Base\PipelineState.cpp" />
     <ClCompile Include="DKJEN\Base\WinApp.cpp" />
+    <ClCompile Include="DKJEN\Base\RoadTexture.cpp" />
     <ClCompile Include="DKJEN\externals\imgui\imgui.cpp" />
     <ClCompile Include="DKJEN\externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="DKJEN\externals\imgui\imgui_draw.cpp" />
@@ -112,6 +113,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Type\Sprite.cpp" />
     <ClCompile Include="DKJEN\Type\Texture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig" />
@@ -136,6 +138,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Base\Log.h" />
     <ClInclude Include="DKJEN\Base\PipelineState.h" />
     <ClInclude Include="DKJEN\Base\WinApp.h" />
+    <ClInclude Include="DKJEN\Base\RoadTexture.h" />
     <ClInclude Include="DKJEN\externals\imgui\imconfig.h" />
     <ClInclude Include="DKJEN\externals\imgui\imgui.h" />
     <ClInclude Include="DKJEN\externals\imgui\imgui_impl_dx12.h" />

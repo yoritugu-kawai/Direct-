@@ -43,6 +43,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="避難所">
+      <UniqueIdentifier>{104d226b-33f2-49c5-8c8b-b477606d7229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\RoadTex">
+      <UniqueIdentifier>{362ce2bb-0203-4a58-8e85-a2ab54036e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="DKJEN\Type\Sprite.cpp">
       <Filter>DKJEN\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="ソース.cpp">
+      <Filter>避難所</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\RoadTexture.cpp">
+      <Filter>DKJEN\Base\RoadTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Type\Sprite.h">
       <Filter>DKJEN\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\RoadTexture.h">
+      <Filter>DKJEN\Base\RoadTex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

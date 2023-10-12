@@ -10,12 +10,12 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 	lefe_ = lefe,
 	top_ = top;
 	right_ = right;
-	
+
 
 }
 
 
-void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m,Vector4 Color)
+void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -26,15 +26,6 @@ void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m,Vector4 Color)
 	Matrix4x4* wvpData = nullptr;
 	wvpResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&wvpData));
-	//*wvpData = MakeIdentity4x4();
-
-	/*transfom.rotate.y += speed;*/
-	/*Matrix4x4 worldMatrix = MakeAffineMatrix
-	(transfom.scale,
-		transfom.rotate,
-		transfom.translate);
-	*wvpData = worldMatrix;*/
-
 	//
 	VerteData* vertexData = nullptr;
 	Vertex->Map(0, nullptr,
@@ -42,7 +33,7 @@ void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m,Vector4 Color)
 	////
 	//// 
 	//////射影
-	
+
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameratransform.scale, cameratransform.rotate, cameratransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
@@ -58,11 +49,13 @@ void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m,Vector4 Color)
 	//上
 	vertexData[1].position =
 	{ top_ };
+	
 	vertexData[1].texcoord = { 0.5f,0.0f };
 	//右下
 	vertexData[2].position =
 	{ right_ };
 	vertexData[2].texcoord = { 1.0f,1.0f };
+	
 
 	//
 	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
