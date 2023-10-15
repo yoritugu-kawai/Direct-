@@ -14,6 +14,29 @@
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+struct PSOProperty
+{
+	ID3D12PipelineState* GraphicsPipelineState = nullptr;
+	ID3D12RootSignature* rootSignature = nullptr;
+	ID3DBlob* signatureBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
+
+};
+struct PSO
+{
+	PSOProperty Texture;
+	PSOProperty polygon;
+
+};
+struct  ShaderMode
+{
+	IDxcBlob* vertexBlob;
+	IDxcBlob* pixelBlob;
+};
+struct Shaders {
+	ShaderMode shape;
+};
+
 struct Vector2 {
 	float x;
 	float y;
@@ -41,6 +64,15 @@ struct  Transfom
 	Vector3 scale;
 	Vector3 rotate;
 	Vector3 translate;
+};
+
+struct ImGguiTransfrom
+{
+	Matrix4x4 matrix;
+	Vector3 scale;
+	Vector3 rotate;
+	Vector3 translate;
+	Vector4 color;
 };
 
 /// <summary>

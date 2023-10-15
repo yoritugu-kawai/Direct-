@@ -14,12 +14,12 @@ struct TexProeerty {
 
 };
 
-class Texture
+class RoadTexture
 {
 public:
 	void Initiluze();
 	TexProeerty Load();
-	void Draw();
+	//void Draw();
 	void End();
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	ID3D12Resource* CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);

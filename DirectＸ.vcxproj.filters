@@ -49,6 +49,9 @@
     <Filter Include="DKJEN\Base\RoadTex">
       <UniqueIdentifier>{362ce2bb-0203-4a58-8e85-a2ab54036e7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DKJEN\Shader">
+      <UniqueIdentifier>{61686a07-e2a4-4683-aa1c-603124a76e42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,11 +69,8 @@
     <ClCompile Include="DKJEN\Base\WinApp.cpp">
       <Filter>DKJEN\Base\Win</Filter>
     </ClCompile>
-    <ClCompile Include="DKJEN\Base\PipelineState.cpp">
+    <ClCompile Include="DKJEN\Base\TexturePSO.cpp">
       <Filter>DKJEN\Base\PSO</Filter>
-    </ClCompile>
-    <ClCompile Include="DKJEN\Shader\CompileShader.cpp">
-      <Filter>DKJEN</Filter>
     </ClCompile>
     <ClCompile Include="DKJEN\Type\Polygon.cpp">
       <Filter>DKJEN\Type</Filter>
@@ -114,6 +114,15 @@
     <ClCompile Include="DKJEN\Base\RoadTexture.cpp">
       <Filter>DKJEN\Base\RoadTex</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Shader\TextureCompileShader.cpp">
+      <Filter>DKJEN\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\PolygonPSO.cpp">
+      <Filter>DKJEN\Base\PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Shader\PolygonCompileShader.cpp">
+      <Filter>DKJEN\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -124,10 +133,16 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Obiject3d.VS.hlsl">
+    <FxCompile Include="TextureObiject3d.VS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="Odject3d.PS.hlsl">
+    <FxCompile Include="TextureOdject3d.PS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="PolygonObiject3d.VS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="PolygonOdject3d.PS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>
@@ -144,11 +159,8 @@
     <ClInclude Include="DKJEN\Base\WinApp.h">
       <Filter>DKJEN\Base\Win</Filter>
     </ClInclude>
-    <ClInclude Include="DKJEN\Base\PipelineState.h">
+    <ClInclude Include="DKJEN\Base\TexturePSO.h">
       <Filter>DKJEN\Base\PSO</Filter>
-    </ClInclude>
-    <ClInclude Include="DKJEN\Shader\CompileShader.h">
-      <Filter>DKJEN</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Type\Polygon.h">
       <Filter>DKJEN\Type</Filter>
@@ -191,6 +203,15 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Base\RoadTexture.h">
       <Filter>DKJEN\Base\RoadTex</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Shader\TextureCompileShader.h">
+      <Filter>DKJEN\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\PolygonPSO.h">
+      <Filter>DKJEN\Base\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Shader\PolygonCompileShader.h">
+      <Filter>DKJEN\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

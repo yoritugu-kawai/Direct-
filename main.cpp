@@ -1,11 +1,16 @@
 #include"DKJEN/Base/DxCommon.h"
 #include"DKJEN/Base/WinApp.h"
-#include"DKJEN/Shader/CompileShader.h"
-#include"DKJEN/Base/PipelineState.h"
-#include"DKJEN/Type/Polygon.h"
-#include"DKJEN/Imgui/imguiManager.h"
-#include"DKJEN/Type/Sprite.h"
+#include"DKJEN/Base/TexturePSO.h"
+#include"DKJEN/Base/PolygonPSO.h"
 
+#include"DKJEN/Shader/TextureCompileShader.h"
+#include"DKJEN/Shader/PolygonCompileShader.h"
+
+#include"DKJEN/Imgui/imguiManager.h"
+
+#include"DKJEN/Type/Polygon.h"
+#include"DKJEN/Type/Sprite.h"
+#include"DKJEN/Type/Texture.h"
 
 const wchar_t Title[] = { L"ド根性エンジン" };
 
@@ -23,9 +28,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
-	CompileShader::DXC();
-	CompileShader::ShaderCompile();
-	PipelineState::CreatePSO();
+	TextureCompileShader::DXC();
+	TextureCompileShader::ShaderCompile();
+	PolygonCompileShader::DXC();
+	PolygonCompileShader::ShaderCompile();
+	TexturePSO::CreatePSO();
+	PolygonPSO::CreatePSO();
 
 	ImguiManager* imguiManager = new ImguiManager;
 	imguiManager->Initialize();
@@ -34,18 +42,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Sprite* SpriteTex = new Sprite;
 	SpriteTex->Initialize();
 
-	
-	//テキスト
-	Texture* tex_ = new Texture;
-	tex_->Initiluze();
 
-	TexProeerty  tex;
-	tex = tex_->Load();
+
 	///座標
-	const int triangleCount = 2;
+	const int Count = 2;
 
 
-	TrianglePropaty triangle[triangleCount];
+	TrianglePropaty triangleTextur[Count];
+	triangleTextur[0] =
+	{
+		{-0.5f,-0.5f,0.0f,1.0f},
+		{0.0f,0.5f,0.0f,1.0f},
+		{0.5f,-0.5f,0.0f,1.0f},
+		{1.0f,1.0f,1.0f,1.0f}
+
+	};
+
+	triangleTextur[1] =
+	{
+
+		{-0.5f,-0.5f,0.0f,1.0f},
+		{0.0f,0.5f,0.0f,1.0f},
+		{0.5f,-0.5f,0.0f,1.0f},
+		{1.0f,0.0f,0.0f,1.0f}
+
+	};
+
+
+	TrianglePropaty triangle[Count];
 	triangle[0] =
 	{
 		{-0.5f,-0.5f,0.0f,1.0f},
@@ -64,30 +88,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{1.0f,0.0f,0.0f,1.0f}
 
 	};
-	float Speed =0.03f;
+
 	//imgui
-	Matrix4x4 matrix[2];
-	Vector3 scale[2];
-	Vector3 rotate[2];
-	Vector3 translate[2];
-	Vector4 color[2];
+	ImGguiTransfrom imGuiTextur[2];
 
 
-	for (int i = 0; i <2 ; i++) {
-		matrix[i] = MakeIdentity4x4();
-		scale[i] = { 1,1,1 };
-		rotate[i] = { 0,0,0 };
-		translate[i] = { 0,0,0 };
-		color[i] = { 1.0f,1.0f,1.0f,1.0f };
+	for (int i = 0; i < 2; i++) {
+		imGuiTextur[i].matrix = MakeIdentity4x4();
+		imGuiTextur[i].scale = { 1,1,1 };
+		imGuiTextur[i].rotate = { 0,0,0 };
+		imGuiTextur[i].translate = { 0,0,0 };
+		imGuiTextur[i].color = { 1.0f,1.0f,1.0f,1.0f };
 
 	}
 
-		PolygonType* polygon_[triangleCount];
-	for (int i = 0; i < triangleCount; i++) {
+	ImGguiTransfrom imGuiPolygon[2];
+
+
+	for (int i = 0; i < 2; i++) {
+		imGuiPolygon[i].matrix = MakeIdentity4x4();
+		imGuiPolygon[i].scale = { 1,1,1 };
+		imGuiPolygon[i].rotate = { 0,0,0 };
+		imGuiPolygon[i].translate = { 0,0,0 };
+		imGuiPolygon[i].color = { 1.0f,1.0f,1.0f,1.0f };
+
+	}
+
+	PolygonType* polygon_[Count];
+	for (int i = 0; i < Count; i++) {
 		polygon_[i] = new PolygonType;
-		polygon_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right);
+		polygon_[i]->Initialize(triangleTextur[i].lefe, triangleTextur[i].top, triangleTextur[i].right);
 	}
 
+	Texture* texture_[Count];
+	for (int i = 0; i < Count; i++) {
+		texture_[i] = new Texture;
+		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right);
+	}
 
 
 	//　メインループ
@@ -104,43 +141,74 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//　ゲーム処理
 
 
-		ImGui::Begin("Triangle1");
-		ImGui::ColorEdit3("color", (float*)&color[0]);
-		ImGui::SliderFloat3("scale", &scale[0].x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &rotate[0].x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &translate[0].x, -5.0f, 5.0f);
-		
+		ImGui::Begin("Texture1");
+		ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
+		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
+
 		ImGui::End();
 
-		ImGui::Begin("Triangle2");
-		ImGui::ColorEdit3("color", (float*)&color[1]);
-		ImGui::SliderFloat3("scale", &scale[1].x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &rotate[1].x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &translate[1].x, -5.0f, 5.0f);
+		ImGui::Begin("Texture2");
+		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
+		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
+
 		ImGui::End();
-		for (int i = 0; i < triangleCount; i++) {
-			matrix[i] = MakeAffineMatrix(scale[i], rotate[i], translate[i]);
-			polygon_[i]->Draw(tex, matrix[i], color[i]);
-		
-		
+
+		//for (int i = 0; i < Count; i++) {
+		//	imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
+		//	texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
+
+
+		//}
+			SpriteTex->Darw();
+
+		ImGui::Begin("polygon1");
+		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
+		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
+
+		ImGui::End();
+
+		ImGui::Begin("polygon2");
+		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
+		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
+
+		ImGui::End();
+
+
+		for (int i = 0; i < Count; i++) {
+			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
+			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
+
+
 		}
-		SpriteTex->Darw();
 
 
-		///
+			///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
 
 	}
-	for (int i = 0; i < triangleCount; i++) {
+	for (int i = 0; i < Count; i++) {
+		texture_[i]->Release();
+	}
+	for (int i = 0; i < Count; i++) {
 		polygon_[i]->Release();
 	}
-	
-	CompileShader::Release();
+	TextureCompileShader::Release();
+	PolygonCompileShader::Release();
+
+	TexturePSO::Release();
+	PolygonPSO::Release();
+
 	imguiManager->Release();
-	tex.Resource->Release();
 	SpriteTex->Release();
-	PipelineState::Release();
 	DxCommon::Release();
 
 

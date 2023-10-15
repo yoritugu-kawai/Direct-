@@ -1,28 +1,27 @@
-#include "PipelineState.h"
-PipelineState* PipelineState::GetInstance()
+#include "TexturePSO.h"
+TexturePSO* TexturePSO::GetInstance()
 {
-	static PipelineState instance;
+	static TexturePSO instance;
 
 	return &instance;
 }
-void PipelineState::CreatePSO()
+void TexturePSO::CreatePSO()
 {
 	ShapePSO();
 }
 
-void PipelineState::Release()
+void TexturePSO::Release()
 {
-	if (PipelineState::GetInstance()->pso_.shape.errorBlob)
+	if (TexturePSO::GetInstance()->pso_.Texture.errorBlob)
 	{
-		PipelineState::GetInstance()->pso_.shape.errorBlob->Release();
+		TexturePSO::GetInstance()->pso_.Texture.errorBlob->Release();
 	}
-	
-	PipelineState::GetInstance()->pso_.shape.GraphicsPipelineState->Release();
-	PipelineState::GetInstance()->pso_.shape.rootSignature->Release();
-	PipelineState::GetInstance()->pso_.shape.signatureBlob->Release();
+	TexturePSO::GetInstance()->pso_.Texture.GraphicsPipelineState->Release();
+	TexturePSO::GetInstance()->pso_.Texture.rootSignature->Release();
+	TexturePSO::GetInstance()->pso_.Texture.signatureBlob->Release();
 }
 
-void PipelineState::ShapePSO()
+void TexturePSO::ShapePSO()
 {
 
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
@@ -30,7 +29,7 @@ void PipelineState::ShapePSO()
 
 	PSOProperty ShapePSO;
 
-	ShaderMode shader = CompileShader::GetInstance()->GetShaders().shape;
+	ShaderMode shader = TextureCompileShader::GetInstance()->GetShaders().shape;
 
 	//RootSignature作成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
@@ -153,10 +152,16 @@ void PipelineState::ShapePSO()
 
 	graphicsPipelineStateDesc.pRootSignature = ShapePSO.rootSignature; //RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; //InputLayout
+
+
+	///
 	graphicsPipelineStateDesc.VS = { shader.vertexBlob->GetBufferPointer(),
 	shader.vertexBlob->GetBufferSize() }; //VertexShader
+
+	//
 	graphicsPipelineStateDesc.PS = { shader.pixelBlob->GetBufferPointer(),
 	shader.pixelBlob->GetBufferSize() }; //PixeShader
+
 	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
 	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
@@ -180,7 +185,7 @@ D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 		IID_PPV_ARGS(&ShapePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 	
-	PipelineState::GetInstance()->pso_.shape = ShapePSO;
+	TexturePSO::GetInstance()->pso_.Texture = ShapePSO;
 
 
 }

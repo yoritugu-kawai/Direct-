@@ -1,7 +1,7 @@
 #include"RoadTexture.h"
 
 
-DirectX::ScratchImage Texture::LoadTexture(const std::string& filePath)
+DirectX::ScratchImage RoadTexture::LoadTexture(const std::string& filePath)
 {
 
 	//テクスチャファイルを読み込んでプログラムで扱えるようにする
@@ -20,7 +20,7 @@ DirectX::ScratchImage Texture::LoadTexture(const std::string& filePath)
 
 }
 
-ID3D12Resource* Texture::CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
+ID3D12Resource* RoadTexture::CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
 {
 	//1.metadataを基にResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -53,7 +53,7 @@ ID3D12Resource* Texture::CreateTexResource(ID3D12Device* device, const DirectX::
 	return resource;
 }
 
-void Texture::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
+void RoadTexture::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
 {
 	//Meta情報を取得
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
@@ -78,21 +78,21 @@ void Texture::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage
 
 }
 
-void Texture::ShaderResourceView()
+void RoadTexture::ShaderResourceView()
 {
 
 
 }
 
 
-void Texture::Initiluze()
+void RoadTexture::Initiluze()
 {
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 }
 
-TexProeerty  Texture::Load()
+TexProeerty RoadTexture::Load()
 {
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
 	ID3D12DescriptorHeap* srvDescriptorHeap = DxCommon::GetInstance()->GetsrvDescriptorHeap();
@@ -127,7 +127,7 @@ TexProeerty  Texture::Load()
 
 
 
-void Texture::End()
+void RoadTexture::End()
 {
 	CoUninitialize();
 }

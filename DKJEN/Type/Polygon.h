@@ -1,13 +1,13 @@
 #pragma once
 #include"../Math/Math.h"
 #include"../Base/DxCommon.h"
-#include"../Base/PipelineState.h"
+#include"../Base/PolygonPSO.h"
 #include"../Base/RoadTexture.h"
 class PolygonType
 {
 public:
 	void Initialize(Vector4 lefe, Vector4 top, Vector4 right);
-	void Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color);
+	void Draw(Matrix4x4 m, Vector4 Color);
 	void Release();
 	//
 	static ID3D12Resource* CreateBufferResource(size_t sizeInbyte);

@@ -1,19 +1,19 @@
-#include "CompileShader.h"
+#include "TextureCompileShader.h"
 
-CompileShader* CompileShader::GetInstance()
+TextureCompileShader* TextureCompileShader::GetInstance()
 {
-	static CompileShader instance;
+	static TextureCompileShader instance;
 
 	return &instance;
 }
 
-IDxcBlob* CompileShader::CompileShaderFanc(
+IDxcBlob* TextureCompileShader::CompileShaderFanc(
 	const std::wstring& filePath,
 	const wchar_t* profile)
 {
-	IDxcUtils* dxcUtils = CompileShader::GetInstance()->dxcUtils;
-	IDxcCompiler3* dxcCompiler = CompileShader::GetInstance()->dxcCompiler;
-	IDxcIncludeHandler* includeHandler = CompileShader::GetInstance()->includeHandler;
+	IDxcUtils* dxcUtils = TextureCompileShader::GetInstance()->dxcUtils;
+	IDxcCompiler3* dxcCompiler = TextureCompileShader::GetInstance()->dxcCompiler;
+	IDxcIncludeHandler* includeHandler = TextureCompileShader::GetInstance()->includeHandler;
 
 	//1.hlslファイルを読む
 	Log(ConvertString(std::format(L"Begin CompileShader,path:{},profile:{}\n", filePath, profile)));
@@ -72,7 +72,7 @@ IDxcBlob* CompileShader::CompileShaderFanc(
 }
 
 
-void  CompileShader::DXC()
+void TextureCompileShader::DXC()
 {
 	IDxcUtils* dxcUtils;
 	IDxcCompiler3* dxcCompiler;
@@ -87,33 +87,33 @@ void  CompileShader::DXC()
 	// 現時点でincludeはしないが、includeに対応するための設定を行っておく
 	hr = dxcUtils->CreateDefaultIncludeHandler(&includeHandler);
 	assert(SUCCEEDED(hr));
-	CompileShader::GetInstance()->dxcUtils = dxcUtils;
-	CompileShader::GetInstance()->dxcCompiler = dxcCompiler;
-	CompileShader::GetInstance()->includeHandler = includeHandler;
+	TextureCompileShader::GetInstance()->dxcUtils = dxcUtils;
+	TextureCompileShader::GetInstance()->dxcCompiler = dxcCompiler;
+	TextureCompileShader::GetInstance()->includeHandler = includeHandler;
 }
 
-void CompileShader::ShaderCompile()
+void TextureCompileShader::ShaderCompile()
 {
 	ShaderMode shape;
 
 	shape.vertexBlob =
-		CompileShader::CompileShaderFanc(
-			L"Obiject3d.VS.hlsl",
+		TextureCompileShader::CompileShaderFanc(
+			L"TextureObiject3d.VS.hlsl",
 			L"vs_6_0"
 		);
 	shape.pixelBlob =
-		CompileShader::CompileShaderFanc(
-			L"Odject3d.PS.hlsl",
+		TextureCompileShader::CompileShaderFanc(
+			L"TextureOdject3d.PS.hlsl",
 			L"ps_6_0"
 		);
 
 
-	CompileShader::GetInstance()->shaders_.shape = shape;
+	TextureCompileShader::GetInstance()->shaders_.shape = shape;
 }
 
-void CompileShader::Release()
+void TextureCompileShader::Release()
 {
-	CompileShader::GetInstance()->shaders_.shape.pixelBlob->Release();
-	CompileShader::GetInstance()->shaders_.shape.vertexBlob->Release();
+	TextureCompileShader::GetInstance()->shaders_.shape.pixelBlob->Release();
+	TextureCompileShader::GetInstance()->shaders_.shape.vertexBlob->Release();
 }
 

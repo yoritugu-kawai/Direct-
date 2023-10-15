@@ -7,8 +7,10 @@ public:
 	void Vertex();
 	void Darw();
 	void Release();
+
+	 ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
 private:
-	PolygonType* polygon_ = new  PolygonType;
+
 	//
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
 	VerteData* VertexDataSprite = nullptr;

@@ -3,9 +3,9 @@
 void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 {
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
+	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
-	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
 
 	lefe_ = lefe,
 	top_ = top;
@@ -15,7 +15,7 @@ void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 }
 
 
-void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color)
+void PolygonType::Draw(Matrix4x4 m, Vector4 Color)
 {
 	//色
 	Vector4* materialDeta = nullptr;
@@ -45,20 +45,20 @@ void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color)
 	//左下
 	vertexData[0].position =
 	{ lefe_ };
-	vertexData[0].texcoord = { 0.0f,1.0f };
+	
 	//上
 	vertexData[1].position =
 	{ top_ };
 	
-	vertexData[1].texcoord = { 0.5f,0.0f };
+
 	//右下
 	vertexData[2].position =
 	{ right_ };
-	vertexData[2].texcoord = { 1.0f,1.0f };
+	
 	
 
 	//
-	PSOProperty pso_ = PipelineState::GetInstance()->GetPSO().shape;
+	PSOProperty pso_ = PolygonPSO::GetInstance()->GetPSO().polygon;
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 	commandList->SetGraphicsRootSignature(pso_.rootSignature);
 	commandList->SetPipelineState(pso_.GraphicsPipelineState);
@@ -66,7 +66,6 @@ void PolygonType::Draw(TexProeerty  tex, Matrix4x4 m, Vector4 Color)
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootDescriptorTable(2, tex.SrvHandleGPU);
 	commandList->DrawInstanced(3, 1, 0, 0);
 }
 

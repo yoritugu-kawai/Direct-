@@ -1,22 +1,15 @@
 #pragma once
 #include"../Base/DxCommon.h"
-struct  ShaderMode
-{
-	IDxcBlob* vertexBlob;
-	IDxcBlob* pixelBlob;
-};
-struct Shaders {
-	ShaderMode shape;
-};
-class CompileShader
+
+class PolygonCompileShader
 {
 public:
-	static CompileShader* GetInstance();
+	static PolygonCompileShader* GetInstance();
 	static void DXC();
 	static void ShaderCompile();
 	static void Release();
 	//
-	static Shaders GetShaders() {return CompileShader::GetInstance()->shaders_;}
+	static Shaders GetShaders() { return PolygonCompileShader::GetInstance()->shaders_; }
 private:
 	static IDxcBlob* CompileShaderFanc(
 		const std::wstring& filePath,
