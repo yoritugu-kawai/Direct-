@@ -157,12 +157,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		ImGui::End();
 
-		//for (int i = 0; i < Count; i++) {
-		//	imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
-		//	texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
+		for (int i = 0; i < Count; i++) {
+			imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
+			texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
 
 
-		//}
+		}
 			SpriteTex->Darw();
 
 		ImGui::Begin("polygon1");
