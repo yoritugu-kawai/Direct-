@@ -32,8 +32,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
 	TextureCompileShader::DXC();
-	//PolygonCompileShader::DXC();
-	//SpriteCompileShader::DXC();
+	PolygonCompileShader::DXC();
+	SpriteCompileShader::DXC();
 
 	TextureCompileShader::ShaderCompile();
 	PolygonCompileShader::ShaderCompile();
