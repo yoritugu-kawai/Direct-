@@ -4,10 +4,11 @@
 class ImguiManager
 {
 public:
-	void Initialize();
-	void BeginFrame();
-	void EndFrame();
-	void Release();
+	static ImguiManager* GetInstance();
+	static void Initialize();
+	static void BeginFrame();
+	static void EndFrame();
+	static void Release();
 private:
 	WinApp winApp_;
 	DxCommon dxCommon_;

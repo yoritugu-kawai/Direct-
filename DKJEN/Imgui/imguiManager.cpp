@@ -1,4 +1,13 @@
 #include"../Imgui/imguiManager.h"
+
+ImguiManager* ImguiManager::GetInstance()
+{
+	static ImguiManager instance;
+
+	return &instance;
+}
+
+
 void  ImguiManager::Initialize() {
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
 	ID3D12DescriptorHeap* srvDescriptorHeap = DxCommon::GetInstance()->GetsrvDescriptorHeap();

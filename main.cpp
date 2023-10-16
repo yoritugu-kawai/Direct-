@@ -31,6 +31,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
+	ImguiManager::Initialize();
+
 	TextureCompileShader::DXC();
 	PolygonCompileShader::DXC();
 	SpriteCompileShader::DXC();
@@ -43,9 +45,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygonPSO::CreatePSO();
 	SpritePSO::CreatePSO();
 
-	ImguiManager* imguiManager = new ImguiManager;
-	imguiManager->Initialize();
-
+	
 	//スプライト
 	Sprite* SpriteTex = new Sprite;
 	SpriteTex->Initialize();
@@ -144,7 +144,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			DispatchMessage(&msg);
 		}
 		DxCommon::BeginFrame();
-		imguiManager->BeginFrame();
+		ImguiManager::BeginFrame();
 		//　ゲーム処理
 		//　ゲーム処理
 
@@ -170,32 +170,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		//}
 
-		//ImGui::Begin("polygon1");
-		//ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
-		//ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
-		//ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
-		//ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
-		//ImGui::End();
+		ImGui::Begin("polygon1");
+		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
+		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
+		ImGui::End();
 
-		//ImGui::Begin("polygon2");
-		//ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
-		//ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
-		//ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
-		//ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
-		//ImGui::End();
-
-
-		//for (int i = 0; i < Count; i++) {
-		//	imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
-		//	polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
+		ImGui::Begin("polygon2");
+		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
+		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
+		ImGui::End();
 
 
-		//}
+		for (int i = 0; i < Count; i++) {
+			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
+			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
+
+
+		}
 
 		SpriteTex->Darw();
 
 
-		imguiManager->EndFrame();
+		ImguiManager::EndFrame();
 		DxCommon::EndFrame();
 
 	}
@@ -220,7 +220,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	SpritePSO::Release();
 
 
-	imguiManager->Release();
+	ImguiManager::Release();
 	SpriteTex->Release();
 	DxCommon::Release();
 
