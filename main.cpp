@@ -154,15 +154,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
-
 		ImGui::End();
+
+
 
 		ImGui::Begin("Texture2");
 		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
 		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
-
 		ImGui::End();
 
 		for (int i = 0; i < Count; i++) {
@@ -171,14 +171,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		}
-		SpriteTex->Darw();
 
 		ImGui::Begin("polygon1");
 		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
 		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
-
 		ImGui::End();
 
 		ImGui::Begin("polygon2");
@@ -186,7 +184,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
 		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
-
 		ImGui::End();
 
 
@@ -197,10 +194,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 
+		SpriteTex->Darw();
+
+
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
 
 	}
+
+	/*
+	*************************
+	*********   解放  *******
+	*************************
+	*/
 	for (int i = 0; i < Count; i++) {
 		texture_[i]->Release();
 	}
