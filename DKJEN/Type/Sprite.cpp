@@ -2,8 +2,13 @@
 
 void Sprite::Initialize()
 {
+
+	Roadtex_->Initiluze();
+	tex_ = Roadtex_->Load();
+
 	vertexResourceSprite = CreateBufferResource(sizeof(VerteData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
+	materialResource = CreateBufferResource(sizeof(Vector4));
 }
 
 void Sprite::Vertex()
@@ -42,7 +47,10 @@ void Sprite::Vertex()
 void Sprite::Darw()
 {
 	Vertex();
-
+	Vector4* materialDeta = nullptr;
+	materialResource->Map(0, nullptr,
+		reinterpret_cast<void**>(&materialDeta));
+	*materialDeta = {1.0f,1.0f,1.0,1.0f};
 
 
 	transformationMatrixResourceSprote->Map(0, nullptr, reinterpret_cast<void**>
@@ -57,21 +65,24 @@ void Sprite::Darw()
 
 
 	//
+	PSOProperty pso_ = SpritePSO::GetInstance()->GetPSO().Texture;
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 
+
+	commandList->SetGraphicsRootSignature(pso_.rootSignature);
+	commandList->SetPipelineState(pso_.GraphicsPipelineState);
 	commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
 
 	
 	
 
     commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-   // commandList->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+   commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 
 	commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprote->GetGPUVirtualAddress());
    
     
-	//commandList->SetGraphicsRootDescriptorTable(2, textureManager->GetTextureSrvHandleGPU());
-
+	commandList->SetGraphicsRootDescriptorTable(2, tex_.SrvHandleGPU);
 	
 	
 	commandList->DrawInstanced(6, 1, 0, 0);
@@ -80,9 +91,10 @@ void Sprite::Darw()
 
 void Sprite::Release()
 {
+	tex_.Resource->Release();
 	vertexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
-	
+	materialResource->Release();
 }
 
 ID3D12Resource* Sprite::CreateBufferResource(size_t sizeInbyte)

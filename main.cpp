@@ -2,9 +2,12 @@
 #include"DKJEN/Base/WinApp.h"
 #include"DKJEN/Base/TexturePSO.h"
 #include"DKJEN/Base/PolygonPSO.h"
+#include"DKJEN/Base/SpritePSO.h"
 
 #include"DKJEN/Shader/TextureCompileShader.h"
 #include"DKJEN/Shader/PolygonCompileShader.h"
+#include"DKJEN/Shader/SpriteCompileShader.h"
+
 
 #include"DKJEN/Imgui/imguiManager.h"
 
@@ -29,11 +32,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
 	TextureCompileShader::DXC();
-	TextureCompileShader::ShaderCompile();
 	PolygonCompileShader::DXC();
+	SpriteCompileShader::DXC();
+
+	TextureCompileShader::ShaderCompile();
 	PolygonCompileShader::ShaderCompile();
+	SpriteCompileShader::ShaderCompile();
+
 	TexturePSO::CreatePSO();
 	PolygonPSO::CreatePSO();
+	SpritePSO::CreatePSO();
 
 	ImguiManager* imguiManager = new ImguiManager;
 	imguiManager->Initialize();
@@ -163,7 +171,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 		}
-			SpriteTex->Darw();
+		SpriteTex->Darw();
 
 		ImGui::Begin("polygon1");
 		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
@@ -189,8 +197,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 
-
-			///
 		imguiManager->EndFrame();
 		DxCommon::EndFrame();
 
@@ -203,9 +209,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	TextureCompileShader::Release();
 	PolygonCompileShader::Release();
+	SpriteCompileShader::Release();
 
 	TexturePSO::Release();
 	PolygonPSO::Release();
+	SpritePSO::Release();
+
 
 	imguiManager->Release();
 	SpriteTex->Release();

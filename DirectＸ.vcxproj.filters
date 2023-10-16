@@ -123,6 +123,12 @@
     <ClCompile Include="DKJEN\Shader\PolygonCompileShader.cpp">
       <Filter>DKJEN\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Base\SpritePSO.cpp">
+      <Filter>DKJEN\Base\PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Shader\SpriteCompileShader.cpp">
+      <Filter>DKJEN\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -143,6 +149,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="PolygonOdject3d.PS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteObiject3d.VS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteObiject3d.PS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>
@@ -211,6 +223,12 @@
       <Filter>DKJEN\Base\PSO</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Shader\PolygonCompileShader.h">
+      <Filter>DKJEN\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\SpritePSO.h">
+      <Filter>DKJEN\Base\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Shader\SpriteCompileShader.h">
       <Filter>DKJEN\Shader</Filter>
     </ClInclude>
   </ItemGroup>

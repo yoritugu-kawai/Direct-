@@ -3,6 +3,7 @@
 #include"../Base/DxCommon.h"
 #include"../Base/PolygonPSO.h"
 #include"../Base/RoadTexture.h"
+
 class PolygonType
 {
 public:

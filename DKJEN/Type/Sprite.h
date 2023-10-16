@@ -1,5 +1,6 @@
 #pragma once
 #include"Polygon.h"
+#include"../Base/SpritePSO.h"
 class  Sprite
 {
 public:
@@ -16,9 +17,14 @@ private:
 	VerteData* VertexDataSprite = nullptr;
 	ID3D12Resource* vertexResourceSprite;
 	ID3D12Resource* transformationMatrixResourceSprote;
+	ID3D12Resource* materialResource;
+
 	Matrix4x4* transformationMatrixDataSprite = nullptr;
 	Transfom transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-
+	
+	
+	TexProeerty  tex_;
+	RoadTexture* Roadtex_ = new RoadTexture;
 };
 
 
