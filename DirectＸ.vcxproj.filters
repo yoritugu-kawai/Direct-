@@ -151,10 +151,10 @@
     <FxCompile Include="PolygonOdject3d.PS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="SpriteObiject3d.VS.hlsl">
+    <FxCompile Include="SpriteObiject2d.VS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
-    <FxCompile Include="SpriteObiject3d.PS.hlsl">
+    <FxCompile Include="SpriteObiject2d.PS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

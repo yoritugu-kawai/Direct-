@@ -25,7 +25,7 @@ void TexturePSO::ShapePSO()
 {
 
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
-	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
+	//ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
 
 	PSOProperty ShapePSO;
 

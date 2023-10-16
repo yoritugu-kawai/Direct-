@@ -32,8 +32,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp::Initialize(Title);
 	DxCommon::Initialize();
 	TextureCompileShader::DXC();
-	PolygonCompileShader::DXC();
-	SpriteCompileShader::DXC();
+	//PolygonCompileShader::DXC();
+	//SpriteCompileShader::DXC();
 
 	TextureCompileShader::ShaderCompile();
 	PolygonCompileShader::ShaderCompile();
@@ -149,52 +149,50 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//　ゲーム処理
 
 
-		ImGui::Begin("Texture1");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
+		//ImGui::Begin("Texture1");
+		//ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
+		//ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
+		//ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
+		//ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
+		//ImGui::End();
+
+		//ImGui::Begin("Texture2");
+		//ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
+		//ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
+		//ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
+		//ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
+		//ImGui::End();
+
+		//for (int i = 0; i < Count; i++) {
+		//	imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
+		//	texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
 
 
+		//}
 
-		ImGui::Begin("Texture2");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
+		//ImGui::Begin("polygon1");
+		//ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
+		//ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
+		//ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
+		//ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
+		//ImGui::End();
 
-		for (int i = 0; i < Count; i++) {
-			imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
-			texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
-
-
-		}
-
-		ImGui::Begin("polygon1");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		ImGui::Begin("polygon2");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
+		//ImGui::Begin("polygon2");
+		//ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
+		//ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
+		//ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
+		//ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
+		//ImGui::End();
 
 
-		for (int i = 0; i < Count; i++) {
-			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
-			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
+		//for (int i = 0; i < Count; i++) {
+		//	imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
+		//	polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
 
 
-		}
+		//}
 
-		//SpriteTex->Darw();
+		SpriteTex->Darw();
 
 
 		imguiManager->EndFrame();

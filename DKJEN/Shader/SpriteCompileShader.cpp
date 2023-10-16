@@ -98,12 +98,12 @@ void SpriteCompileShader::ShaderCompile()
 
 	shape.vertexBlob =
 		SpriteCompileShader::CompileShaderFanc(
-			L"SpriteObiject3d.VS.hlsl",
+			L"SpriteObiject2d.VS.hlsl",
 			L"vs_6_0"
 		);
 	shape.pixelBlob =
 		SpriteCompileShader::CompileShaderFanc(
-			L"SpriteObiject3d.PS.hlsl",
+			L"SpriteObiject2d.PS.hlsl",
 			L"ps_6_0"
 		);
 
