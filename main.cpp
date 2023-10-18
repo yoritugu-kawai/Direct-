@@ -149,7 +149,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		SphereTrans[i].color = { 1.0f,1.0f,1.0f,1.0f };
 
 	}
-
+	
 
 
 	//　メインループ
@@ -217,6 +217,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("rotate", &SphereTrans[0].rotate.x, -5.0f, 5.0f);
 		ImGui::SliderFloat3("translate", &SphereTrans[0].translate.x, -5.0f, 5.0f);
 		ImGui::End();
+
+		
+		SphereTrans[0].rotate.y += 0.02f;
+
 		SphereTrans[0].matrix = MakeAffineMatrix(SphereTrans[0].scale, SphereTrans[0].rotate, SphereTrans[0].translate);
 		sphere_->Draw(SphereTrans[0].matrix);
 		ImguiManager::EndFrame();
