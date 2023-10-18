@@ -8,6 +8,10 @@
 #include<cassert>
 #include<dxgidebug.h>
 #include<dxcapi.h>
+#include <cassert>
+#include <cmath>
+#include <numbers>
+
 #include"../Base/Log.h"
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"d3d12.lib")

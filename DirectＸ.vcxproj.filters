@@ -129,6 +129,9 @@
     <ClCompile Include="DKJEN\Shader\SpriteCompileShader.cpp">
       <Filter>DKJEN\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Type\Sphere.cpp">
+      <Filter>DKJEN\Type</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Shader\SpriteCompileShader.h">
       <Filter>DKJEN\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Type\Sphere.h">
+      <Filter>DKJEN\Type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

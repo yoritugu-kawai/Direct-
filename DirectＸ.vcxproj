@@ -114,6 +114,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Shader\TextureCompileShader.cpp" />
     <ClCompile Include="DKJEN\Type\Camera.cpp" />
     <ClCompile Include="DKJEN\Type\Polygon.cpp" />
+    <ClCompile Include="DKJEN\Type\Sphere.cpp" />
     <ClCompile Include="DKJEN\Type\Sprite.cpp" />
     <ClCompile Include="DKJEN\Type\Texture.cpp" />
     <ClCompile Include="main.cpp" />
@@ -180,6 +181,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Shader\TextureCompileShader.h" />
     <ClInclude Include="DKJEN\Type\Camera.h" />
     <ClInclude Include="DKJEN\Type\Polygon.h" />
+    <ClInclude Include="DKJEN\Type\Sphere.h" />
     <ClInclude Include="DKJEN\Type\Sprite.h" />
     <ClInclude Include="DKJEN\Type\Texture.h" />
   </ItemGroup>

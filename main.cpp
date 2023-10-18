@@ -8,12 +8,13 @@
 #include"DKJEN/Shader/PolygonCompileShader.h"
 #include"DKJEN/Shader/SpriteCompileShader.h"
 
-
+#include"DKJEN/Math/Math.h"
 #include"DKJEN/Imgui/imguiManager.h"
 
 #include"DKJEN/Type/Polygon.h"
 #include"DKJEN/Type/Sprite.h"
 #include"DKJEN/Type/Texture.h"
+#include"DKJEN/Type/Sphere.h"
 
 const wchar_t Title[] = { L"ド根性エンジン" };
 
@@ -49,7 +50,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//スプライト
 	Sprite* SpriteTex = new Sprite;
 	SpriteTex->Initialize();
-
+	//
+	Sphere* sphere_ = new Sphere;
+	sphere_->Initialize({ 0.0f,0.0f,0.0f,1.0f },0.3f);
 
 
 	///座標
@@ -122,6 +125,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
+
+
+
 	PolygonType* polygon_[Count];
 	for (int i = 0; i < Count; i++) {
 		polygon_[i] = new PolygonType;
@@ -133,6 +139,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		texture_[i] = new Texture;
 		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right);
 	}
+
+	ImGguiTransfrom SphereTrans[1];
+	for (int i = 0; i < 1; i++) {
+		SphereTrans[i].matrix = MakeIdentity4x4();
+		SphereTrans[i].scale = { 1.0f, 1.0f, 1.0f } ;
+		SphereTrans[i].rotate = { 0.0f, 0.0f, 0.0f };
+		SphereTrans[i].translate = { 0.0f, 0.0f, 0.0f };
+		SphereTrans[i].color = { 1.0f,1.0f,1.0f,1.0f };
+
+	}
+
 
 
 	//　メインループ
@@ -149,26 +166,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//　ゲーム処理
 
 
-		//ImGui::Begin("Texture1");
-		//ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
-		//ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
-		//ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
-		//ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
-		//ImGui::End();
+		ImGui::Begin("Texture1");
+		ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
+		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
+		ImGui::End();
 
-		//ImGui::Begin("Texture2");
-		//ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
-		//ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
-		//ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
-		//ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
-		//ImGui::End();
+		ImGui::Begin("Texture2");
+		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
+		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
+		ImGui::End();
 
-		//for (int i = 0; i < Count; i++) {
-		//	imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
-		//	texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
+		for (int i = 0; i < Count; i++) {
+			imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
+			texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
 
 
-		//}
+		}
 
 		ImGui::Begin("polygon1");
 		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
@@ -193,8 +210,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		SpriteTex->Darw();
-
-
+		SphereTrans[0].matrix = MakeAffineMatrix(SphereTrans[0].scale, SphereTrans[0].rotate, SphereTrans[0].translate);
+		sphere_->Draw(SphereTrans[0].matrix);
 		ImguiManager::EndFrame();
 		DxCommon::EndFrame();
 
@@ -219,7 +236,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygonPSO::Release();
 	SpritePSO::Release();
 
-
+	sphere_->Release();
 	ImguiManager::Release();
 	SpriteTex->Release();
 	DxCommon::Release();
