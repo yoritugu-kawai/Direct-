@@ -3,6 +3,7 @@
 void Sprite::Initialize()
 {
 
+
 	Roadtex_->Initiluze();
 	tex_ = Roadtex_->Load();
 
