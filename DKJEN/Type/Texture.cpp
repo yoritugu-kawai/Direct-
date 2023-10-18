@@ -87,6 +87,7 @@ void Texture::Release()
 	materialResource->Release();
 	wvpResource->Release();
 	tex_.Resource->Release();
+	tex_.Resource2->Release();
 }
 
 ID3D12Resource* Texture::CreateBufferResource(size_t sizeInbyte)

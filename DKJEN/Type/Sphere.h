@@ -43,6 +43,8 @@ private:
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
 	
 	const int VertexNum_ = 16;
+	bool useMonsterBall = true;
+
 };
 
 

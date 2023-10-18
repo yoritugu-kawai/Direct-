@@ -2,6 +2,7 @@
 #pragma once
 #include"../Base/WinApp.h"
 #include"../Base/DxCommon.h"
+#include"../Base/Function.h"
 #include"../externals/DirectXTex/d3dx12.h"
 #include"../externals/DirectXTex/DirectXTex.h"
 struct VerteData {
@@ -10,7 +11,9 @@ struct VerteData {
 };
 struct TexProeerty {
 	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU;
+	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU2;
 	ID3D12Resource* Resource;
+	ID3D12Resource* Resource2;
 
 };
 
@@ -27,4 +30,9 @@ public:
 	void ShaderResourceView();
 private:
 	DxCommon dxcommon_;
+
+	uint32_t descriptorSizeSRV;
+	uint32_t descriptorSizeRTV;
+	uint32_t descriptorSizeDSV;
+
 };

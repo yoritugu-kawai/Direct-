@@ -144,7 +144,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	for (int i = 0; i < 1; i++) {
 		SphereTrans[i].matrix = MakeIdentity4x4();
 		SphereTrans[i].scale = { 1.0f, 1.0f, 1.0f } ;
-		SphereTrans[i].rotate = { 0.0f, 0.0f, 0.0f };
+		SphereTrans[i].rotate = { 0.0f, 4.7f, 0.0f };
 		SphereTrans[i].translate = { 0.0f, 0.0f, 0.0f };
 		SphereTrans[i].color = { 1.0f,1.0f,1.0f,1.0f };
 
@@ -210,6 +210,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		SpriteTex->Darw();
+
+		ImGui::Begin("sphere");
+		ImGui::ColorEdit3("color", (float*)&SphereTrans[0].color);
+		ImGui::SliderFloat3("scale", &SphereTrans[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &SphereTrans[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &SphereTrans[0].translate.x, -5.0f, 5.0f);
+		ImGui::End();
 		SphereTrans[0].matrix = MakeAffineMatrix(SphereTrans[0].scale, SphereTrans[0].rotate, SphereTrans[0].translate);
 		sphere_->Draw(SphereTrans[0].matrix);
 		ImguiManager::EndFrame();

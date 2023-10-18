@@ -89,7 +89,10 @@ void RoadTexture::Initiluze()
 {
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
-
+	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
+	descriptorSizeSRV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSizeRTV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV); 
+	descriptorSizeDSV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 }
 
 TexProeerty RoadTexture::Load()
@@ -102,7 +105,13 @@ TexProeerty RoadTexture::Load()
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	ID3D12Resource* textureResource = CreateTexResource(device, metadata);
 	UploadTexData(textureResource, mipImages);
+	//Textureを読んで転送する2
+	DirectX::ScratchImage mipImages2 = LoadTexture("resource/monsterBall.png");
+	const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
+	ID3D12Resource* textureResource2 = CreateTexResource(device, metadata2);
+	UploadTexData(textureResource2, mipImages2);
 
+	
 	//テキストのシェダ－
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = metadata.format;
@@ -117,11 +126,25 @@ TexProeerty RoadTexture::Load()
 
 	texSrvHandleGPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	device->CreateShaderResourceView(textureResource, &srvDesc, texSrvHandleCPU);
+	
+	//テキストのシェダ－2
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
+	srvDesc2.Format = metadata2.format;
+	srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
+
+	D3D12_GPU_DESCRIPTOR_HANDLE texSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
+	D3D12_CPU_DESCRIPTOR_HANDLE texSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
+
+	device->CreateShaderResourceView(textureResource2, &srvDesc2, texSrvHandleCPU2);
 	//
 
 	TexProeerty tex;
 	tex.Resource = textureResource;
+	tex.Resource2 = textureResource2;
 	tex.SrvHandleGPU = texSrvHandleGPU;
+	tex.SrvHandleGPU2 = texSrvHandleGPU2;
 	return tex;
 }
 

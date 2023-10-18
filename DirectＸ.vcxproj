@@ -94,6 +94,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DKJEN\Base\DxCommon.cpp" />
+    <ClCompile Include="DKJEN\Base\Function.cpp" />
     <ClCompile Include="DKJEN\Base\Log.cpp" />
     <ClCompile Include="DKJEN\Base\PolygonPSO.cpp" />
     <ClCompile Include="DKJEN\Base\SpritePSO.cpp" />
@@ -160,6 +161,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DKJEN\Base\DxCommon.h" />
+    <ClInclude Include="DKJEN\Base\Function.h" />
     <ClInclude Include="DKJEN\Base\Log.h" />
     <ClInclude Include="DKJEN\Base\PolygonPSO.h" />
     <ClInclude Include="DKJEN\Base\SpritePSO.h" />

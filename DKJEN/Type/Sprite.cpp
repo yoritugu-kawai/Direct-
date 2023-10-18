@@ -83,6 +83,7 @@ void Sprite::Darw()
 void Sprite::Release()
 {
 	tex_.Resource->Release();
+	tex_.Resource2->Release();
 	vertexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
 	materialResource->Release();

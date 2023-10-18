@@ -117,7 +117,7 @@ void Sphere::Draw(Matrix4x4 m)
 
 	ImGui::Begin("SphereCamera");
 	ImGui::DragFloat("CameraZ", &viewMatrix.m[3][2], 2);
-	
+	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 	ImGui::End();
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
 
@@ -138,6 +138,7 @@ void Sphere::Release()
 	materialResource->Release();
 	wvpResource->Release();
 	tex_.Resource->Release();
+	tex_.Resource2->Release();
 	
 }
 
@@ -159,7 +160,7 @@ void Sphere::CommandCall()
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResource->GetGPUVirtualAddress());
 	//
-	commandList->SetGraphicsRootDescriptorTable(2, tex_.SrvHandleGPU);
+	commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2: tex_.SrvHandleGPU);
 
 
 	//描画(DrawCall/ドローコール)。
