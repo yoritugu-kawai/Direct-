@@ -31,7 +31,7 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW bufferView_;
 	
 	TexProeerty  tex_;
-	
+	 
 	RoadTexture* Roadtex_ = new RoadTexture;
 	
 
