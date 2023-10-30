@@ -157,6 +157,7 @@ void Sphere::Draw(Matrix4x4 m)
 	CommandCall();
 }
 
+
 void Sphere::Release()
 {
 	Vertex->Release();
