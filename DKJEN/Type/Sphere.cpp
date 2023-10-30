@@ -185,7 +185,7 @@ void Sphere::CommandCall()
 
 	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootConstantBufferView(3,lightResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(3, lightResource->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResource->GetGPUVirtualAddress());
 	//
 	commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2 : tex_.SrvHandleGPU);
