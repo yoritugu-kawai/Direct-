@@ -68,7 +68,7 @@ void TexturePSO::ShapePSO()
 	staicSamplers[0].ShaderRegister = 0;
 	staicSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	//
-	 descriptionRootSignature.pStaticSamplers = staicSamplers;
+	descriptionRootSignature.pStaticSamplers = staicSamplers;
 	descriptionRootSignature.NumStaticSamplers = _countof(staicSamplers);
 	////
 	descriptionRootSignature.pParameters = rootParameters;
@@ -105,7 +105,7 @@ void TexturePSO::ShapePSO()
 	inputElementDescs[0].SemanticIndex = 0;
 	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
-	
+
 	//
 	inputElementDescs[1].SemanticName = "TEXCOORD";
 	inputElementDescs[1].SemanticIndex = 0;
@@ -146,7 +146,7 @@ void TexturePSO::ShapePSO()
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	//
-	
+
 	////PSOの生成
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 
@@ -176,7 +176,7 @@ void TexturePSO::ShapePSO()
 
 	//利用するトポロジ(形状)のタイプ。三角形
 	graphicsPipelineStateDesc.PrimitiveTopologyType =
-D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
@@ -184,7 +184,7 @@ D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&ShapePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
-	
+
 	TexturePSO::GetInstance()->pso_.Texture = ShapePSO;
 
 
