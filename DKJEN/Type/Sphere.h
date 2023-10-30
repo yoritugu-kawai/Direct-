@@ -4,6 +4,7 @@
 #include"../Base/PolygonPSO.h"
 #include"../Base/RoadTexture.h"
 #include"../Base/SpritePSO.h"
+#include"../Base/LightPSO.h"
 
 class Sphere
 {
@@ -26,7 +27,7 @@ private:
 	ID3D12Resource* Vertex;
 	ID3D12Resource* materialResource;
 	ID3D12Resource* wvpResource;
-
+	ID3D12Resource* lightResource;
 	
 	D3D12_VERTEX_BUFFER_VIEW bufferView_;
 	

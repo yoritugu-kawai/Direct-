@@ -8,6 +8,7 @@
 struct VerteData {
 	Vector4 position;
 	Vector2 texcoord;
+	Vector3 normal;
 };
 struct TexProeerty {
 	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU;
@@ -16,6 +17,23 @@ struct TexProeerty {
 	ID3D12Resource* Resource2;
 
 };
+struct Material {
+
+	Vector4 color;
+	int32_t enableLighting;
+};
+struct TransformationMatrix {
+	Matrix4x4 WVP;
+	Matrix4x4 World;
+};
+
+struct DirectionalLight {
+	Vector4 color;
+	Vector3 direction;
+	float intensity;
+
+};
+
 
 class RoadTexture
 {

@@ -135,6 +135,12 @@
     <ClCompile Include="DKJEN\Base\Function.cpp">
       <Filter>DKJEN\Base\Dx</Filter>
     </ClCompile>
+    <ClCompile Include="DKJEN\Shader\LightCompileShader.cpp">
+      <Filter>DKJEN\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\LightPSO.cpp">
+      <Filter>DKJEN\Base\PSO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig">
@@ -161,6 +167,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="SpriteObiject2d.PS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="LightObject.PS.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="LightObject.VS.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>
@@ -242,6 +254,12 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Base\Function.h">
       <Filter>DKJEN\Base\Dx</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Shader\LightCompileShader.h">
+      <Filter>DKJEN\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\LightPSO.h">
+      <Filter>DKJEN\Base\PSO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

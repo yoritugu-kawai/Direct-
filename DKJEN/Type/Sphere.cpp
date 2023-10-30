@@ -4,9 +4,11 @@ void Sphere::Initialize(Vector4 pos, float size)
 {
 	const uint32_t v = VertexNum_ * VertexNum_ * 6;
 	Vertex = CreateBufferResource(sizeof(VerteData) * v);
-	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
+	wvpResource = CreateBufferResource(sizeof(TransformationMatrix));
 	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * v, Vertex, v);
-	materialResource = CreateBufferResource(sizeof(Vector4));
+
+	materialResource = CreateBufferResource(sizeof(Material));
+	lightResource = CreateBufferResource(sizeof(DirectionalLight));
 	centerPos_ = pos;
 	radious_ = size;
 
@@ -18,17 +20,19 @@ void Sphere::Initialize(Vector4 pos, float size)
 void Sphere::Draw(Matrix4x4 m)
 {
 	VerteData* vertexData = nullptr;
-	Vector4* MaterialData = nullptr;
-	Matrix4x4* wvpData = nullptr;
+	Material* MaterialData = nullptr;
+	TransformationMatrix* wvpData = nullptr;
+	DirectionalLight* lightData = nullptr;
 
-	
 
 
 	//書き込むためのアドレスを取得
 	Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&MaterialData));
+	MaterialData->enableLighting = false;
 
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
+	lightResource->Map(0, nullptr, reinterpret_cast<void**>(&lightData));
 
 	const float LON_EVERY = float(std::numbers::pi) * 2.0f / float(VertexNum_);
 	//緯度分割1つ分の角度θd
@@ -63,6 +67,10 @@ void Sphere::Draw(Matrix4x4 m)
 				//分割分移動
 				vertexData[start].texcoord.x = u;
 				vertexData[start].texcoord.y = v + length;
+				//
+				vertexData[start].normal.x = vertexData[start].position.x;
+				vertexData[start].normal.y = vertexData[start].position.y;
+				vertexData[start].normal.z = vertexData[start].position.z;
 
 				//点b(左上)
 				vertexData[start + 1].position.x = radious_ * (cos(lat + LAT_EVERY)) * cos(lon);
@@ -71,7 +79,9 @@ void Sphere::Draw(Matrix4x4 m)
 				vertexData[start + 1].position.w = 1.0f;
 				vertexData[start + 1].texcoord.x = u;
 				vertexData[start + 1].texcoord.y = v;
-
+				vertexData[start + 1].normal.x = vertexData[start + 1].position.x;
+				vertexData[start + 1].normal.y = vertexData[start + 1].position.y;
+				vertexData[start + 1].normal.z = vertexData[start + 1].position.z;
 
 				//点c(右下)
 				vertexData[start + 2].position.x = radious_ * (cos(lat) * cos(lon + LON_EVERY));
@@ -80,6 +90,9 @@ void Sphere::Draw(Matrix4x4 m)
 				vertexData[start + 2].position.w = 1.0f;
 				vertexData[start + 2].texcoord.x = u + length;
 				vertexData[start + 2].texcoord.y = v + length;
+				vertexData[start + 2].normal.x = vertexData[start + 2].position.x;
+				vertexData[start + 2].normal.y = vertexData[start + 2].position.y;
+				vertexData[start + 2].normal.z = vertexData[start + 2].position.z;
 
 #pragma endregion
 
@@ -92,6 +105,9 @@ void Sphere::Draw(Matrix4x4 m)
 				vertexData[start + 3].position.w = 1.0f;
 				vertexData[start + 3].texcoord.x = u + length;
 				vertexData[start + 3].texcoord.y = v;
+				vertexData[start + 3].normal.x = vertexData[start + 3].position.x;
+				vertexData[start + 3].normal.y = vertexData[start + 3].position.y;
+				vertexData[start + 3].normal.z = vertexData[start + 3].position.z;
 
 				//点c(右下)
 				vertexData[start + 4].position.x = radious_ * (cos(lat) * cos(lon + LON_EVERY));
@@ -100,6 +116,9 @@ void Sphere::Draw(Matrix4x4 m)
 				vertexData[start + 4].position.w = 1.0f;
 				vertexData[start + 4].texcoord.x = u + length;
 				vertexData[start + 4].texcoord.y = v + length;
+				vertexData[start + 4].normal.x = vertexData[start + 4].position.x;
+				vertexData[start + 4].normal.y = vertexData[start + 4].position.y;
+				vertexData[start + 4].normal.z = vertexData[start + 4].position.z;
 
 
 
@@ -110,6 +129,9 @@ void Sphere::Draw(Matrix4x4 m)
 				vertexData[start + 5].position.w = 1.0f;
 				vertexData[start + 5].texcoord.x = u;
 				vertexData[start + 5].texcoord.y = v;
+				vertexData[start + 5].normal.x = vertexData[start + 5].position.x;
+				vertexData[start + 5].normal.y = vertexData[start + 5].position.y;
+				vertexData[start + 5].normal.z = vertexData[start + 5].position.z;
 #pragma endregion
 			}
 		}
@@ -121,13 +143,16 @@ void Sphere::Draw(Matrix4x4 m)
 	ImGui::End();
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
 
-    Matrix4x4 worldViewProjectionMatrix = Multiply(m, Multiply(viewMatrix, projectionMatrix));
+	Matrix4x4 worldViewProjectionMatrix = Multiply(m, Multiply(viewMatrix, projectionMatrix));
 
-	*wvpData = worldViewProjectionMatrix;
-
+	wvpData->WVP = worldViewProjectionMatrix;
+	wvpData->World = worldViewProjectionMatrix;
+	lightData->color = { 1.0f,1.0f,1.0f,1.0f };
+	lightData->direction = { 0.0f,-1.0f,0.0f };
+	lightData->intensity = 1.0f;
 	//*wvpData = m;
 
-	*MaterialData = color_;
+	MaterialData->color = color_;
 
 	CommandCall();
 }
@@ -139,13 +164,14 @@ void Sphere::Release()
 	wvpResource->Release();
 	tex_.Resource->Release();
 	tex_.Resource2->Release();
-	
+	lightResource->Release();
+
 }
 
 void Sphere::CommandCall()
 {
 	ID3D12GraphicsCommandList* commandList = DxCommon::GetInstance()->GetCommandList();
-	PSOProperty pso_ = SpritePSO::GetInstance()->GetPSO().Texture;
+	PSOProperty pso_ = LightPSO::GetInstance()->GetPSO().Texture;
 
 
 	commandList->SetGraphicsRootSignature(pso_.rootSignature);
@@ -153,14 +179,15 @@ void Sphere::CommandCall()
 
 	commandList->IASetVertexBuffers(0, 1, &bufferView_);
 
-	
+
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	commandList->SetGraphicsRootConstantBufferView(1,wvpResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(1, wvpResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootConstantBufferView(3,lightResource->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResource->GetGPUVirtualAddress());
 	//
-	commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2: tex_.SrvHandleGPU);
+	commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2 : tex_.SrvHandleGPU);
 
 
 	//描画(DrawCall/ドローコール)。

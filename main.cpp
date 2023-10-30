@@ -1,12 +1,6 @@
 #include"DKJEN/Base/DxCommon.h"
 #include"DKJEN/Base/WinApp.h"
-#include"DKJEN/Base/TexturePSO.h"
-#include"DKJEN/Base/PolygonPSO.h"
-#include"DKJEN/Base/SpritePSO.h"
 
-#include"DKJEN/Shader/TextureCompileShader.h"
-#include"DKJEN/Shader/PolygonCompileShader.h"
-#include"DKJEN/Shader/SpriteCompileShader.h"
 
 #include"DKJEN/Math/Math.h"
 #include"DKJEN/Imgui/imguiManager.h"
@@ -37,15 +31,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TextureCompileShader::DXC();
 	PolygonCompileShader::DXC();
 	SpriteCompileShader::DXC();
+	LightCompileShader::DXC();
 
 	TextureCompileShader::ShaderCompile();
 	PolygonCompileShader::ShaderCompile();
 	SpriteCompileShader::ShaderCompile();
+	LightCompileShader::ShaderCompile();
 
 	TexturePSO::CreatePSO();
 	PolygonPSO::CreatePSO();
 	SpritePSO::CreatePSO();
-
+	LightPSO::CreatePSO();
 	
 	//スプライト
 	Sprite* SpriteTex = new Sprite;
@@ -242,10 +238,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TextureCompileShader::Release();
 	PolygonCompileShader::Release();
 	SpriteCompileShader::Release();
+	LightCompileShader::Release();
 
 	TexturePSO::Release();
 	PolygonPSO::Release();
 	SpritePSO::Release();
+	LightPSO::Release();
 
 	sphere_->Release();
 	ImguiManager::Release();
