@@ -108,9 +108,6 @@
     <ClCompile Include="DKJEN\Type\Sprite.cpp">
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
-    <ClCompile Include="ソース.cpp">
-      <Filter>避難所</Filter>
-    </ClCompile>
     <ClCompile Include="DKJEN\Base\RoadTexture.cpp">
       <Filter>DKJEN\Base\RoadTex</Filter>
     </ClCompile>
