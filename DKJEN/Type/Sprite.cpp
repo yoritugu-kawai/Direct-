@@ -32,7 +32,7 @@ void Sprite::Vertex()
 	uint32_t* indexDataSpriite = nullptr;
 	indexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSpriite));
 	indexDataSpriite[0] = 0;  indexDataSpriite[1] = 1; indexDataSpriite[2] = 2;
-	indexDataSpriite[3] = 1; indexDataSpriite[4] = 3; indexDataSpriite[5] = 2;
+	indexDataSpriite[3] = 2; indexDataSpriite[4] = 1; indexDataSpriite[5] = 4;
 
 	//1枚目
 	//左下
