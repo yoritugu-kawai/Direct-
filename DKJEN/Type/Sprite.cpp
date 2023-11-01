@@ -10,6 +10,7 @@ void Sprite::Initialize(TexProeerty  tex)
 	vertexResourceSprite = CreateBufferResource(sizeof(VerteData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
 	materialResource = CreateBufferResource(sizeof(Vector4));
+	indexResourceSprite = CreateBufferResource(sizeof(uint32_t) * 6);
 }
 
 void Sprite::Vertex()
@@ -18,10 +19,22 @@ void Sprite::Vertex()
 	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
 	vertexBufferViewSprite.SizeInBytes = sizeof(VerteData) * 6;
 	vertexBufferViewSprite.StrideInBytes = sizeof(VerteData);
-	//頂点データ
+	//
+	indexBufferViewSprite.BufferLocation = indexResourceSprite->GetGPUVirtualAddress();
+	indexBufferViewSprite.SizeInBytes = sizeof(uint32_t) * 6;
+	indexBufferViewSprite.Format = DXGI_FORMAT_R32_UINT;
 
-
+    //頂点データ
 	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&VertexDataSprite));
+	uint32_t* indexDataSpriite = nullptr;
+	indexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSpriite));
+	indexDataSpriite[0] = 0;
+	indexDataSpriite[1] = 1;
+	indexDataSpriite[2] = 2;
+	indexDataSpriite[3] = 1;
+	indexDataSpriite[4] = 3;
+	indexDataSpriite[5] = 2;
+
 	//1枚目
 	//左下
 	VertexDataSprite[0].position = { 0.0f,360.0f,0.0f,1.0f };
@@ -73,6 +86,7 @@ void Sprite::Darw()
 	commandList->SetGraphicsRootSignature(pso_.rootSignature);
 	commandList->SetPipelineState(pso_.GraphicsPipelineState);
 	commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);
+	commandList->IASetIndexBuffer(&indexBufferViewSprite);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprote->GetGPUVirtualAddress());
@@ -86,6 +100,7 @@ void Sprite::Release()
 	tex_.Resource->Release();
 
 	vertexResourceSprite->Release();
+	indexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
 	materialResource->Release();
 }
