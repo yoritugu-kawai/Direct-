@@ -1,11 +1,11 @@
 #include"../Math/Math.h"
 #include"../Base/DxCommon.h"
 #include"../Base/TexturePSO.h"
-#include"../Base/RoadTexture.h"
+#include"../Base/ImageLoading.h"
 class Texture
 {
 public:
-	void Initialize(Vector4 lefe, Vector4 top, Vector4 right);
+	void Initialize(Vector4 lefe, Vector4 top, Vector4 right, TexProeerty  tex);
 	void Draw( Matrix4x4 m, Vector4 Color);
 	void Release();
 	//
@@ -33,6 +33,6 @@ private:
 	//
 	Transfom cameratransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	///
-	RoadTexture* Roadtex_ = new RoadTexture;
+
 	TexProeerty  tex_;
 };

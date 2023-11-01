@@ -12,9 +12,9 @@ struct VerteData {
 };
 struct TexProeerty {
 	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU2;
+
 	ID3D12Resource* Resource;
-	ID3D12Resource* Resource2;
+
 
 };
 struct Material {
@@ -35,17 +35,19 @@ struct DirectionalLight {
 };
 
 
-class RoadTexture
+class ImageLoading
 {
 public:
 	void Initiluze();
-	TexProeerty Load();
+	TexProeerty Load(const std::string& filePath);
 	//void Draw();
 	void End();
 	DirectX::ScratchImage LoadTexture(const std::string& filePath);
 	ID3D12Resource* CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 	void UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 	void ShaderResourceView();
+
+	
 private:
 	DxCommon dxcommon_;
 

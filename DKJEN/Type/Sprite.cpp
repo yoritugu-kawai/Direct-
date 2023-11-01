@@ -1,11 +1,11 @@
 #include "Sprite.h"
 
-void Sprite::Initialize()
+void Sprite::Initialize(TexProeerty  tex)
 {
 
 
-	Roadtex_->Initiluze();
-	tex_ = Roadtex_->Load();
+
+	tex_ = tex;// spriteLoad_->Load("resource/e.png");
 
 	vertexResourceSprite = CreateBufferResource(sizeof(VerteData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
@@ -84,7 +84,7 @@ void Sprite::Darw()
 void Sprite::Release()
 {
 	tex_.Resource->Release();
-	tex_.Resource2->Release();
+
 	vertexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
 	materialResource->Release();

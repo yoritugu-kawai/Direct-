@@ -96,9 +96,16 @@ void PolygonPSO::ShapePSO()
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
 
 	//裏面（時計回り）を表示しない
-	rasterizerDesc.CullMode = D3D12_CULL_MODE_NONE;
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	//三角形の中を塗りつぶす
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
+
+	//ステイト追加
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	//
 
 	////PSOの生成
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
@@ -111,6 +118,9 @@ void PolygonPSO::ShapePSO()
 	shader.pixelBlob->GetBufferSize() }; //PixeShader
 	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
+	///
+	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
+	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	//書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;

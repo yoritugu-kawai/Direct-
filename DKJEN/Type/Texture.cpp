@@ -1,15 +1,12 @@
 #include "Texture.h"
 
 
-void Texture::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
+void Texture::Initialize(Vector4 lefe, Vector4 top, Vector4 right, TexProeerty  tex)
 {
-
-
-
 	//テキスト
 
-	Roadtex_->Initiluze();
-	tex_ = Roadtex_->Load();
+	
+	tex_ = tex;// textureLoad_->Load("resource/uvChecker.png");
 
 	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
@@ -87,7 +84,7 @@ void Texture::Release()
 	materialResource->Release();
 	wvpResource->Release();
 	tex_.Resource->Release();
-	tex_.Resource2->Release();
+
 }
 
 ID3D12Resource* Texture::CreateBufferResource(size_t sizeInbyte)

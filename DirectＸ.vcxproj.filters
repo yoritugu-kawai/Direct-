@@ -108,7 +108,7 @@
     <ClCompile Include="DKJEN\Type\Sprite.cpp">
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
-    <ClCompile Include="DKJEN\Base\RoadTexture.cpp">
+    <ClCompile Include="DKJEN\Base\ImageLoading.cpp">
       <Filter>DKJEN\Base\RoadTex</Filter>
     </ClCompile>
     <ClCompile Include="DKJEN\Shader\TextureCompileShader.cpp">
@@ -228,7 +228,7 @@
     <ClInclude Include="DKJEN\Type\Sprite.h">
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
-    <ClInclude Include="DKJEN\Base\RoadTexture.h">
+    <ClInclude Include="DKJEN\Base\ImageLoading.h">
       <Filter>DKJEN\Base\RoadTex</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Shader\TextureCompileShader.h">

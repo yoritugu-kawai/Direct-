@@ -1,6 +1,6 @@
 #include"Sphere.h"
 
-void Sphere::Initialize(Vector4 pos, float size)
+void Sphere::Initialize(Vector4 pos, float size,TexProeerty  tex)
 {
 	const uint32_t v = VertexNum_ * VertexNum_ * 6;
 	Vertex = CreateBufferResource(sizeof(VerteData) * v);
@@ -12,8 +12,8 @@ void Sphere::Initialize(Vector4 pos, float size)
 	centerPos_ = pos;
 	radious_ = size;
 
-	Roadtex_->Initiluze();
-	tex_ = Roadtex_->Load();
+
+	tex_ = tex; //sphereLoad_->Load("resource/monsterBall.png");
 	viewMatrix.m[3][2] = 2;
 }
 
@@ -137,10 +137,10 @@ void Sphere::Draw(Matrix4x4 m)
 		}
 	}
 
-	ImGui::Begin("SphereCamera");
-	ImGui::DragFloat("CameraZ", &viewMatrix.m[3][2], 2);
-	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
-	ImGui::End();
+	//ImGui::Begin("SphereCamera");
+	//ImGui::DragFloat("CameraZ", &viewMatrix.m[3][2], 2);
+	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	//ImGui::End();
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(WinApp::GetInstance()->Width()) / float(WinApp::GetInstance()->Height()), 0.1f, 100.0f);
 
 	Matrix4x4 worldViewProjectionMatrix = Multiply(m, Multiply(viewMatrix, projectionMatrix));
@@ -164,7 +164,7 @@ void Sphere::Release()
 	materialResource->Release();
 	wvpResource->Release();
 	tex_.Resource->Release();
-	tex_.Resource2->Release();
+
 	lightResource->Release();
 
 }
@@ -188,8 +188,9 @@ void Sphere::CommandCall()
 	commandList->SetGraphicsRootConstantBufferView(3, lightResource->GetGPUVirtualAddress());
 	//commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResource->GetGPUVirtualAddress());
 	//
-	commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2 : tex_.SrvHandleGPU);
+	//commandList->SetGraphicsRootDescriptorTable(2, useMonsterBall ? tex_.SrvHandleGPU2 : tex_.SrvHandleGPU);
 
+	commandList->SetGraphicsRootDescriptorTable(2,  tex_.SrvHandleGPU);
 
 	//描画(DrawCall/ドローコール)。
 	commandList->DrawInstanced(VertexNum_ * VertexNum_ * 6, 1, 0, 0);

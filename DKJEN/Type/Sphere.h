@@ -2,15 +2,15 @@
 #include"../Base/DxCommon.h"
 #include"../Math/Math.h"
 #include"../Base/PolygonPSO.h"
-#include"../Base/RoadTexture.h"
+
 #include"../Base/SpritePSO.h"
 #include"../Base/LightPSO.h"
-
+#include"../Base/ImageLoading.h"
 class Sphere
 {
 public:
 
-	void Initialize(Vector4 pos, float size);
+	void Initialize(Vector4 pos, float size, TexProeerty  tex);
 
 	void Draw(Matrix4x4 m);
 
@@ -33,7 +33,6 @@ private:
 	
 	TexProeerty  tex_;
 	
-	RoadTexture* Roadtex_ = new RoadTexture;
 	
 
 	Transfom transform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };

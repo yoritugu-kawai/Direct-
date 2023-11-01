@@ -1,6 +1,6 @@
 #include"DKJEN/Base/DxCommon.h"
 #include"DKJEN/Base/WinApp.h"
-
+#include"DKJEN/Base/ImageLoading.h"
 
 #include"DKJEN/Math/Math.h"
 #include"DKJEN/Imgui/imguiManager.h"
@@ -42,13 +42,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygonPSO::CreatePSO();
 	SpritePSO::CreatePSO();
 	LightPSO::CreatePSO();
-	
+	ImageLoading* imageLoading = new ImageLoading;
+	imageLoading->Initiluze();
+	TexProeerty tex = imageLoading->Load("resource/e.png");
+	TexProeerty tex3 = imageLoading->Load("resource/monsterBall.png");
+	TexProeerty tex2 = imageLoading->Load("resource/uvChecker.png");
 	//スプライト
 	Sprite* SpriteTex = new Sprite;
-	SpriteTex->Initialize();
-	//
+	SpriteTex->Initialize(tex);
+	// 球
 	Sphere* sphere_ = new Sphere;
-	sphere_->Initialize({ 0.0f,0.0f,0.0f,1.0f },0.3f);
+	sphere_->Initialize({ 0.0f,0.0f,0.0f,1.0f },0.3f, tex3);
 
 
 	///座標
@@ -133,7 +137,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Texture* texture_[Count];
 	for (int i = 0; i < Count; i++) {
 		texture_[i] = new Texture;
-		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right);
+		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right, tex2);
 	}
 
 	ImGguiTransfrom SphereTrans[1];
@@ -201,8 +205,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		for (int i = 0; i < Count; i++) {
 			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
 			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
-
-
 		}
 
 		SpriteTex->Darw();
@@ -219,6 +221,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		SphereTrans[0].matrix = MakeAffineMatrix(SphereTrans[0].scale, SphereTrans[0].rotate, SphereTrans[0].translate);
 		sphere_->Draw(SphereTrans[0].matrix);
+
+
+
+
 		ImguiManager::EndFrame();
 		DxCommon::EndFrame();
 

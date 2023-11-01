@@ -1,7 +1,19 @@
-#include"RoadTexture.h"
+#include"ImageLoading.h"
 
+static uint32_t LoadCount;
 
-DirectX::ScratchImage RoadTexture::LoadTexture(const std::string& filePath)
+void ImageLoading::Initiluze()
+{
+
+	CoInitializeEx(0, COINIT_MULTITHREADED);
+	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
+	descriptorSizeSRV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSizeRTV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	descriptorSizeDSV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+	LoadCount = 0;
+}
+
+DirectX::ScratchImage ImageLoading::LoadTexture(const std::string& filePath)
 {
 
 	//テクスチャファイルを読み込んでプログラムで扱えるようにする
@@ -20,7 +32,7 @@ DirectX::ScratchImage RoadTexture::LoadTexture(const std::string& filePath)
 
 }
 
-ID3D12Resource* RoadTexture::CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
+ID3D12Resource* ImageLoading::CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
 {
 	//1.metadataを基にResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -53,7 +65,7 @@ ID3D12Resource* RoadTexture::CreateTexResource(ID3D12Device* device, const Direc
 	return resource;
 }
 
-void RoadTexture::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
+void ImageLoading::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages)
 {
 	//Meta情報を取得
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
@@ -78,79 +90,71 @@ void RoadTexture::UploadTexData(ID3D12Resource* texture, const DirectX::ScratchI
 
 }
 
-void RoadTexture::ShaderResourceView()
+void ImageLoading::ShaderResourceView()
 {
 
 
 }
 
 
-void RoadTexture::Initiluze()
-{
-
-	CoInitializeEx(0, COINIT_MULTITHREADED);
-	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
-	descriptorSizeSRV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	descriptorSizeRTV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV); 
-	descriptorSizeDSV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-}
-
-TexProeerty RoadTexture::Load()
+TexProeerty ImageLoading::Load(const std::string& filePath)
 {
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
 	ID3D12DescriptorHeap* srvDescriptorHeap = DxCommon::GetInstance()->GetsrvDescriptorHeap();
 
 	//Textureを読んで転送する
-	DirectX::ScratchImage mipImages = LoadTexture("resource/uvChecker.png");
+	DirectX::ScratchImage mipImages = LoadTexture(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
+
 	ID3D12Resource* textureResource = CreateTexResource(device, metadata);
 	UploadTexData(textureResource, mipImages);
 	//Textureを読んで転送する2
-	DirectX::ScratchImage mipImages2 = LoadTexture("resource/monsterBall.png");
-	const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
-	ID3D12Resource* textureResource2 = CreateTexResource(device, metadata2);
-	UploadTexData(textureResource2, mipImages2);
+	//DirectX::ScratchImage mipImages2 = LoadTexture("resource/monsterBall.png");
+	//const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
+	//ID3D12Resource* textureResource2 = CreateTexResource(device, metadata2);
+	//UploadTexData(textureResource2, mipImages2);
 
-	
+
 	//テキストのシェダ－
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = metadata.format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+	//
 
-	D3D12_GPU_DESCRIPTOR_HANDLE texSrvHandleGPU = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
-	D3D12_CPU_DESCRIPTOR_HANDLE texSrvHandleCPU = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE texSrvHandleGPU =
+		GetGPUDescriptorHandle(
+			srvDescriptorHeap, descriptorSizeSRV, LoadCount);
+	D3D12_CPU_DESCRIPTOR_HANDLE texSrvHandleCPU =
+		GetCPUDescriptorHandle(
+			srvDescriptorHeap, descriptorSizeSRV, LoadCount);
 
 	texSrvHandleCPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-
 	texSrvHandleGPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	device->CreateShaderResourceView(textureResource, &srvDesc, texSrvHandleCPU);
-	
+
+
 	//テキストのシェダ－2
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
-	srvDesc2.Format = metadata2.format;
-	srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
+	//D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
+	//srvDesc2.Format = metadata2.format;
+	//srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	//srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	//srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
 
-	D3D12_GPU_DESCRIPTOR_HANDLE texSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
-	D3D12_CPU_DESCRIPTOR_HANDLE texSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap, descriptorSizeSRV, 2);
-
-	device->CreateShaderResourceView(textureResource2, &srvDesc2, texSrvHandleCPU2);
+	LoadCount++;
 	//
 
 	TexProeerty tex;
 	tex.Resource = textureResource;
-	tex.Resource2 = textureResource2;
 	tex.SrvHandleGPU = texSrvHandleGPU;
-	tex.SrvHandleGPU2 = texSrvHandleGPU2;
+
 	return tex;
 }
 
 
 
-void RoadTexture::End()
+void ImageLoading::End()
 {
 	CoUninitialize();
 }

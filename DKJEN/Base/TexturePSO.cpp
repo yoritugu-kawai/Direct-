@@ -164,11 +164,10 @@ void TexturePSO::ShapePSO()
 
 	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
+	///
 	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	/*graphicsPipelineStateDesc.DepthStencilState = despthStencilDesc;
-	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;*/
 
 	//書き込むRTVの情報
 	graphicsPipelineStateDesc.NumRenderTargets = 1;

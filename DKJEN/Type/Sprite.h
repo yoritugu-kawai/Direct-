@@ -2,11 +2,11 @@
 #include"../Math/Math.h"
 #include"../Base/DxCommon.h"
 #include"../Base/SpritePSO.h"
-#include"../Base/RoadTexture.h"
+#include"../Base/ImageLoading.h"
 class  Sprite
 {
 public:
-	void Initialize();
+	void Initialize(TexProeerty  tex);
 	void Vertex();
 	void Darw();
 	void Release();
@@ -26,7 +26,7 @@ private:
 
 
 	TexProeerty  tex_;
-	RoadTexture* Roadtex_ = new RoadTexture;
+	
 };
 
 
