@@ -27,16 +27,12 @@ void Sprite::Vertex()
 	indexBufferViewSprite.SizeInBytes = sizeof(uint32_t) * 6;
 	indexBufferViewSprite.Format = DXGI_FORMAT_R32_UINT;
 
-    //頂点データ
+	//頂点データ
 	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&VertexDataSprite));
 	uint32_t* indexDataSpriite = nullptr;
 	indexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&indexDataSpriite));
-	indexDataSpriite[0] = 0;
-	indexDataSpriite[1] = 1;
-	indexDataSpriite[2] = 2;
-	indexDataSpriite[3] = 1;
-	indexDataSpriite[4] = 3;
-	indexDataSpriite[5] = 2;
+	indexDataSpriite[0] = 0;  indexDataSpriite[1] = 1; indexDataSpriite[2] = 2;
+	indexDataSpriite[3] = 1; indexDataSpriite[4] = 3; indexDataSpriite[5] = 2;
 
 	//1枚目
 	//左下
@@ -63,11 +59,11 @@ void Sprite::Vertex()
 }
 void Sprite::Darw(Matrix4x4 m)
 {
-	Vertex();
 	UVMaterial* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&materialDeta));
 	materialDeta->color = { 1.0f,1.0f,1.0,1.0f };
+	Vertex();
 
 	ImGui::Begin("sprite");
 	ImGui::Text("uv");
@@ -104,7 +100,7 @@ void Sprite::Darw(Matrix4x4 m)
 	commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprote->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootDescriptorTable(2, tex_.SrvHandleGPU);
-	commandList->DrawInstanced(6, 1, 0, 0);
+	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
 }
 
