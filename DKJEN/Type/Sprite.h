@@ -25,13 +25,18 @@ private:
 	ID3D12Resource* indexResourceSprite;
 
 	Matrix4x4* transformationMatrixDataSprite = nullptr;
-	Transfrom transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	Transform transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 
 	TexProeerty  tex_;
 	Vector4 transX_ = { 0.0f,0.0f,0.0f };
 	Vector4 transY_ = { 0.0f,0.0f,0.0f };
 	Vector4 transXY_ = { 0.0f,0.0f,0.0f };
+	Transform uvTranformSprite{
+	 {1.0f,1.0f,1.0f},
+	 {0.0f,0.0f,0.0f},
+	 {0.0f,0.0f,0.0f}
+	};
 };
 
 

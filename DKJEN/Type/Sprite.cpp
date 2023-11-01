@@ -9,7 +9,7 @@ void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 
 	vertexResourceSprite = CreateBufferResource(sizeof(VerteData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
-	materialResource = CreateBufferResource(sizeof(Vector4));
+	materialResource = CreateBufferResource(sizeof(UVMaterial));
 	indexResourceSprite = CreateBufferResource(sizeof(uint32_t) * 6);
 	transX_ = x;
 	transY_ = y;
@@ -64,10 +64,20 @@ void Sprite::Vertex()
 void Sprite::Darw(Matrix4x4 m)
 {
 	Vertex();
-	Vector4* materialDeta = nullptr;
+	UVMaterial* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&materialDeta));
-	*materialDeta = { 1.0f,1.0f,1.0,1.0f };
+	materialDeta->color = { 1.0f,1.0f,1.0,1.0f };
+
+	ImGui::Begin("sprite");
+	ImGui::Text("uv");
+	ImGui::SliderFloat3("t", &uvTranformSprite.translate.x, -4.0f, 4.0f);
+	ImGui::SliderFloat3("s", &uvTranformSprite.scale.x, -4.0f, 4.0f);
+	ImGui::SliderFloat3("r", &uvTranformSprite.rotate.x, -4.0f, 4.0f);
+	ImGui::End();
+
+	Matrix4x4 m2 = MakeAffineMatrix(uvTranformSprite.scale, uvTranformSprite.rotate, uvTranformSprite.translate);
+	materialDeta->uvTransform = m2;
 
 
 	transformationMatrixResourceSprote->Map(0, nullptr, reinterpret_cast<void**>

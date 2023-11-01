@@ -35,7 +35,7 @@ private:
 	
 	
 
-	Transfrom transform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	Transform transform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	Vector4 color_ = { 1,1,1,1 };
 	Vector4 centerPos_ = { 0,0,0,0 };
