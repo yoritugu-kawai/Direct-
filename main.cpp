@@ -13,7 +13,7 @@
 const wchar_t Title[] = { L"ド根性エンジン" };
 
 
-struct TrianglePropaty
+struct Transfrom4
 {
 	Vector4 lefe;
 	Vector4  top;
@@ -48,8 +48,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty tex3 = imageLoading->Load("resource/monsterBall.png");
 	TexProeerty tex2 = imageLoading->Load("resource/uvChecker.png");
 	//スプライト
-	Sprite* SpriteTex = new Sprite;
-	SpriteTex->Initialize(tex);
+	
 	// 球
 	Sphere* sphere_ = new Sphere;
 	sphere_->Initialize({ 0.0f,0.0f,0.0f,1.0f },0.3f, tex3);
@@ -59,7 +58,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const int Count = 2;
 
 
-	TrianglePropaty triangleTextur[Count];
+	Transfrom4 triangleTextur[Count];
 	triangleTextur[0] =
 	{
 		{-0.5f,-0.5f,0.0f,1.0f},
@@ -80,7 +79,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	};
 
 
-	TrianglePropaty triangle[Count];
+	Transfrom4 triangle[Count];
 	triangle[0] =
 	{
 		{-0.5f,-0.5f,0.0f,1.0f},
@@ -99,7 +98,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{1.0f,0.0f,0.0f,1.0f}
 
 	};
+	Transfrom4 SpriteTrans =
+	{
+		{560.f,0.0f,0.0f,1.0f},
+		{ 0.0f,360.0f,0.0f,1.0f },
+		{560.0f,360.0f,0.0f,1.0f}
 
+	};
 	//imgui
 	ImGguiTransfrom imGuiTextur[2];
 
@@ -125,9 +130,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	}
 
+	ImGguiTransfrom imGuiSphere[1];
+	for (int i = 0; i < 1; i++) {
+		imGuiSphere[i].matrix = MakeIdentity4x4();
+		imGuiSphere[i].scale = { 1.0f, 1.0f, 1.0f };
+		imGuiSphere[i].rotate = { 0.0f, 4.7f, 0.0f };
+		imGuiSphere[i].translate = { 0.0f, 0.0f, 0.0f };
+		imGuiSphere[i].color = { 1.0f,1.0f,1.0f,1.0f };
 
+	}
+	ImGguiTransfrom imGuiSprite;
+	imGuiSprite.matrix = MakeIdentity4x4();
+	imGuiSprite.scale = { 1.0f,1.0f,1.0f };
+	imGuiSprite.rotate = { 0.0f,0.0f,0.0f };
+	imGuiSprite.translate = { 0.0f,0.0f,0.0f };
 
-
+	///初期化
 	PolygonType* polygon_[Count];
 	for (int i = 0; i < Count; i++) {
 		polygon_[i] = new PolygonType;
@@ -140,16 +158,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right, tex2);
 	}
 
-	ImGguiTransfrom SphereTrans[1];
-	for (int i = 0; i < 1; i++) {
-		SphereTrans[i].matrix = MakeIdentity4x4();
-		SphereTrans[i].scale = { 1.0f, 1.0f, 1.0f } ;
-		SphereTrans[i].rotate = { 0.0f, 4.7f, 0.0f };
-		SphereTrans[i].translate = { 0.0f, 0.0f, 0.0f };
-		SphereTrans[i].color = { 1.0f,1.0f,1.0f,1.0f };
-
-	}
-	
+	Sprite* SpriteTex = new Sprite;
+	SpriteTex->Initialize(tex, SpriteTrans.lefe, SpriteTrans.top, SpriteTrans.right);
 
 
 	//　メインループ
@@ -207,20 +217,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
 		}
 
-		SpriteTex->Darw();
+		ImGui::Begin("Sprite");
+		
+		ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
+		ImGui::End();
+		imGuiSprite.matrix= MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
+
+		SpriteTex->Darw(imGuiSprite.matrix);
 
 		ImGui::Begin("sphere");
-		ImGui::ColorEdit3("color", (float*)&SphereTrans[0].color);
-		ImGui::SliderFloat3("scale", &SphereTrans[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &SphereTrans[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &SphereTrans[0].translate.x, -5.0f, 5.0f);
+		ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
+		ImGui::SliderFloat3("scale", &imGuiSphere[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiSphere[0].rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiSphere[0].translate.x, -5.0f, 5.0f);
 		ImGui::End();
 
 		
-		SphereTrans[0].rotate.y += 0.02f;
+		imGuiSphere[0].rotate.y += 0.02f;
 
-		SphereTrans[0].matrix = MakeAffineMatrix(SphereTrans[0].scale, SphereTrans[0].rotate, SphereTrans[0].translate);
-		sphere_->Draw(SphereTrans[0].matrix);
+		imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
+		sphere_->Draw(imGuiSphere[0].matrix);
 
 
 

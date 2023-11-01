@@ -14,6 +14,6 @@ public:
 
 
 private:
-	Transfom cameratransform;
+	Transfrom cameratransform;
 	
 };

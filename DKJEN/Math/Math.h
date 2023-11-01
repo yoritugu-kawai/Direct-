@@ -63,7 +63,7 @@ struct   Matrix4x4 {
 	float m[4][4];
 };
 
-struct  Transfom
+struct  Transfrom
 {
 	Vector3 scale;
 	Vector3 rotate;

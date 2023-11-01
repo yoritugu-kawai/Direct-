@@ -19,7 +19,7 @@ private:
 	Vector4 right_ = { 0.0f,0.0f,0.0f };
 
 	//Vector4 Color_ = { 0.0f,0.0f,1.0f,1.0f };
-	Transfom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	Transfrom transfom{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	const float size = 0.1f;
 	DxCommon dxCommmon_;
@@ -31,7 +31,7 @@ private:
 	//
 	D3D12_VERTEX_BUFFER_VIEW bufferView_;
 	//
-	Transfom cameratransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
+	Transfrom cameratransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	///
 
 	TexProeerty  tex_;

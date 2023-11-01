@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-void Sprite::Initialize(TexProeerty  tex)
+void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 {
 
 
@@ -11,6 +11,9 @@ void Sprite::Initialize(TexProeerty  tex)
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	indexResourceSprite = CreateBufferResource(sizeof(uint32_t) * 6);
+	transX_ = x;
+	transY_ = y;
+	transXY_ = xy;
 }
 
 void Sprite::Vertex()
@@ -37,28 +40,28 @@ void Sprite::Vertex()
 
 	//1枚目
 	//左下
-	VertexDataSprite[0].position = { 0.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[0].position = { transY_ };
 	VertexDataSprite[0].texcoord = { 0.0f,1.0f };
 	//左上
 	VertexDataSprite[1].position = { 0.0f,0.0f,0.0f,1.0f };
 	VertexDataSprite[1].texcoord = { 0.0f,0.0f };
 	//右下
-	VertexDataSprite[2].position = { 360.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[2].position = { transXY_ };
 	VertexDataSprite[2].texcoord = { 1.0f,1.0f };
 	//二枚目
 	//左上
 	VertexDataSprite[3].position = { 0.0f,0.0f,0.0f,1.0f };
 	VertexDataSprite[3].texcoord = { 0.0f,0.0f };
 	//右上
-	VertexDataSprite[4].position = { 360.f,0.0f,0.0f,1.0f };
+	VertexDataSprite[4].position = { transX_ };
 	VertexDataSprite[4].texcoord = { 1.0f,0.0f };
 	//右下
-	VertexDataSprite[5].position = { 360.0f,360.0f,0.0f,1.0f };
+	VertexDataSprite[5].position = { transXY_ };
 	VertexDataSprite[5].texcoord = { 1.0f,1.0f };
 
 
 }
-void Sprite::Darw()
+void Sprite::Darw(Matrix4x4 m)
 {
 	Vertex();
 	Vector4* materialDeta = nullptr;
@@ -74,7 +77,7 @@ void Sprite::Darw()
 	Matrix4x4 SpriteMatrix = MakeAffineMatrix(transformSprite.scale, transformSprite.rotate, transformSprite.translate);
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
 	Matrix4x4 projectionMatrix = MakeOrthographicMatrix(0.0f, 0.0f, float(WinApp::GetInstance()->Width()), float(WinApp::GetInstance()->Height()), 0.0f, 100.0f);
-	Matrix4x4 worldViewProjectionMatrix = Multiply(SpriteMatrix, Multiply(viewMatrix, projectionMatrix));
+	Matrix4x4 worldViewProjectionMatrix = Multiply(m, Multiply(viewMatrix, projectionMatrix));
 	*transformationMatrixDataSprite = worldViewProjectionMatrix;
 
 

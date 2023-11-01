@@ -6,9 +6,9 @@
 class  Sprite
 {
 public:
-	void Initialize(TexProeerty  tex);
+	void Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy);
 	void Vertex();
-	void Darw();
+	void Darw(Matrix4x4 m);
 	void Release();
 
 	ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
@@ -25,11 +25,13 @@ private:
 	ID3D12Resource* indexResourceSprite;
 
 	Matrix4x4* transformationMatrixDataSprite = nullptr;
-	Transfom transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	Transfrom transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 
 	TexProeerty  tex_;
-	
+	Vector4 transX_ = { 0.0f,0.0f,0.0f };
+	Vector4 transY_ = { 0.0f,0.0f,0.0f };
+	Vector4 transXY_ = { 0.0f,0.0f,0.0f };
 };
 
 
