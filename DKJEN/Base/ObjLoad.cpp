@@ -1,6 +1,6 @@
 #include"ObjLoad.h"
 
-ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename, TexProeerty tex_)
+ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename, TexProeerty tex)
 {
 	//1.
 	ModelData modelData;
@@ -68,9 +68,9 @@ ModelData LoadObjFile(const std::string& directoryPath, const std::string& filen
 			modelData.material= LoadMaterialTemplateFile(directoryPath, materialFilename);
 		}
 	}
-	ImageLoading* imgload = new ImageLoading;
-	tex_ = imgload->LoadTexture(modelData.material.textureFilePath);
-	imgload->End();
+	/*ImageLoading* imgload = new ImageLoading;
+	tex= imgload->LoadTexture(modelData.material.textureFilePath);
+	*/
 	//4.
 	
 	return modelData;
