@@ -7,7 +7,7 @@ void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 
 	tex_ = tex;// spriteLoad_->Load("resource/e.png");
 
-	vertexResourceSprite = CreateBufferResource(sizeof(VerteData) * 6);
+	vertexResourceSprite = CreateBufferResource(sizeof(VertexData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
 	materialResource = CreateBufferResource(sizeof(UVMaterial));
 	indexResourceSprite = CreateBufferResource(sizeof(uint32_t) * 6);
@@ -20,8 +20,8 @@ void Sprite::Vertex()
 {
 
 	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
-	vertexBufferViewSprite.SizeInBytes = sizeof(VerteData) * 6;
-	vertexBufferViewSprite.StrideInBytes = sizeof(VerteData);
+	vertexBufferViewSprite.SizeInBytes = sizeof(VertexData) * 6;
+	vertexBufferViewSprite.StrideInBytes = sizeof(VertexData);
 	//
 	indexBufferViewSprite.BufferLocation = indexResourceSprite->GetGPUVirtualAddress();
 	indexBufferViewSprite.SizeInBytes = sizeof(uint32_t) * 6;

@@ -18,7 +18,7 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite{};
 	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite{};
 
-	VerteData* VertexDataSprite = nullptr;
+	VertexData* VertexDataSprite = nullptr;
 	ID3D12Resource* vertexResourceSprite;
 	ID3D12Resource* transformationMatrixResourceSprote;
 	ID3D12Resource* materialResource;

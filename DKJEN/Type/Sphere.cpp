@@ -3,9 +3,9 @@
 void Sphere::Initialize(Vector4 pos, float size,TexProeerty  tex)
 {
 	const uint32_t v = VertexNum_ * VertexNum_ * 6;
-	Vertex = CreateBufferResource(sizeof(VerteData) * v);
+	Vertex = CreateBufferResource(sizeof(VertexData) * v);
 	wvpResource = CreateBufferResource(sizeof(TransformationMatrix));
-	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * v, Vertex, v);
+	bufferView_ = VertexCreateBufferView(sizeof(VertexData) * v, Vertex, v);
 
 	materialResource = CreateBufferResource(sizeof(Material));
 	lightResource = CreateBufferResource(sizeof(DirectionalLight));
@@ -13,13 +13,13 @@ void Sphere::Initialize(Vector4 pos, float size,TexProeerty  tex)
 	radious_ = size;
 
 
-	tex_ = tex; //sphereLoad_->Load("resource/monsterBall.png");
+	tex_ = tex; 
 	viewMatrix.m[3][2] = 2;
 }
 
 void Sphere::Draw(Matrix4x4 m)
 {
-	VerteData* vertexData = nullptr;
+	VertexData* vertexData = nullptr;
 	Material* MaterialData = nullptr;
 	TransformationMatrix* wvpData = nullptr;
 	DirectionalLight* lightData = nullptr;

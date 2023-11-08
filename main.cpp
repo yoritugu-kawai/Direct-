@@ -9,6 +9,7 @@
 #include"DKJEN/Type/Sprite.h"
 #include"DKJEN/Type/Texture.h"
 #include"DKJEN/Type/Sphere.h"
+#include"DKJEN/Type/Obj3D.h"
 
 const wchar_t Title[] = { L"ド根性エンジン" };
 
@@ -52,7 +53,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// 球
 	Sphere* sphere_ = new Sphere;
 	sphere_->Initialize({ 0.0f,0.0f,0.0f,1.0f },0.3f, tex3);
-
+	//3Dモデル
+	Obj3D* obj3D = new Obj3D;
+	obj3D->Initialize(tex2);
 
 	///座標
 	const int Count = 2;
@@ -175,58 +178,71 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//　ゲーム処理
 		//　ゲーム処理
 
+		if (1) {
+			/*ImGui::Begin("Texture1");
+					ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
+					ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
+					ImGui::End();
 
-		ImGui::Begin("Texture1");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
+					ImGui::Begin("Texture2");
+					ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
+					ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
+					ImGui::End();
 
-		ImGui::Begin("Texture2");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		for (int i = 0; i < Count; i++) {
-			imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
-			texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
+					for (int i = 0; i < Count; i++) {
+						imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
+						texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
 
 
+					}
+
+					ImGui::Begin("polygon1");
+					ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
+					ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
+					ImGui::End();
+
+					ImGui::Begin("polygon2");
+					ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
+					ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
+					ImGui::End();
+
+
+					for (int i = 0; i < Count; i++) {
+						imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
+						polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
+					}
+
+					ImGui::Begin("Sprite");
+
+					ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
+					ImGui::End();
+					imGuiSprite.matrix= MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
+
+					SpriteTex->Darw(imGuiSprite.matrix);
+
+					ImGui::Begin("sphere");
+					ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
+					ImGui::SliderFloat3("scale", &imGuiSphere[0].scale.x, -0.0f, 5.0f);
+					ImGui::SliderFloat3("rotate", &imGuiSphere[0].rotate.x, -5.0f, 5.0f);
+					ImGui::SliderFloat3("translate", &imGuiSphere[0].translate.x, -5.0f, 5.0f);
+					ImGui::End();
+
+
+					imGuiSphere[0].rotate.y += 0.02f;
+
+					imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
+					sphere_->Draw(imGuiSphere[0].matrix);*/
 		}
-
-		ImGui::Begin("polygon1");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		ImGui::Begin("polygon2");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-
-		for (int i = 0; i < Count; i++) {
-			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
-			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
-		}
-
-		ImGui::Begin("Sprite");
-		
-		ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
-		ImGui::End();
-		imGuiSprite.matrix= MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
-
-		SpriteTex->Darw(imGuiSprite.matrix);
-
 		ImGui::Begin("sphere");
 		ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
 		ImGui::SliderFloat3("scale", &imGuiSphere[0].scale.x, -0.0f, 5.0f);
@@ -234,12 +250,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::SliderFloat3("translate", &imGuiSphere[0].translate.x, -5.0f, 5.0f);
 		ImGui::End();
 
-		
-		imGuiSphere[0].rotate.y += 0.02f;
+
+		//imGuiSphere[0].rotate.y += 0.02f;
 
 		imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
-		sphere_->Draw(imGuiSphere[0].matrix);
-
+		obj3D->Draw(imGuiSphere[0].matrix);
 
 
 

@@ -46,11 +46,11 @@
     <Filter Include="避難所">
       <UniqueIdentifier>{104d226b-33f2-49c5-8c8b-b477606d7229}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DKJEN\Base\RoadTex">
-      <UniqueIdentifier>{362ce2bb-0203-4a58-8e85-a2ab54036e7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DKJEN\Shader">
       <UniqueIdentifier>{61686a07-e2a4-4683-aa1c-603124a76e42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DKJEN\Base\Load">
+      <UniqueIdentifier>{362ce2bb-0203-4a58-8e85-a2ab54036e7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +109,7 @@
       <Filter>DKJEN\Type</Filter>
     </ClCompile>
     <ClCompile Include="DKJEN\Base\ImageLoading.cpp">
-      <Filter>DKJEN\Base\RoadTex</Filter>
+      <Filter>DKJEN\Base\Load</Filter>
     </ClCompile>
     <ClCompile Include="DKJEN\Shader\TextureCompileShader.cpp">
       <Filter>DKJEN\Shader</Filter>
@@ -137,6 +137,12 @@
     </ClCompile>
     <ClCompile Include="DKJEN\Base\LightPSO.cpp">
       <Filter>DKJEN\Base\PSO</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Base\ObjLoad.cpp">
+      <Filter>DKJEN\Base\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Type\Obj3D.cpp">
+      <Filter>DKJEN\Type</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +235,7 @@
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Base\ImageLoading.h">
-      <Filter>DKJEN\Base\RoadTex</Filter>
+      <Filter>DKJEN\Base\Load</Filter>
     </ClInclude>
     <ClInclude Include="DKJEN\Shader\TextureCompileShader.h">
       <Filter>DKJEN\Shader</Filter>
@@ -257,6 +263,12 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Base\LightPSO.h">
       <Filter>DKJEN\Base\PSO</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Base\ObjLoad.h">
+      <Filter>DKJEN\Base\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Type\Obj3D.h">
+      <Filter>DKJEN\Type</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

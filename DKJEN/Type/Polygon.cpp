@@ -2,8 +2,8 @@
 
 void PolygonType::Initialize(Vector4 lefe, Vector4 top, Vector4 right)
 {
-	Vertex = CreateBufferResource(sizeof(VerteData) * 3);
-	bufferView_ = VertexCreateBufferView(sizeof(VerteData) * 3, Vertex, 3);
+	Vertex = CreateBufferResource(sizeof(VertexData) * 3);
+	bufferView_ = VertexCreateBufferView(sizeof(VertexData) * 3, Vertex, 3);
 	materialResource = CreateBufferResource(sizeof(Vector4));
 	wvpResource = CreateBufferResource(sizeof(Matrix4x4));
 
@@ -27,7 +27,7 @@ void PolygonType::Draw(Matrix4x4 m, Vector4 Color)
 	wvpResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&wvpData));
 	//
-	VerteData* vertexData = nullptr;
+	VertexData* vertexData = nullptr;
 	Vertex->Map(0, nullptr,
 		reinterpret_cast<void**>(&vertexData));
 	////

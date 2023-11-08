@@ -5,7 +5,7 @@
 #include"../Base/Function.h"
 #include"../externals/DirectXTex/d3dx12.h"
 #include"../externals/DirectXTex/DirectXTex.h"
-struct VerteData {
+struct VertexData {
 	Vector4 position;
 	Vector2 texcoord;
 	Vector3 normal;
