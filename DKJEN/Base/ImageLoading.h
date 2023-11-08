@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include"../Base/WinApp.h"
 #include"../Base/DxCommon.h"
 #include"../Base/Function.h"
@@ -45,10 +44,10 @@ class ImageLoading
 {
 public:
 	void Initiluze();
-	TexProeerty Load(const std::string& filePath);
+	TexProeerty LoadTexture(const std::string& filePath);
 	//void Draw();
 	void End();
-	DirectX::ScratchImage LoadTexture(const std::string& filePath);
+	DirectX::ScratchImage LoadTextureData(const std::string& filePath);
 	ID3D12Resource* CreateTexResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
 	void UploadTexData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 	void ShaderResourceView();

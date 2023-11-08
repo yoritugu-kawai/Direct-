@@ -45,9 +45,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	LightPSO::CreatePSO();
 	ImageLoading* imageLoading = new ImageLoading;
 	imageLoading->Initiluze();
-	TexProeerty tex = imageLoading->Load("resource/e.png");
-	TexProeerty tex3 = imageLoading->Load("resource/monsterBall.png");
-	TexProeerty tex2 = imageLoading->Load("resource/uvChecker.png");
+	TexProeerty tex = imageLoading->LoadTexture("resource/e.png");
+	TexProeerty tex3 = imageLoading->LoadTexture("resource/monsterBall.png");
+	TexProeerty tex2 = imageLoading->LoadTexture("resource/uvChecker.png");
 	//スプライト
 	
 	// 球
@@ -148,6 +148,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	imGuiSprite.rotate = { 0.0f,0.0f,0.0f };
 	imGuiSprite.translate = { 0.0f,0.0f,0.0f };
 
+	ImGguiTransfrom imGui3D[1];
+	for (int i = 0; i < 1; i++) {
+		imGui3D[i].matrix = MakeIdentity4x4();
+		imGui3D[i].scale = { 0.5f, 0.5f, 0.5f };
+		imGui3D[i].rotate = { 0.0f, 0.0f, 0.0f };
+		imGui3D[i].translate = { 0.0f, 0.0f, 0.0f };
+		imGui3D[i].color = { 1.0f,1.0f,1.0f,1.0f };
+
+	}
 	///初期化
 	PolygonType* polygon_[Count];
 	for (int i = 0; i < Count; i++) {
@@ -243,18 +252,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 					imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
 					sphere_->Draw(imGuiSphere[0].matrix);*/
 		}
-		ImGui::Begin("sphere");
-		ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
-		ImGui::SliderFloat3("scale", &imGuiSphere[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiSphere[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiSphere[0].translate.x, -5.0f, 5.0f);
+		ImGui::Begin("3D");
+		ImGui::ColorEdit3("color", (float*)&imGui3D[0].color);
+		ImGui::SliderFloat3("scale", &imGui3D[0].scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGui3D[0].rotate.x, -10.0f, 10.0f);
+		ImGui::SliderFloat3("translate", &imGui3D[0].translate.x, -5.0f, 5.0f);
 		ImGui::End();
 
 
 		//imGuiSphere[0].rotate.y += 0.02f;
 
-		imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
-		obj3D->Draw(imGuiSphere[0].matrix);
+		imGui3D[0].matrix = MakeAffineMatrix(imGui3D[0].scale, imGui3D[0].rotate, imGui3D[0].translate);
+		obj3D->Draw(imGui3D[0].matrix);
 
 
 
@@ -283,7 +292,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	PolygonPSO::Release();
 	SpritePSO::Release();
 	LightPSO::Release();
-
+	obj3D->Release();
 	sphere_->Release();
 	ImguiManager::Release();
 	SpriteTex->Release();

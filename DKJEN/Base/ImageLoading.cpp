@@ -13,7 +13,7 @@ void ImageLoading::Initiluze()
 	LoadCount = 0;
 }
 
-DirectX::ScratchImage ImageLoading::LoadTexture(const std::string& filePath)
+DirectX::ScratchImage ImageLoading::LoadTextureData(const std::string& filePath)
 {
 
 	//テクスチャファイルを読み込んでプログラムで扱えるようにする
@@ -97,13 +97,13 @@ void ImageLoading::ShaderResourceView()
 }
 
 
-TexProeerty ImageLoading::Load(const std::string& filePath)
+TexProeerty ImageLoading::LoadTexture(const std::string& filePath)
 {
 	ID3D12Device* device = DxCommon::GetInstance()->GetDevice();
 	ID3D12DescriptorHeap* srvDescriptorHeap = DxCommon::GetInstance()->GetsrvDescriptorHeap();
 
 	//Textureを読んで転送する
-	DirectX::ScratchImage mipImages = LoadTexture(filePath);
+	DirectX::ScratchImage mipImages = LoadTextureData(filePath);
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 
 	ID3D12Resource* textureResource = CreateTexResource(device, metadata);
