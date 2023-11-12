@@ -1,7 +1,7 @@
 #pragma once
 #include"WinApp.h"
 #include"../Math/Math.h"
-
+#include"../Utilipy/Pch.h"
 class DxCommon
 {
 public:
@@ -69,12 +69,12 @@ public:
 private:
 	//WinApp* winApp_ = nullptr;
 
-
+	ComPtr<IDXGIFactory7>m_pDxgiFactory_=nullptr;
 	/////
 	/// <summary>
 	/// ファクトリーの作成
 	/// </summary>
-	IDXGIFactory7* dxgiFactory;//
+	
 	HRESULT hr;//
 	/// <summary>
 	/// アダプターの作成

@@ -180,7 +180,7 @@ void DxCommon::CreateSwapChain()
 	IDXGISwapChain4* swapChain = DxCommon::GetInstance()->swapChain;
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = DxCommon::GetInstance()->swapChainDesc;
 	ID3D12CommandQueue* commandQueue = DxCommon::GetInstance()->commandQueue;//
-	IDXGIFactory7* dxgiFactory = DxCommon::GetInstance()->dxgiFactory;//
+	IDXGIFactory7* dxgiFactory = DxCommon::GetInstance()->m_pDxgiFactory_.Get();//
 	///
 	//   スワップチェーン作成
 
@@ -197,7 +197,7 @@ void DxCommon::CreateSwapChain()
 		&swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
 	assert(SUCCEEDED(hr));
 	DxCommon::GetInstance()->commandQueue = commandQueue;//
-	DxCommon::GetInstance()->dxgiFactory = dxgiFactory;//
+	DxCommon::GetInstance()->m_pDxgiFactory_ = dxgiFactory;//
 	DxCommon::GetInstance()->swapChain = swapChain;
 	DxCommon::GetInstance()->swapChainDesc = swapChainDesc;
 }
@@ -380,7 +380,7 @@ void DxCommon::CreateDxgiFactory()
 		useAdapter = nullptr;
 	}
 	assert(useAdapter != nullptr);
-	DxCommon::GetInstance()->dxgiFactory = dxgiFactory;
+	DxCommon::GetInstance()->m_pDxgiFactory_ = dxgiFactory;
 	DxCommon::GetInstance()->useAdapter = useAdapter;
 
 
@@ -520,7 +520,7 @@ void DxCommon::Release() {
 	DxCommon::GetInstance()->device->Release();
 	DxCommon::GetInstance()->useAdapter->Release();
 
-	DxCommon::GetInstance()->dxgiFactory->Release();
+	//DxCommon::GetInstance()->m_pDxgiFactory_->Release();
 
 	DxCommon::GetInstance()->depthStencilResource->Release();
 #ifdef _DEBUG
@@ -530,12 +530,6 @@ void DxCommon::Release() {
 	CloseWindow(WinApp::GetInstance()->GetHwnd());
 
 	//リソースリークチェック
-	IDXGIDebug1* debug;
-	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
-		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
-		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
-		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
-		debug->Release();
 
-	}
+	
 }

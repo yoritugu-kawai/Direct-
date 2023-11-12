@@ -205,6 +205,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Type\Sphere.h" />
     <ClInclude Include="DKJEN\Type\Sprite.h" />
     <ClInclude Include="DKJEN\Type\Texture.h" />
+    <ClInclude Include="DKJEN\Utilipy\Pch.h" />
+    <ClInclude Include="DKJEN\Utilipy\rektyk.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Object3d.hlsli" />

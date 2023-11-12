@@ -270,6 +270,12 @@
     <ClInclude Include="DKJEN\Type\Obj3D.h">
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
+    <ClInclude Include="DKJEN\Utilipy\Pch.h">
+      <Filter>DKJEN</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Utilipy\rektyk.h">
+      <Filter>DKJEN</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Object3d.hlsli">
