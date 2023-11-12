@@ -68,9 +68,9 @@ ModelData LoadObjFile(const std::string& directoryPath, const std::string& filen
 			modelData.material= LoadMaterialTemplateFile(directoryPath, materialFilename);
 		}
 	}
-	/*ImageLoading* imgload = new ImageLoading;
+	ImageLoading* imgload = new ImageLoading;
 	tex= imgload->LoadTexture(modelData.material.textureFilePath);
-	*/
+	delete imgload;
 	//4.
 	
 	return modelData;

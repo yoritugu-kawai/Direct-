@@ -3,7 +3,7 @@
 void Obj3D::Initialize(TexProeerty  tex)
 {
 	tex_ = tex;
-	modelData = LoadObjFile("resource","plane.obj", tex_);
+	modelData = LoadObjFile("resource","axis.obj", tex_);
 
 
 	vetexResource = CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
