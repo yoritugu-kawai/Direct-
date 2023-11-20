@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty tex3 = imageLoading->LoadTexture("resource/monsterBall.png");
 	TexProeerty tex2 = imageLoading->LoadTexture("resource/uvChecker.png");
 	//スプライト
-	
+	Sprite::Initialize();
 	//
 	Input::Initialize();
 	// 球
@@ -266,7 +266,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		
-		Sprite::Darw()
+		Sprite::Darw();
 
 
 
@@ -295,7 +295,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sphere_->Release();
 
 	SpriteTex->Release();
-
+	Sprite::Release();
 	
 	PSOCopileManagement::Release();
 
