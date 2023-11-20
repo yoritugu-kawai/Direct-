@@ -12,6 +12,8 @@
 #include"DKJEN/Type/Obj3D.h"
 #include"DKJEN/Utilipy/rektyk.h"
 #include"DKJEN/Utilipy/Input.h"
+
+#include"DKJEN/Management/PSOCopileManagement.h"
 const wchar_t Title[] = { L"ド根性エンジン" };
 
 
@@ -31,20 +33,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DxCommon::Initialize();
 	ImguiManager::Initialize();
 
-	TextureCompileShader::DXC();
-	PolygonCompileShader::DXC();
-	SpriteCompileShader::DXC();
-	LightCompileShader::DXC();
-
-	TextureCompileShader::ShaderCompile();
-	PolygonCompileShader::ShaderCompile();
-	SpriteCompileShader::ShaderCompile();
-	LightCompileShader::ShaderCompile();
-
-	TexturePSO::CreatePSO();
-	PolygonPSO::CreatePSO();
-	SpritePSO::CreatePSO();
-	LightPSO::CreatePSO();
+	
+	PSOCopileManagement::Set();
+	
 	ImageLoading* imageLoading = new ImageLoading;
 	imageLoading->Initiluze();
 	TexProeerty tex = imageLoading->LoadTexture("resource/e.png");
@@ -303,17 +294,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	SpriteTex->Release();
 
-	TextureCompileShader::Release();
-	PolygonCompileShader::Release();
-	SpriteCompileShader::Release();
-	LightCompileShader::Release();
-
-	TexturePSO::Release();
-	PolygonPSO::Release();
-	SpritePSO::Release();
-	LightPSO::Release();
-
-
+	
+	PSOCopileManagement::Release();
 
 	ImguiManager::Release();
 	DxCommon::Release();
