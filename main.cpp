@@ -166,7 +166,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	
-	Sprite::Initialize(tex, SpriteTrans.lefe, SpriteTrans.top, SpriteTrans.right);
+
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -255,15 +255,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			obj3D->Draw(imGui3D[0].matrix);
 		}
 
-		ImGui::Begin("Sprite");
+		//ImGui::Begin("Sprite");
 
-		ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
-		ImGui::End();
-		imGuiSprite.matrix = MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
-		Sprite::Darw(imGuiSprite.matrix);
-
+		//ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
+		//ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
+		//ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
+		//ImGui::End();
+		//imGuiSprite.matrix = MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
+	
 
 
 
@@ -291,7 +290,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	sphere_->Release();
 
 	
-	Sprite::Release();
 	
 	PSOCopileManagement::Release();
 
