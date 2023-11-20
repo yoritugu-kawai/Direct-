@@ -4,14 +4,10 @@
 
 #include"DKJEN/Math/Math.h"
 #include"DKJEN/Imgui/imguiManager.h"
-
-#include"DKJEN/Type/Polygon.h"
-#include"DKJEN/Type/Sprite.h"
-#include"DKJEN/Type/Texture.h"
-#include"DKJEN/Type/Sphere.h"
-#include"DKJEN/Type/Obj3D.h"
 #include"DKJEN/Utilipy/rektyk.h"
 #include"DKJEN/Utilipy/Input.h"
+
+#include"DKJEN/Management/TypManagement.h"
 const wchar_t Title[] = { L"ド根性エンジン" };
 
 
@@ -51,6 +47,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty tex3 = imageLoading->LoadTexture("resource/monsterBall.png");
 	TexProeerty tex2 = imageLoading->LoadTexture("resource/uvChecker.png");
 	//スプライト
+
+
+
+	////
 	Input::Initialize();
 	// 球
 	Sphere* sphere_ = new Sphere;
