@@ -55,6 +55,9 @@
     <Filter Include="DKJEN\Utilipy">
       <UniqueIdentifier>{b84a708b-6400-4a13-a979-716a846578ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DKJEN\Management">
+      <UniqueIdentifier>{2bb7a594-074f-4bf1-a6ce-d1a3674ee1a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="DKJEN\Utilipy\Input.cpp">
       <Filter>DKJEN\Utilipy</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Management\PSOCopileManagement.cpp">
+      <Filter>DKJEN\Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="DKJEN\Utilipy\Input.h">
       <Filter>DKJEN\Utilipy</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Management\PSOCopileManagement.h">
+      <Filter>DKJEN\Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
