@@ -17,7 +17,7 @@ class TypManagement
 {
 public:
 	static TypManagement* GetInstance();
-	static void Initialize();
+	static void Initialize(ImageLoading* imageLoading);
 
 	static void Release();
 private:

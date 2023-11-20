@@ -6,7 +6,7 @@ TypManagement* TypManagement::GetInstance()
 	return &instance;
 }
 
-void TypManagement::Initialize()
+void TypManagement::Initialize(ImageLoading* imageLoading)
 {
 	TexProeerty tex = imageLoading->LoadTexture("resource/e.png");
 	Transfrom SpriteTrans =
@@ -16,7 +16,7 @@ void TypManagement::Initialize()
 		{560.0f,360.0f,0.0f,1.0f}
 
 	};
-	Sprite::Initialize(SpriteTrans.);
+	Sprite::Initialize(tex, SpriteTrans.lefe, SpriteTrans.top, SpriteTrans.right);
 }
 
 
