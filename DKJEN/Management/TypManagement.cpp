@@ -8,7 +8,14 @@ TypManagement* TypManagement::GetInstance()
 
 void TypManagement::Initialize()
 {
-	Sprite::Initialize();
+	Transfrom4 SpriteTrans =
+	{
+		{560.f,0.0f,0.0f,1.0f},
+		{ 0.0f,360.0f,0.0f,1.0f },
+		{560.0f,360.0f,0.0f,1.0f}
+
+	};
+	Sprite::Initialize(SpriteTrans);
 }
 
 
