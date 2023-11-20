@@ -6,12 +6,13 @@
 class  Sprite
 {
 public:
-	void Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy);
-	void Vertex();
-	void Darw(Matrix4x4 m);
-	void Release();
+	static Sprite* GetInstance();
+	static void Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy);
+	static void Vertex();
+	static void Darw(Matrix4x4 m);
+	static void Release();
 
-	ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
+	static ID3D12Resource* CreateBufferResource(size_t sizeInbyte);
 private:
 
 	//

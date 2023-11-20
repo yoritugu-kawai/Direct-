@@ -1,12 +1,24 @@
 #include "Sprite.h"
 
+Sprite* Sprite::GetInstance()
+{
+	static Sprite instance;
+	return &instance;
+}
+
 void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 {
 
+	TexProeerty  tex_ = Sprite::GetInstance()->tex_;
+	ID3D12Resource* vertexResourceSprite = Sprite::GetInstance()->vertexResourceSprite;
+	ID3D12Resource* transformationMatrixResourceSprote = Sprite::GetInstance()->transformationMatrixResourceSprote;
+	ID3D12Resource* materialResource = Sprite::GetInstance()->materialResource;
+	ID3D12Resource* indexResourceSprite = Sprite::GetInstance()->indexResourceSprite;
+	Vector4 transX_ = Sprite::GetInstance()->transX_;
+	Vector4 transY_ = Sprite::GetInstance()->transY_;
+	Vector4 transXY_ = Sprite::GetInstance()->transXY_;
 
-
-	tex_ = tex;// spriteLoad_->Load("resource/e.png");
-
+	tex_ = tex;
 	vertexResourceSprite = CreateBufferResource(sizeof(VertexData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));
 	materialResource = CreateBufferResource(sizeof(UVMaterial));
@@ -14,11 +26,30 @@ void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 	transX_ = x;
 	transY_ = y;
 	transXY_ = xy;
+
+	Sprite::GetInstance()->tex_ = tex_;
+	Sprite::GetInstance()->vertexResourceSprite = vertexResourceSprite;
+	Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
+	Sprite::GetInstance()->materialResource = materialResource;
+	Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
+	Sprite::GetInstance()->transX_ = transX_;
+	Sprite::GetInstance()->transY_ = transY_;
+	Sprite::GetInstance()->transXY_ = transXY_;
 }
 
 void Sprite::Vertex()
 {
-
+	ID3D12Resource* vertexResourceSprite = Sprite::GetInstance()->vertexResourceSprite;
+	ID3D12Resource* transformationMatrixResourceSprote = Sprite::GetInstance()->transformationMatrixResourceSprote;
+	ID3D12Resource* materialResource = Sprite::GetInstance()->materialResource;
+	ID3D12Resource* indexResourceSprite = Sprite::GetInstance()->indexResourceSprite;
+	Vector4 transX_ = Sprite::GetInstance()->transX_;
+	Vector4 transY_ = Sprite::GetInstance()->transY_;
+	Vector4 transXY_ = Sprite::GetInstance()->transXY_;
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite = Sprite::GetInstance()->vertexBufferViewSprite;
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite = Sprite::GetInstance()->indexBufferViewSprite;
+	VertexData* VertexDataSprite = Sprite::GetInstance()->VertexDataSprite;
+	//////本筋
 	vertexBufferViewSprite.BufferLocation = vertexResourceSprite->GetGPUVirtualAddress();
 	vertexBufferViewSprite.SizeInBytes = sizeof(VertexData) * 6;
 	vertexBufferViewSprite.StrideInBytes = sizeof(VertexData);
@@ -55,16 +86,40 @@ void Sprite::Vertex()
 	VertexDataSprite[5].position = { transXY_ };
 	VertexDataSprite[5].texcoord = { 1.0f,1.0f };
 
+	Sprite::GetInstance()->vertexResourceSprite = vertexResourceSprite;
+	Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
+	Sprite::GetInstance()->materialResource = materialResource;
+	Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
+	Sprite::GetInstance()->transX_ = transX_;
+	Sprite::GetInstance()->transY_ = transY_;
+	Sprite::GetInstance()->transXY_ = transXY_;
+	Sprite::GetInstance()->vertexBufferViewSprite = vertexBufferViewSprite;
+	Sprite::GetInstance()->indexBufferViewSprite = indexBufferViewSprite;
+	Sprite::GetInstance()->VertexDataSprite = VertexDataSprite;
 
 }
 void Sprite::Darw(Matrix4x4 m)
 {
+	ID3D12Resource* vertexResourceSprite = Sprite::GetInstance()->vertexResourceSprite;
+	ID3D12Resource* transformationMatrixResourceSprote = Sprite::GetInstance()->transformationMatrixResourceSprote;
+	ID3D12Resource* materialResource = Sprite::GetInstance()->materialResource;
+	ID3D12Resource* indexResourceSprite = Sprite::GetInstance()->indexResourceSprite;
+	D3D12_VERTEX_BUFFER_VIEW vertexBufferViewSprite = Sprite::GetInstance()->vertexBufferViewSprite;
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite = Sprite::GetInstance()->indexBufferViewSprite;
+	TexProeerty  tex_ = Sprite::GetInstance()->tex_;
+
+
+
 	UVMaterial* materialDeta = nullptr;
 	materialResource->Map(0, nullptr,
 		reinterpret_cast<void**>(&materialDeta));
 	materialDeta->color = { 1.0f,1.0f,1.0,1.0f };
 	Vertex();
-
+	Transform uvTranformSprite{
+   {1.0f,1.0f,1.0f},
+   {0.0f,0.0f,0.0f},
+   {0.0f,0.0f,0.0f}
+	};
 	ImGui::Begin("sprite");
 	ImGui::Text("uv");
 	ImGui::SliderFloat3("t", &uvTranformSprite.translate.x, -4.0f, 4.0f);
@@ -75,10 +130,12 @@ void Sprite::Darw(Matrix4x4 m)
 	Matrix4x4 m2 = MakeAffineMatrix(uvTranformSprite.scale, uvTranformSprite.rotate, uvTranformSprite.translate);
 	materialDeta->uvTransform = m2;
 
-
+	Matrix4x4* transformationMatrixDataSprite = nullptr;
 	transformationMatrixResourceSprote->Map(0, nullptr, reinterpret_cast<void**>
 		(&transformationMatrixDataSprite));
 	*transformationMatrixDataSprite = MakeIdentity4x4();
+
+	Transform transformSprite{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	Matrix4x4 SpriteMatrix = MakeAffineMatrix(transformSprite.scale, transformSprite.rotate, transformSprite.translate);
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
@@ -102,16 +159,37 @@ void Sprite::Darw(Matrix4x4 m)
 	commandList->SetGraphicsRootDescriptorTable(2, tex_.SrvHandleGPU);
 	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
+	////
+	Sprite::GetInstance()->vertexResourceSprite = vertexResourceSprite;
+	Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
+	Sprite::GetInstance()->materialResource = materialResource;
+	Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
+	Sprite::GetInstance()->vertexBufferViewSprite = vertexBufferViewSprite;
+	Sprite::GetInstance()->indexBufferViewSprite = indexBufferViewSprite;
+	Sprite::GetInstance()->tex_ = tex_;
+
 }
 
 void Sprite::Release()
 {
-	tex_.Resource->Release();
+	TexProeerty  tex_ = Sprite::GetInstance()->tex_;
+	ID3D12Resource* vertexResourceSprite = Sprite::GetInstance()->vertexResourceSprite;
+	ID3D12Resource* transformationMatrixResourceSprote = Sprite::GetInstance()->transformationMatrixResourceSprote;
+	ID3D12Resource* materialResource = Sprite::GetInstance()->materialResource;
+	ID3D12Resource* indexResourceSprite = Sprite::GetInstance()->indexResourceSprite;
 
+	tex_.Resource->Release();
 	vertexResourceSprite->Release();
 	indexResourceSprite->Release();
 	transformationMatrixResourceSprote->Release();
 	materialResource->Release();
+
+
+	Sprite::GetInstance()->tex_ = tex_;
+	Sprite::GetInstance()->vertexResourceSprite = vertexResourceSprite;
+	Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
+	Sprite::GetInstance()->materialResource = materialResource;
+	Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
 }
 
 ID3D12Resource* Sprite::CreateBufferResource(size_t sizeInbyte)

@@ -42,6 +42,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty tex3 = imageLoading->LoadTexture("resource/monsterBall.png");
 	TexProeerty tex2 = imageLoading->LoadTexture("resource/uvChecker.png");
 	//スプライト
+	
+	//
 	Input::Initialize();
 	// 球
 	Sphere* sphere_ = new Sphere;
@@ -264,7 +266,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		
-		
+		Sprite::Darw()
 
 
 
