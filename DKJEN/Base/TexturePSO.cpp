@@ -135,11 +135,6 @@ void TexturePSO::ShapePSO()
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 
 
-	/*D3D12_DEPTH_STENCIL_DESC despthStencilDesc{};
-	despthStencilDesc.DepthEnable = true;
-	despthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	despthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;*/
-
 	//ステイト追加
 	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
 	depthStencilDesc.DepthEnable = true;

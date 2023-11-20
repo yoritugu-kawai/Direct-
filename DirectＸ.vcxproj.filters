@@ -52,6 +52,9 @@
     <Filter Include="DKJEN\Base\Load">
       <UniqueIdentifier>{362ce2bb-0203-4a58-8e85-a2ab54036e7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DKJEN\Utilipy">
+      <UniqueIdentifier>{b84a708b-6400-4a13-a979-716a846578ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,11 +141,11 @@
     <ClCompile Include="DKJEN\Base\LightPSO.cpp">
       <Filter>DKJEN\Base\PSO</Filter>
     </ClCompile>
-    <ClCompile Include="DKJEN\Base\ObjLoad.cpp">
-      <Filter>DKJEN\Base\Load</Filter>
-    </ClCompile>
     <ClCompile Include="DKJEN\Type\Obj3D.cpp">
       <Filter>DKJEN\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="DKJEN\Utilipy\Input.cpp">
+      <Filter>DKJEN\Utilipy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -264,17 +267,17 @@
     <ClInclude Include="DKJEN\Base\LightPSO.h">
       <Filter>DKJEN\Base\PSO</Filter>
     </ClInclude>
-    <ClInclude Include="DKJEN\Base\ObjLoad.h">
-      <Filter>DKJEN\Base\Load</Filter>
-    </ClInclude>
     <ClInclude Include="DKJEN\Type\Obj3D.h">
       <Filter>DKJEN\Type</Filter>
     </ClInclude>
-    <ClInclude Include="DKJEN\Utilipy\Pch.h">
-      <Filter>DKJEN</Filter>
-    </ClInclude>
     <ClInclude Include="DKJEN\Utilipy\rektyk.h">
-      <Filter>DKJEN</Filter>
+      <Filter>DKJEN\Utilipy</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Utilipy\Pch.h">
+      <Filter>DKJEN\Utilipy</Filter>
+    </ClInclude>
+    <ClInclude Include="DKJEN\Utilipy\Input.h">
+      <Filter>DKJEN\Utilipy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

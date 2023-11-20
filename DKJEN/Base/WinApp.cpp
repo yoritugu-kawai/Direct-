@@ -66,21 +66,9 @@ void  WinApp::Initialize(const wchar_t* title) {
 	//ウィンドウを表示
 	ShowWindow(hwnd_, SW_SHOW);
 	WinApp::GetInstance()->hwnd_ = hwnd_;
-	WinApp::GetInstance()->wc = wc;
+	WinApp::GetInstance()->wc_ = wc;
 	WinApp::GetInstance()->title_ = title_;
 	
-//#ifdef _DEBUG
-//
-//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&deugController)))) {
-//		deugController->EnableDebugLayer();
-//		deugController->SetEnableGPUBasedValidation(TRUE);
-//	}
-//
-//#endif // _DEBUG
+
 }
 
-//void WinApp::Release() {
-//#ifdef _DEBUG
-//	deugController->Release();
-//#endif // _DEBUG
-//}

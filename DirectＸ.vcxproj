@@ -97,7 +97,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Base\Function.cpp" />
     <ClCompile Include="DKJEN\Base\LightPSO.cpp" />
     <ClCompile Include="DKJEN\Base\Log.cpp" />
-    <ClCompile Include="DKJEN\Base\ObjLoad.cpp" />
     <ClCompile Include="DKJEN\Base\PolygonPSO.cpp" />
     <ClCompile Include="DKJEN\Base\SpritePSO.cpp" />
     <ClCompile Include="DKJEN\Base\TexturePSO.cpp" />
@@ -122,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\Type\Sphere.cpp" />
     <ClCompile Include="DKJEN\Type\Sprite.cpp" />
     <ClCompile Include="DKJEN\Type\Texture.cpp" />
+    <ClCompile Include="DKJEN\Utilipy\Input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +179,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Base\Function.h" />
     <ClInclude Include="DKJEN\Base\LightPSO.h" />
     <ClInclude Include="DKJEN\Base\Log.h" />
-    <ClInclude Include="DKJEN\Base\ObjLoad.h" />
     <ClInclude Include="DKJEN\Base\PolygonPSO.h" />
     <ClInclude Include="DKJEN\Base\SpritePSO.h" />
     <ClInclude Include="DKJEN\Base\TexturePSO.h" />
@@ -205,6 +204,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\Type\Sphere.h" />
     <ClInclude Include="DKJEN\Type\Sprite.h" />
     <ClInclude Include="DKJEN\Type\Texture.h" />
+    <ClInclude Include="DKJEN\Utilipy\Input.h" />
     <ClInclude Include="DKJEN\Utilipy\Pch.h" />
     <ClInclude Include="DKJEN\Utilipy\rektyk.h" />
   </ItemGroup>

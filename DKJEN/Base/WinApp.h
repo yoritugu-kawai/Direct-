@@ -17,9 +17,10 @@ public :
 	static const int32_t Width() { return WinApp::GetInstance()-> kClientWidth_; }
 	static const int32_t Height() { return WinApp::GetInstance()->kClientHeight_; }
 	static HWND GetHwnd() { return WinApp::GetInstance()->hwnd_; }
+	static WNDCLASS GetWc() { return WinApp::GetInstance()->wc_; }
 
 private:
-	WNDCLASS wc{};
+	WNDCLASS wc_{};
 	HWND hwnd_;
 	const wchar_t* title_;
 	const int32_t kClientWidth_ = 1280;
