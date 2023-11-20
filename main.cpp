@@ -213,6 +213,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 
+
 		/*ImGui::Begin("polygon1");
 		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
 		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
