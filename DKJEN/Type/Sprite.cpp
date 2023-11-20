@@ -5,7 +5,7 @@ void Sprite::Initialize(TexProeerty  tex, Vector4 x, Vector4 y, Vector4 xy)
 
 
 
-	tex_ = tex;// spriteLoad_->Load("resource/e.png");
+	tex_ = tex;
 
 	vertexResourceSprite = CreateBufferResource(sizeof(VertexData) * 6);
 	transformationMatrixResourceSprote = CreateBufferResource(sizeof(Matrix4x4));

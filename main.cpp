@@ -187,80 +187,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DxCommon::BeginFrame();
 		ImguiManager::BeginFrame();
 		Input::BeginFlame();
-
-		//　ゲーム処理
-		//　ゲーム処理
-
-
-		ImGui::Begin("Texture1");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[0].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		ImGui::Begin("Texture2");
-		ImGui::ColorEdit3("color", (float*)&imGuiTextur[1].color);
-		ImGui::SliderFloat3("scale", &imGuiTextur[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiTextur[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiTextur[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		for (int i = 0; i < Count; i++) {
-			imGuiTextur[i].matrix = MakeAffineMatrix(imGuiTextur[i].scale, imGuiTextur[i].rotate, imGuiTextur[i].translate);
-			texture_[i]->Draw(imGuiTextur[i].matrix, imGuiTextur[i].color);
-
-
-		}
-
-		/*ImGui::Begin("polygon1");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[0].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[0].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[0].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[0].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-		ImGui::Begin("polygon2");
-		ImGui::ColorEdit3("color", (float*)&imGuiPolygon[1].color);
-		ImGui::SliderFloat3("scale", &imGuiPolygon[1].scale.x, -0.0f, 5.0f);
-		ImGui::SliderFloat3("rotate", &imGuiPolygon[1].rotate.x, -5.0f, 5.0f);
-		ImGui::SliderFloat3("translate", &imGuiPolygon[1].translate.x, -5.0f, 5.0f);
-		ImGui::End();
-
-
-		for (int i = 0; i < Count; i++) {
-			imGuiPolygon[i].matrix = MakeAffineMatrix(imGuiPolygon[i].scale, imGuiPolygon[i].rotate, imGuiPolygon[i].translate);
-			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
-		}*/
-
-		/*	ImGui::Begin("Sprite");
-
-			ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
-			ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
-			ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
-			ImGui::End();
-			imGuiSprite.matrix= MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
-
-			SpriteTex->Darw(imGuiSprite.matrix);
-
-			ImGui::Begin("sphere");
-			ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
-			ImGui::SliderFloat3("scale", &imGuiSphere[0].scale.x, -0.0f, 5.0f);
-			ImGui::SliderFloat3("rotate", &imGuiSphere[0].rotate.x, -5.0f, 5.0f);
-			ImGui::SliderFloat3("translate", &imGuiSphere[0].translate.x, -5.0f, 5.0f);
-			ImGui::End();
-
-
-			imGuiSphere[0].rotate.y += 0.02f;
-
-			imGuiSphere[0].matrix = MakeAffineMatrix(imGuiSphere[0].scale, imGuiSphere[0].rotate, imGuiSphere[0].translate);
-			sphere_->Draw(imGuiSphere[0].matrix);*/
-		
-
-
-		if (Input::GetInstance()->PushKey(DIK_A)) {
-
-
 			ImGui::Begin("3D");
 			ImGui::ColorEdit3("color", (float*)&imGui3D[0].color);
 			ImGui::SliderFloat3("scale", &imGui3D[0].scale.x, -0.0f, 5.0f);
@@ -269,14 +195,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			ImGui::End();
 			imGui3D[0].matrix = MakeAffineMatrix(imGui3D[0].scale, imGui3D[0].rotate, imGui3D[0].translate);
 			obj3D->Draw(imGui3D[0].matrix);
-		}
-
-		
-		
-
-
-
-
+	
 		ImguiManager::EndFrame();
 		DxCommon::EndFrame();
 

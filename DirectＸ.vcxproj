@@ -110,6 +110,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DKJEN\externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="DKJEN\externals\imgui\imgui_widgets.cpp" />
     <ClCompile Include="DKJEN\Imgui\imguiManager.cpp" />
+    <ClCompile Include="DKJEN\Management\TypManagement.cpp" />
     <ClCompile Include="DKJEN\Math\Math.cpp" />
     <ClCompile Include="DKJEN\Shader\LightCompileShader.cpp" />
     <ClCompile Include="DKJEN\Shader\PolygonCompileShader.cpp" />
@@ -193,6 +194,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DKJEN\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="DKJEN\externals\imgui\imstb_truetype.h" />
     <ClInclude Include="DKJEN\Imgui\imguiManager.h" />
+    <ClInclude Include="DKJEN\Management\TypManagement.h" />
     <ClInclude Include="DKJEN\Math\Math.h" />
     <ClInclude Include="DKJEN\Shader\LightCompileShader.h" />
     <ClInclude Include="DKJEN\Shader\PolygonCompileShader.h" />
