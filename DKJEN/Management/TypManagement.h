@@ -5,6 +5,14 @@
 #include"DKJEN/Type/Texture.h"
 #include"DKJEN/Type/Sphere.h"
 #include"DKJEN/Type/Obj3D.h"
+struct Transfrom
+{
+	Vector4 lefe;
+	Vector4  top;
+	Vector4 right;
+	Vector4 color;
+
+};
 class TypManagement
 {
 public:

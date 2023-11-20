@@ -8,14 +8,15 @@ TypManagement* TypManagement::GetInstance()
 
 void TypManagement::Initialize()
 {
-	Transfrom4 SpriteTrans =
+	TexProeerty tex = imageLoading->LoadTexture("resource/e.png");
+	Transfrom SpriteTrans =
 	{
 		{560.f,0.0f,0.0f,1.0f},
 		{ 0.0f,360.0f,0.0f,1.0f },
 		{560.0f,360.0f,0.0f,1.0f}
 
 	};
-	Sprite::Initialize(SpriteTrans);
+	Sprite::Initialize(SpriteTrans.);
 }
 
 
