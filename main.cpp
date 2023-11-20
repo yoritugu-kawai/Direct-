@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	TexProeerty tex3 = imageLoading->LoadTexture("resource/monsterBall.png");
 	TexProeerty tex2 = imageLoading->LoadTexture("resource/uvChecker.png");
 	//スプライト
-	Sprite::Initialize();
+	
 	//
 	Input::Initialize();
 	// 球
@@ -165,10 +165,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		texture_[i]->Initialize(triangle[i].lefe, triangle[i].top, triangle[i].right, tex2);
 	}
 
-	Sprite* SpriteTex = new Sprite;
-	SpriteTex->Initialize(tex, SpriteTrans.lefe, SpriteTrans.top, SpriteTrans.right);
-
-
+	
+	Sprite::Initialize(tex, SpriteTrans.lefe, SpriteTrans.top, SpriteTrans.right);
 	//　メインループ
 	MSG msg{};
 	while (msg.message != WM_QUIT)
@@ -227,15 +225,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			polygon_[i]->Draw(imGuiPolygon[i].matrix, imGuiPolygon[i].color);
 		}*/
 
-		/*	ImGui::Begin("Sprite");
-
-			ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
-			ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
-			ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
-			ImGui::End();
-			imGuiSprite.matrix= MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
-
-			SpriteTex->Darw(imGuiSprite.matrix);
+		/*	
 
 			ImGui::Begin("sphere");
 			ImGui::ColorEdit3("color", (float*)&imGuiSphere[0].color);
@@ -265,8 +255,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			obj3D->Draw(imGui3D[0].matrix);
 		}
 
-		
-		Sprite::Darw();
+		ImGui::Begin("Sprite");
+
+		ImGui::SliderFloat3("scale", &imGuiSprite.scale.x, -0.0f, 5.0f);
+		ImGui::SliderFloat3("rotate", &imGuiSprite.rotate.x, -5.0f, 5.0f);
+		ImGui::SliderFloat3("translate", &imGuiSprite.translate.x, -500.0f, 500.0f);
+		ImGui::End();
+		imGuiSprite.matrix = MakeAffineMatrix(imGuiSprite.scale, imGuiSprite.rotate, imGuiSprite.translate);
+		Sprite::Darw(imGuiSprite.matrix);
 
 
 
@@ -294,7 +290,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	delete 	imageLoading;
 	sphere_->Release();
 
-	SpriteTex->Release();
+	
 	Sprite::Release();
 	
 	PSOCopileManagement::Release();

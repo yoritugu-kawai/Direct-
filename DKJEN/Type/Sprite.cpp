@@ -100,7 +100,7 @@ void Sprite::Vertex()
 }
 void Sprite::Darw(Matrix4x4 m)
 {
-	ID3D12Resource* vertexResourceSprite = Sprite::GetInstance()->vertexResourceSprite;
+	
 	ID3D12Resource* transformationMatrixResourceSprote = Sprite::GetInstance()->transformationMatrixResourceSprote;
 	ID3D12Resource* materialResource = Sprite::GetInstance()->materialResource;
 	ID3D12Resource* indexResourceSprite = Sprite::GetInstance()->indexResourceSprite;
@@ -160,10 +160,10 @@ void Sprite::Darw(Matrix4x4 m)
 	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
 	////
-	Sprite::GetInstance()->vertexResourceSprite = vertexResourceSprite;
-	Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
-	Sprite::GetInstance()->materialResource = materialResource;
-	Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
+
+	//Sprite::GetInstance()->transformationMatrixResourceSprote = transformationMatrixResourceSprote;
+	//Sprite::GetInstance()->materialResource = materialResource;
+	//Sprite::GetInstance()->indexResourceSprite = indexResourceSprite;
 	Sprite::GetInstance()->vertexBufferViewSprite = vertexBufferViewSprite;
 	Sprite::GetInstance()->indexBufferViewSprite = indexBufferViewSprite;
 	Sprite::GetInstance()->tex_ = tex_;
