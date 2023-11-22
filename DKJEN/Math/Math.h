@@ -97,3 +97,8 @@ Matrix4x4 MakePerspectiveFovMatrix(
 	float fovY, float aspecrRatio, float nearClip, float farClip);
 Matrix4x4 Inverse(const Matrix4x4& m);
 Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float neaCrlip, float farClip);
+float Length(const Vector3& v);
+Vector3 Normalize(const Vector3& v);
+Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
+
+
